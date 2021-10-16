@@ -10888,6 +10888,8 @@ var ____generator_11 = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(_$main_11, "__esModule", { value: true });
 _$main_11.project = _$main_11.ui = void 0;
+// License info (for the about box)
+var licenseInfo = "\n===\nEnnuizel\n===\n\nCopyright (c) 2021 Yahweasel\n\nPermission to use, copy, modify, and/or distribute this software for any\npurpose with or without fee is hereby granted, provided that the above\ncopyright notice and this permission notice appear in all copies.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\" AND THE AUTHOR DISCLAIMS ALL WARRANTIES\nWITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF\nMERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY\nSPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES\nWHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION\nOF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN\nCONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.\n\n\n===\nbytes (https://github.com/visionmedia/bytes.js)\n===\n\n(The MIT License)\n\nCopyright (c) 2012-2014 TJ Holowaychuk <tj@vision-media.ca>\nCopyright (c) 2015 Jed Watson <jed.watson@me.com>\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n'Software'), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\nCLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\nTORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\nSOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n\n===\nStreamSaver (https://github.com/jimmywarting/StreamSaver.js)\n===\n\nThe MIT License (MIT)\n\nCopyright (c) 2016-2021 Jimmy Karl Roland W\u00E4rting\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n";
 /* removed: var _$avthreads_6 = require("./avthreads"); */;
 /* removed: var _$filters_8 = require("./filters"); */;
 /* removed: var _$project_12 = require("./project"); */;
@@ -11019,13 +11021,24 @@ _$main_11.ui = _$ui_19;
                     _$ui_19.ui.menu.about.onclick = function () {
                         _$ui_19.dialog(function (d, show) {
                             return ____awaiter_11(this, void 0, void 0, function () {
-                                var about, ok;
+                                var about, li, ok;
                                 return ____generator_11(this, function (_a) {
                                     about = _$ui_19.mk("div", d.box, {
-                                        innerHTML: 'This is Ennuizel, an audio editor in your web browser! Ennuizel is not “cloud”-based: everything is saved locally in your browser\'s local storage space. Ennuizel is <a href="https://github.com/Yahweasel/ennuizel">open source</a>.<br/><br/>'
+                                        innerHTML: 'This is Ennuizel, an audio editor in your web browser! Ennuizel is not “cloud”-based: everything is saved locally in your browser\'s local storage space. Ennuizel is <a href="https://github.com/Yahweasel/ennuizel">open source</a>.<br/><br/>License info:'
                                     });
-                                    about.style.maxWidth = "30em";
+                                    about.style.maxWidth = "45rem";
+                                    li = _$ui_19.mk("textarea", d.box, {
+                                        readonly: true,
+                                        innerHTML: licenseInfo,
+                                        className: "row"
+                                    });
+                                    Object.assign(li.style, {
+                                        display: "block",
+                                        width: "45rem",
+                                        height: "20em"
+                                    });
                                     ok = _$ui_19.btn(d.box, "OK", { className: "row" });
+                                    ok.style.width = "45rem";
                                     ok.onclick = function () { return _$ui_19.dialogClose(d); };
                                     show(ok);
                                     return [2 /*return*/];

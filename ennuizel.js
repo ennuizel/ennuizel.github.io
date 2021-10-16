@@ -11028,7 +11028,7 @@ _$main_11.ui = _$ui_19;
                                     });
                                     about.style.maxWidth = "45rem";
                                     li = _$ui_19.mk("textarea", d.box, {
-                                        readonly: true,
+                                        readOnly: true,
                                         innerHTML: licenseInfo,
                                         className: "row"
                                     });

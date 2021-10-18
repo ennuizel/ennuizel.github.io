@@ -9655,7 +9655,7 @@ var ____generator_13 = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(_$project_13, "__esModule", { value: true });
-_$project_13.play = _$project_13.deleteProjectById = _$project_13.unloadProject = _$project_13.loadProject = _$project_13.newProject = _$project_13.getProjects = _$project_13.load = _$project_13.project = _$project_13.Project = void 0;
+_$project_13.play = _$project_13.undoPoint = _$project_13.deleteProjectById = _$project_13.unloadProject = _$project_13.loadProject = _$project_13.newProject = _$project_13.getProjects = _$project_13.load = _$project_13.project = _$project_13.Project = void 0;
 /* removed: var _$audio_5 = require("./audio"); */;
 /* removed: var _$audioData_4 = require("./audio-data"); */;
 /* removed: var _$export_7 = require("./export"); */;
@@ -10402,6 +10402,14 @@ function editMenu() {
     });
 }
 /**
+ * Mark this as an undo point.
+ */
+function undoPoint() {
+    if (_$project_13.project)
+        _$project_13.project.store.undoPoint();
+}
+_$project_13.undoPoint = undoPoint;
+/**
  * Perform an undo.
  */
 function performUndo() {
@@ -11139,7 +11147,8 @@ function __load_12() {
                 getProjects: _$project_13.getProjects,
                 loadProject: _$project_13.loadProject,
                 unloadProject: _$project_13.unloadProject,
-                deleteProjectById: _$project_13.deleteProjectById
+                deleteProjectById: _$project_13.deleteProjectById,
+                undoPoint: _$project_13.undoPoint
             };
             return [2 /*return*/];
         });
@@ -11532,10 +11541,10 @@ var ennuizelPlugin = {
 function about(d, plugin) {
     _$ui_20.dialog(function (d, show) {
         return ____awaiter_11(this, void 0, void 0, function () {
-            var header, headerA, about, li, ok;
+            var header, about, li, ok;
             return ____generator_11(this, function (_a) {
                 header = _$ui_20.mk("h2", d.box);
-                headerA = _$ui_20.mk("a", header, {
+                _$ui_20.mk("a", header, {
                     href: plugin.infoURL,
                     innerText: plugin.name
                 });

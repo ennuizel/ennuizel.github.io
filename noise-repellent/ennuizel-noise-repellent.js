@@ -65,8 +65,6 @@ var plugin = {
 };
 // Register the plugin
 Ennuizel.registerPlugin(plugin);
-// Our array of noise repellent instances
-var nrInstances = [];
 /**
  * Noise Repellent options.
  */
@@ -203,6 +201,7 @@ function uiNoiseRepellent(d) {
                                                             else
                                                                 opts[key] = +el.value;
                                                         }
+                                                        Ennuizel.undoPoint();
                                                         return [4 /*yield*/, noiseRepellent(opts, Ennuizel.select.getSelection(), d)];
                                                     case 1:
                                                         _a.sent();

@@ -9655,7 +9655,7 @@ var ____generator_13 = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(_$project_13, "__esModule", { value: true });
-_$project_13.play = _$project_13.unloadProject = _$project_13.loadProject = _$project_13.newProject = _$project_13.getProjects = _$project_13.load = _$project_13.project = _$project_13.Project = void 0;
+_$project_13.play = _$project_13.deleteProjectById = _$project_13.unloadProject = _$project_13.loadProject = _$project_13.newProject = _$project_13.getProjects = _$project_13.load = _$project_13.project = _$project_13.Project = void 0;
 /* removed: var _$audio_5 = require("./audio"); */;
 /* removed: var _$audioData_4 = require("./audio-data"); */;
 /* removed: var _$export_7 = require("./export"); */;
@@ -9769,41 +9769,26 @@ var Project = /** @class */ (function () {
      */
     Project.prototype.del = function () {
         return ____awaiter_13(this, void 0, void 0, function () {
-            var projects, idx;
             return ____generator_13(this, function (_a) {
                 switch (_a.label) {
                     case 0: 
-                    // First drop the stores
+                    // First drop the undo store
                     return [4 /*yield*/, this.store.dropUndo()];
                     case 1:
-                        // First drop the stores
+                        // First drop the undo store
                         _a.sent();
-                        return [4 /*yield*/, this.store.dropInstance({ name: "ez-project-" + this.id })];
+                        // Then delete it
+                        return [4 /*yield*/, deleteProjectById(this.id)];
                     case 2:
+                        // Then delete it
                         _a.sent();
-                        // Then drop the ref in the main store
-                        return [4 /*yield*/, _$store_16.store.removeItem("ez-project-" + _$project_13.project.id)];
-                    case 3:
-                        // Then drop the ref in the main store
-                        _a.sent();
-                        return [4 /*yield*/, _$store_16.store.getItem("ez-projects")];
-                    case 4:
-                        projects = (_a.sent()) || [];
-                        idx = projects.indexOf(this.id);
-                        if (!(idx >= 0)) return [3 /*break*/, 6];
-                        projects.splice(idx, 1);
-                        return [4 /*yield*/, _$store_16.store.setItem("ez-projects", projects)];
-                    case 5:
-                        _a.sent();
-                        _a.label = 6;
-                    case 6:
-                        if (!(_$project_13.project === this)) return [3 /*break*/, 8];
+                        if (!(_$project_13.project === this)) return [3 /*break*/, 4];
                         _$project_13.project = null;
                         return [4 /*yield*/, unloadProject()];
-                    case 7:
+                    case 3:
                         _a.sent();
-                        _a.label = 8;
-                    case 8: return [2 /*return*/];
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -10321,6 +10306,43 @@ function reloadProject() {
         });
     });
 }
+/**
+ * Delete a project by ID. You can delete the *current* project with
+ * its del() method.
+ * @param id  ID of the project to delete.
+ */
+function deleteProjectById(id) {
+    return ____awaiter_13(this, void 0, void 0, function () {
+        var projects, idx;
+        return ____generator_13(this, function (_a) {
+            switch (_a.label) {
+                case 0: 
+                // First drop the store
+                return [4 /*yield*/, _$store_16.store.dropInstance({ name: "ez-project-" + id })];
+                case 1:
+                    // First drop the store
+                    _a.sent();
+                    // Then drop the ref in the main store
+                    return [4 /*yield*/, _$store_16.store.removeItem("ez-project-" + _$project_13.project.id)];
+                case 2:
+                    // Then drop the ref in the main store
+                    _a.sent();
+                    return [4 /*yield*/, _$store_16.store.getItem("ez-projects")];
+                case 3:
+                    projects = (_a.sent()) || [];
+                    idx = projects.indexOf(id);
+                    if (!(idx >= 0)) return [3 /*break*/, 5];
+                    projects.splice(idx, 1);
+                    return [4 /*yield*/, _$store_16.store.setItem("ez-projects", projects)];
+                case 4:
+                    _a.sent();
+                    _a.label = 5;
+                case 5: return [2 /*return*/];
+            }
+        });
+    });
+}
+_$project_13.deleteProjectById = deleteProjectById;
 /**
  * Show the edit menu.
  */
@@ -11116,7 +11138,8 @@ function __load_12() {
                 newProject: _$project_13.newProject,
                 getProjects: _$project_13.getProjects,
                 loadProject: _$project_13.loadProject,
-                unloadProject: _$project_13.unloadProject
+                unloadProject: _$project_13.unloadProject,
+                deleteProjectById: _$project_13.deleteProjectById
             };
             return [2 /*return*/];
         });
@@ -11354,7 +11377,7 @@ var ennuizelPlugin = {
                             ("" + ev.reason + "\n" + ev.reason.stack) :
                             ("" + ev.reason));
                     });
-                    return [4 /*yield*/, _$ui_20.loading(function () {
+                    return [4 /*yield*/, _$ui_20.loading(function (d) {
                             return ____awaiter_11(this, void 0, void 0, function () {
                                 var persistent, wizard, response, config, _i, _a, url, plugin, ex_1;
                                 return ____generator_11(this, function (_b) {
@@ -11456,7 +11479,13 @@ var ennuizelPlugin = {
                                             ex_1 = _b.sent();
                                             console.error(ex_1);
                                             return [3 /*break*/, 28];
-                                        case 28: return [2 /*return*/];
+                                        case 28:
+                                            if (!wizard) return [3 /*break*/, 30];
+                                            return [4 /*yield*/, wizard(d)];
+                                        case 29:
+                                            _b.sent();
+                                            _b.label = 30;
+                                        case 30: return [2 /*return*/];
                                     }
                                 });
                             });

@@ -317,7 +317,7 @@ function noiseRepellent(opts, sel, d) {
                             filterStream = new Ennuizel.ReadableStream({
                                 pull: function (controller) {
                                     return __awaiter(this, void 0, void 0, function () {
-                                        var inp, fltp, _i, fltp_1, frame_1, i, outp, _a, outp_1, part;
+                                        var inp, fltp, _i, fltp_1, frame_1, i, data, j, outp, _a, outp_1, part;
                                         return __generator(this, function (_b) {
                                             switch (_b.label) {
                                                 case 0:
@@ -333,8 +333,12 @@ function noiseRepellent(opts, sel, d) {
                                                     // Noise reduction
                                                     for (_i = 0, fltp_1 = fltp; _i < fltp_1.length; _i++) {
                                                         frame_1 = fltp_1[_i];
-                                                        for (i = 0; i < track.channels; i++)
-                                                            frame_1.data[i] = nrs[i].run(frame_1.data[i]).slice(0);
+                                                        for (i = 0; i < track.channels; i++) {
+                                                            data = frame_1.data[i];
+                                                            for (j = 0; j < data.length; j += track.sampleRate) {
+                                                                data.set(nrs[i].run(data.subarray(j, j + track.sampleRate)), j);
+                                                            }
+                                                        }
                                                     }
                                                     return [4 /*yield*/, libav.ff_filter_multi(src2, sink2, frame, fltp, inp.done)];
                                                 case 3:

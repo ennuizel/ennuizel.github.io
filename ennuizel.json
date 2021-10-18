@@ -1,3 +1,6 @@
 {
-    "plugins": ["ennuizel.github.io/noise-repellent/ennuizel-noise-repellent.js"]
+    "plugins": [
+        "ennuizel.github.io/noise-repellent/ennuizel-noise-repellent.js",
+        "ennuizel.github.io/better-normalization/ennuizel-better-normalization.js"
+    ]
 }

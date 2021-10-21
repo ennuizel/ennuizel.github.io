@@ -96,7 +96,7 @@ function uiNormalize(d) {
                                 switch (_a.label) {
                                     case 0:
                                         Ennuizel.undoPoint();
-                                        return [4 /*yield*/, betterNormalize(Object.create(null), Ennuizel.select.getSelection(), d)];
+                                        return [4 /*yield*/, Ennuizel.filters.selectionFilter(function (x) { return betterNormalize(x); }, false, Ennuizel.select.getSelection(), d)];
                                     case 1:
                                         _a.sent();
                                         return [2 /*return*/];
@@ -116,136 +116,16 @@ function uiNormalize(d) {
 }
 /**
  * Filter implementation.
- * @param opts  dynaudnorm options.
- * @param sel  Selection to filter.
- * @param d  Dialog to show progress.
+ * @param stream  Input stream to filter.
+ * @param opts  Other dynaudnorm options.
  */
-function betterNormalize(opts, sel, d) {
+function betterNormalize(stream, opts) {
+    if (opts === void 0) { opts = {}; }
     return __awaiter(this, void 0, void 0, function () {
-        // Function to show the current status
-        function showStatus() {
-            if (d) {
-                var statusStr = status.map(function (x) {
-                    return x.name + ": " + Math.round(x.filtered / x.duration * 100) + "%";
-                })
-                    .join("<br/>");
-                d.box.innerHTML = "Filtering...<br/>" + statusStr;
-            }
-        }
-        // The filtering function for each track
-        function filterThread(track, idx) {
-            return __awaiter(this, void 0, void 0, function () {
-                var libav, channelLayout, frame, _a, src, sink, preInStream, remaining, rd, inStream, filterStream;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0: return [4 /*yield*/, LibAV.LibAV()];
-                        case 1:
-                            libav = _b.sent();
-                            channelLayout = (track.channels === 1) ? 4 : ((1 << track.channels) - 1);
-                            return [4 /*yield*/, libav.av_frame_alloc()];
-                        case 2:
-                            frame = _b.sent();
-                            return [4 /*yield*/, libav.ff_init_filter_graph(fs, {
-                                    sample_rate: track.sampleRate,
-                                    sample_fmt: track.format,
-                                    channel_layout: channelLayout
-                                }, {
-                                    sample_rate: track.sampleRate,
-                                    sample_fmt: track.format,
-                                    channel_layout: channelLayout
-                                })];
-                        case 3:
-                            _a = _b.sent(), src = _a[1], sink = _a[2];
-                            preInStream = track.stream(streamOpts).getReader();
-                            remaining = 10 * track.sampleRate * track.channels;
-                            _b.label = 4;
-                        case 4:
-                            if (!remaining) return [3 /*break*/, 9];
-                            return [4 /*yield*/, preInStream.read()];
-                        case 5:
-                            rd = _b.sent();
-                            if (!rd.done) return [3 /*break*/, 6];
-                            // Try again from the start
-                            preInStream = track.stream(streamOpts).getReader();
-                            return [3 /*break*/, 8];
-                        case 6:
-                            rd.value.node = null;
-                            if (rd.value.data.length > remaining)
-                                rd.value.data = rd.value.data.subarray(0, remaining);
-                            return [4 /*yield*/, libav.ff_filter_multi(src, sink, frame, [rd.value], false)];
-                        case 7:
-                            _b.sent();
-                            remaining -= rd.value.data.length;
-                            _b.label = 8;
-                        case 8: return [3 /*break*/, 4];
-                        case 9:
-                            preInStream.cancel();
-                            inStream = track.stream(Object.assign({ keepOpen: true }, streamOpts)).getReader();
-                            filterStream = new Ennuizel.ReadableStream({
-                                pull: function (controller) {
-                                    return __awaiter(this, void 0, void 0, function () {
-                                        var inp, outp, _i, outp_1, part;
-                                        return __generator(this, function (_a) {
-                                            switch (_a.label) {
-                                                case 0:
-                                                    if (!true) return [3 /*break*/, 3];
-                                                    return [4 /*yield*/, inStream.read()];
-                                                case 1:
-                                                    inp = _a.sent();
-                                                    if (inp.value)
-                                                        inp.value.node = null;
-                                                    return [4 /*yield*/, libav.ff_filter_multi(src, sink, frame, inp.done ? [] : [inp.value], inp.done)];
-                                                case 2:
-                                                    outp = _a.sent();
-                                                    // Update the status
-                                                    if (inp.done)
-                                                        status[idx].filtered = status[idx].duration;
-                                                    else
-                                                        status[idx].filtered += inp.value.data.length;
-                                                    showStatus();
-                                                    // Write it out
-                                                    for (_i = 0, outp_1 = outp; _i < outp_1.length; _i++) {
-                                                        part = outp_1[_i];
-                                                        controller.enqueue(part.data);
-                                                    }
-                                                    // Maybe end it
-                                                    if (inp.done)
-                                                        controller.close();
-                                                    if (outp.length || inp.done)
-                                                        return [3 /*break*/, 3];
-                                                    return [3 /*break*/, 0];
-                                                case 3: return [2 /*return*/];
-                                            }
-                                        });
-                                    });
-                                }
-                            });
-                            // Overwrite the track
-                            return [4 /*yield*/, track.overwrite(filterStream, Object.assign({ closeTwice: true }, streamOpts))];
-                        case 10:
-                            // Overwrite the track
-                            _b.sent();
-                            // And get rid of the libav instance
-                            libav.terminate();
-                            return [2 /*return*/];
-                    }
-                });
-            });
-        }
-        var tracks, streamOpts, fs, parts, key, status, threads, running, toRun, _a, sel_1, idx, fin;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var fs, parts, key, first, remaining, recycle, inputStream, filterStream;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    tracks = sel.tracks.filter(function (x) { return x.type() === Ennuizel.TrackType.Audio; });
-                    tracks = tracks.filter(function (x) { return x.duration() !== 0; });
-                    if (tracks.length === 0)
-                        return [2 /*return*/];
-                    if (d)
-                        d.box.innerHTML = "Filtering...";
-                    streamOpts = {
-                        start: sel.range ? sel.start : void 0,
-                        end: sel.range ? sel.end : void 0
-                    };
                     fs = "dynaudnorm";
                     if (Object.keys(opts).length) {
                         fs += "=";
@@ -255,34 +135,78 @@ function betterNormalize(opts, sel, d) {
                         fs += parts.join(":");
                     }
                     fs += ",atrim=start=10";
-                    status = tracks.map(function (x) { return ({
-                        name: x.name,
-                        filtered: 0,
-                        duration: x.sampleCount()
-                    }); });
-                    threads = navigator.hardwareConcurrency ? navigator.hardwareConcurrency : 2;
-                    running = [];
-                    toRun = tracks.map(function (x, idx) { return [x, idx]; });
-                    _b.label = 1;
+                    return [4 /*yield*/, stream.read()];
                 case 1:
-                    if (!toRun.length) return [3 /*break*/, 3];
-                    // Get the right number of threads running
-                    while (running.length < threads && toRun.length) {
-                        _a = toRun.shift(), sel_1 = _a[0], idx = _a[1];
-                        running.push(filterThread(sel_1, idx));
+                    first = _a.sent();
+                    if (!first) {
+                        // Oh well!
+                        return [2 /*return*/, new Ennuizel.ReadableStream({
+                                start: function (controller) {
+                                    controller.close();
+                                }
+                            })];
                     }
-                    return [4 /*yield*/, Promise.race(running.map(function (x, idx) { return x.then(function () { return idx; }); }))];
+                    stream.push(first);
+                    remaining = 10 * first.sample_rate * first.channels;
+                    recycle = [];
+                    inputStream = new Ennuizel.ReadableStream({
+                        pull: function (controller) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var chunk, nchunk, chunk;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!(remaining > 0)) return [3 /*break*/, 4];
+                                            chunk = null;
+                                            _a.label = 1;
+                                        case 1:
+                                            if (!!chunk) return [3 /*break*/, 3];
+                                            return [4 /*yield*/, stream.read()];
+                                        case 2:
+                                            chunk = _a.sent();
+                                            if (!chunk) {
+                                                // Early recycling!
+                                                while (recycle.length)
+                                                    stream.push(recycle.pop());
+                                            }
+                                            return [3 /*break*/, 1];
+                                        case 3:
+                                            recycle.push(chunk);
+                                            if (chunk.data.length > remaining) {
+                                                nchunk = Object.assign({}, chunk);
+                                                nchunk.data = nchunk.data.subarray(0, remaining);
+                                                controller.enqueue(nchunk);
+                                                remaining = 0;
+                                            }
+                                            else {
+                                                // Send this whole chunk
+                                                controller.enqueue(chunk);
+                                                remaining -= chunk.data.length;
+                                            }
+                                            // Perhaps done with initial data?
+                                            if (remaining === 0) {
+                                                while (recycle.length)
+                                                    stream.push(recycle.pop());
+                                            }
+                                            return [3 /*break*/, 6];
+                                        case 4: return [4 /*yield*/, stream.read()];
+                                        case 5:
+                                            chunk = _a.sent();
+                                            if (chunk)
+                                                controller.enqueue(chunk);
+                                            else
+                                                controller.close();
+                                            _a.label = 6;
+                                        case 6: return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        }
+                    });
+                    return [4 /*yield*/, Ennuizel.filters.ffmpegStream(new Ennuizel.EZStream(inputStream), fs)];
                 case 2:
-                    fin = _b.sent();
-                    running.splice(fin, 1);
-                    return [3 /*break*/, 1];
-                case 3: 
-                // Wait for them all to finish
-                return [4 /*yield*/, Promise.all(running)];
-                case 4:
-                    // Wait for them all to finish
-                    _b.sent();
-                    return [2 /*return*/];
+                    filterStream = _a.sent();
+                    return [2 /*return*/, filterStream];
             }
         });
     });

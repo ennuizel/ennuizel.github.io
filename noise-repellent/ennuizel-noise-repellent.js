@@ -202,7 +202,7 @@ function uiNoiseRepellent(d) {
                                                                 opts[key] = +el.value;
                                                         }
                                                         Ennuizel.undoPoint();
-                                                        return [4 /*yield*/, noiseRepellent(opts, Ennuizel.select.getSelection(), d)];
+                                                        return [4 /*yield*/, Ennuizel.filters.selectionFilter(function (x) { return noiseRepellent(x, opts); }, false, Ennuizel.select.getSelection(), d)];
                                                     case 1:
                                                         _a.sent();
                                                         return [2 /*return*/];
@@ -230,194 +230,95 @@ function uiNoiseRepellent(d) {
 }
 /**
  * Noise repellent filter implementation.
+ * @param stream  Stream to filter.
  * @param opts  Noise repellent options.
- * @param sel  Selection to filter.
- * @param d  Dialog to show progress.
  */
-function noiseRepellent(opts, sel, d) {
+function noiseRepellent(stream, opts) {
     return __awaiter(this, void 0, void 0, function () {
-        // Function to show the current status
-        function showStatus() {
-            if (d) {
-                var statusStr = status.map(function (x) {
-                    return x.name + ": " + Math.round(x.filtered / x.duration * 100) + "%";
-                })
-                    .join("<br/>");
-                d.box.innerHTML = "Filtering...<br/>" + statusStr;
-            }
-        }
-        // The filtering function for each track
-        function filterThread(track, idx) {
-            return __awaiter(this, void 0, void 0, function () {
-                var nrs, i, _a, _b, _i, nrs_1, nr, _c, NoiseRepellentOptions_2, opt, latency, libav, channelLayout, frame, _d, src1, sink1, _e, src2, sink2, inStream, filterStream;
-                return __generator(this, function (_f) {
-                    switch (_f.label) {
-                        case 0:
-                            nrs = [];
-                            i = 0;
-                            _f.label = 1;
-                        case 1:
-                            if (!(i < track.channels)) return [3 /*break*/, 4];
-                            _b = (_a = nrs).push;
-                            return [4 /*yield*/, NoiseRepellent.NoiseRepellent(track.sampleRate)];
-                        case 2:
-                            _b.apply(_a, [_f.sent()]);
-                            _f.label = 3;
-                        case 3:
-                            i++;
-                            return [3 /*break*/, 1];
-                        case 4:
-                            // Initialize them
-                            for (_i = 0, nrs_1 = nrs; _i < nrs_1.length; _i++) {
-                                nr = nrs_1[_i];
-                                for (_c = 0, NoiseRepellentOptions_2 = NoiseRepellentOptions; _c < NoiseRepellentOptions_2.length; _c++) {
-                                    opt = NoiseRepellentOptions_2[_c];
-                                    if (opt.id in opts)
-                                        nr.set(NoiseRepellent[opt.id], opts[opt.id]);
-                                    else
-                                        nr.set(NoiseRepellent[opt.id], opt.value);
-                                }
-                                nr.set(NoiseRepellent.N_ADAPTIVE, 1);
-                                nr.set(NoiseRepellent.ENABLE, 1);
-                            }
-                            // Figure out the latency
-                            nrs[0].run(new Float32Array(track.sampleRate));
-                            latency = nrs[0].latency;
-                            return [4 /*yield*/, LibAV.LibAV()];
-                        case 5:
-                            libav = _f.sent();
-                            channelLayout = (track.channels === 1) ? 4 : ((1 << track.channels) - 1);
-                            return [4 /*yield*/, libav.av_frame_alloc()];
-                        case 6:
-                            frame = _f.sent();
-                            return [4 /*yield*/, libav.ff_init_filter_graph("apad=pad_len=" + latency, {
-                                    sample_rate: track.sampleRate,
-                                    sample_fmt: track.format,
-                                    channel_layout: channelLayout
-                                }, {
-                                    sample_rate: track.sampleRate,
-                                    sample_fmt: Ennuizel.LibAVSampleFormat.FLTP,
-                                    channel_layout: channelLayout
-                                })];
-                        case 7:
-                            _d = _f.sent(), src1 = _d[1], sink1 = _d[2];
-                            return [4 /*yield*/, libav.ff_init_filter_graph("atrim=start_pts=" + latency, {
-                                    sample_rate: track.sampleRate,
-                                    sample_fmt: Ennuizel.LibAVSampleFormat.FLTP,
-                                    channel_layout: channelLayout,
-                                }, {
-                                    sample_rate: track.sampleRate,
-                                    sample_fmt: track.format,
-                                    channel_layout: channelLayout
-                                })];
-                        case 8:
-                            _e = _f.sent(), src2 = _e[1], sink2 = _e[2];
-                            inStream = track.stream(Object.assign({ keepOpen: true }, streamOpts)).getReader();
-                            filterStream = new Ennuizel.ReadableStream({
-                                pull: function (controller) {
-                                    return __awaiter(this, void 0, void 0, function () {
-                                        var inp, fltp, _i, fltp_1, frame_1, i, data, j, outp, _a, outp_1, part;
-                                        return __generator(this, function (_b) {
-                                            switch (_b.label) {
-                                                case 0:
-                                                    if (!true) return [3 /*break*/, 4];
-                                                    return [4 /*yield*/, inStream.read()];
-                                                case 1:
-                                                    inp = _b.sent();
-                                                    if (inp.value)
-                                                        inp.value.node = null;
-                                                    return [4 /*yield*/, libav.ff_filter_multi(src1, sink1, frame, inp.done ? [] : [inp.value], inp.done)];
-                                                case 2:
-                                                    fltp = _b.sent();
-                                                    // Noise reduction
-                                                    for (_i = 0, fltp_1 = fltp; _i < fltp_1.length; _i++) {
-                                                        frame_1 = fltp_1[_i];
-                                                        for (i = 0; i < track.channels; i++) {
-                                                            data = frame_1.data[i];
-                                                            for (j = 0; j < data.length; j += track.sampleRate) {
-                                                                data.set(nrs[i].run(data.subarray(j, j + track.sampleRate)), j);
-                                                            }
-                                                        }
-                                                    }
-                                                    return [4 /*yield*/, libav.ff_filter_multi(src2, sink2, frame, fltp, inp.done)];
-                                                case 3:
-                                                    outp = _b.sent();
-                                                    // Update the status
-                                                    if (inp.done)
-                                                        status[idx].filtered = status[idx].duration;
-                                                    else
-                                                        status[idx].filtered += inp.value.data.length;
-                                                    showStatus();
-                                                    // Write it out
-                                                    for (_a = 0, outp_1 = outp; _a < outp_1.length; _a++) {
-                                                        part = outp_1[_a];
-                                                        controller.enqueue(part.data);
-                                                    }
-                                                    // Maybe end it
-                                                    if (inp.done)
-                                                        controller.close();
-                                                    if (outp.length || inp.done)
-                                                        return [3 /*break*/, 4];
-                                                    return [3 /*break*/, 0];
-                                                case 4: return [2 /*return*/];
-                                            }
-                                        });
-                                    });
-                                }
-                            });
-                            // Overwrite the track
-                            return [4 /*yield*/, track.overwrite(filterStream, Object.assign({ closeTwice: true }, streamOpts))];
-                        case 9:
-                            // Overwrite the track
-                            _f.sent();
-                            // And get rid of the libav instance
-                            libav.terminate();
-                            return [2 /*return*/];
-                    }
-                });
-            });
-        }
-        var tracks, streamOpts, status, threads, running, toRun, _a, sel_1, idx, fin;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    tracks = sel.tracks.filter(function (x) { return x.type() === Ennuizel.TrackType.Audio; });
-                    if (tracks.length === 0)
-                        return [2 /*return*/];
-                    if (d)
-                        d.box.innerHTML = "Filtering...";
-                    streamOpts = {
-                        start: sel.range ? sel.start : void 0,
-                        end: sel.range ? sel.end : void 0
-                    };
-                    status = tracks.map(function (x) { return ({
-                        name: x.name,
-                        filtered: 0,
-                        duration: x.sampleCount()
-                    }); });
-                    threads = navigator.hardwareConcurrency ? navigator.hardwareConcurrency : 2;
-                    running = [];
-                    toRun = tracks.map(function (x, idx) { return [x, idx]; });
-                    _b.label = 1;
+        var first, nrs, i, _a, _b, _i, nrs_1, nr, _c, NoiseRepellentOptions_2, opt, latency, toFltStr, toFlt, filterStream, fromFlt;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
+                case 0: return [4 /*yield*/, stream.read()];
                 case 1:
-                    if (!toRun.length) return [3 /*break*/, 3];
-                    // Get the right number of threads running
-                    while (running.length < threads && toRun.length) {
-                        _a = toRun.shift(), sel_1 = _a[0], idx = _a[1];
-                        running.push(filterThread(sel_1, idx));
+                    first = _d.sent();
+                    if (!first) {
+                        return [2 /*return*/, new Ennuizel.ReadableStream({
+                                start: function (controller) {
+                                    controller.close();
+                                }
+                            })];
                     }
-                    return [4 /*yield*/, Promise.race(running.map(function (x, idx) { return x.then(function () { return idx; }); }))];
+                    stream.push(first);
+                    nrs = [];
+                    i = 0;
+                    _d.label = 2;
                 case 2:
-                    fin = _b.sent();
-                    running.splice(fin, 1);
-                    return [3 /*break*/, 1];
-                case 3: 
-                // Wait for them all to finish
-                return [4 /*yield*/, Promise.all(running)];
+                    if (!(i < first.channels)) return [3 /*break*/, 5];
+                    _b = (_a = nrs).push;
+                    return [4 /*yield*/, NoiseRepellent.NoiseRepellent(first.sample_rate)];
+                case 3:
+                    _b.apply(_a, [_d.sent()]);
+                    _d.label = 4;
                 case 4:
-                    // Wait for them all to finish
-                    _b.sent();
-                    return [2 /*return*/];
+                    i++;
+                    return [3 /*break*/, 2];
+                case 5:
+                    // Initialize them
+                    for (_i = 0, nrs_1 = nrs; _i < nrs_1.length; _i++) {
+                        nr = nrs_1[_i];
+                        for (_c = 0, NoiseRepellentOptions_2 = NoiseRepellentOptions; _c < NoiseRepellentOptions_2.length; _c++) {
+                            opt = NoiseRepellentOptions_2[_c];
+                            if (opt.id in opts)
+                                nr.set(NoiseRepellent[opt.id], opts[opt.id]);
+                            else
+                                nr.set(NoiseRepellent[opt.id], opt.value);
+                        }
+                        nr.set(NoiseRepellent.N_ADAPTIVE, 1);
+                        nr.set(NoiseRepellent.ENABLE, 1);
+                    }
+                    // Figure out the latency
+                    nrs[0].run(new Float32Array(first.sample_rate));
+                    latency = nrs[0].latency;
+                    return [4 /*yield*/, Ennuizel.filters.resample(stream, first.sample_rate, Ennuizel.LibAVSampleFormat.FLTP, first.channels, "apad=pad_len=" + latency)];
+                case 6:
+                    toFltStr = _d.sent();
+                    toFlt = toFltStr.getReader();
+                    filterStream = new Ennuizel.ReadableStream({
+                        pull: function (controller) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var inp, frame, i, data, j;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!true) return [3 /*break*/, 2];
+                                            return [4 /*yield*/, toFlt.read()];
+                                        case 1:
+                                            inp = _a.sent();
+                                            if (inp.done) {
+                                                controller.close();
+                                                return [3 /*break*/, 2];
+                                            }
+                                            frame = inp.value;
+                                            // Noise reduction
+                                            for (i = 0; i < first.channels; i++) {
+                                                data = frame.data[i];
+                                                for (j = 0; j < data.length; j += first.sample_rate) {
+                                                    data.set(nrs[i].run(data.subarray(j, j + first.sample_rate)), j);
+                                                }
+                                            }
+                                            // Write it out
+                                            controller.enqueue(frame);
+                                            return [3 /*break*/, 2];
+                                        case 2: return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        }
+                    });
+                    return [4 /*yield*/, Ennuizel.filters.resample(new Ennuizel.EZStream(filterStream), first.sample_rate, first.format, first.channels, "atrim=start_pts=" + latency)];
+                case 7:
+                    fromFlt = _d.sent();
+                    return [2 /*return*/, fromFlt];
             }
         });
     });

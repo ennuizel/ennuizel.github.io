@@ -5800,7 +5800,7 @@ var ____generator_4 = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(_$audioData_4, "__esModule", { value: true });
-_$audioData_4.AudioData = _$audioData_4.AudioTrack = _$audioData_4.fromPlanar = _$audioData_4.toPlanar = _$audioData_4.LibAVSampleFormat = void 0;
+_$audioData_4.AudioData = _$audioData_4.AudioTrack = _$audioData_4.resample = _$audioData_4.sanitizeLibAVFrame = _$audioData_4.toChannelLayout = _$audioData_4.fromPlanar = _$audioData_4.toPlanar = _$audioData_4.LibAVSampleFormat = void 0;
 /* removed: var _$avthreads_6 = require("./avthreads"); */;
 /* removed: var _$id36_10 = require("./id36"); */;
 /* removed: var _$select_14 = require("./select"); */;
@@ -5831,30 +5831,25 @@ var log2 = Math.log(2);
  * @param format  The input format, which may or may not be planar.
  */
 function toPlanar(format) {
-    return ____awaiter_4(this, void 0, void 0, function () {
-        return ____generator_4(this, function (_a) {
-            switch (format) {
-                case LibAVSampleFormat.U8:
-                case LibAVSampleFormat.U8P:
-                    return [2 /*return*/, LibAVSampleFormat.U8P];
-                case LibAVSampleFormat.S16:
-                case LibAVSampleFormat.S16P:
-                    return [2 /*return*/, LibAVSampleFormat.S16P];
-                case LibAVSampleFormat.S32:
-                case LibAVSampleFormat.S32P:
-                    return [2 /*return*/, LibAVSampleFormat.S32P];
-                case LibAVSampleFormat.FLT:
-                case LibAVSampleFormat.FLTP:
-                    return [2 /*return*/, LibAVSampleFormat.FLTP];
-                case LibAVSampleFormat.DBL:
-                case LibAVSampleFormat.DBLP:
-                    return [2 /*return*/, LibAVSampleFormat.DBLP];
-                default:
-                    throw new Error("Unsupported format (to planar) " + format);
-            }
-            return [2 /*return*/];
-        });
-    });
+    switch (format) {
+        case LibAVSampleFormat.U8:
+        case LibAVSampleFormat.U8P:
+            return LibAVSampleFormat.U8P;
+        case LibAVSampleFormat.S16:
+        case LibAVSampleFormat.S16P:
+            return LibAVSampleFormat.S16P;
+        case LibAVSampleFormat.S32:
+        case LibAVSampleFormat.S32P:
+            return LibAVSampleFormat.S32P;
+        case LibAVSampleFormat.FLT:
+        case LibAVSampleFormat.FLTP:
+            return LibAVSampleFormat.FLTP;
+        case LibAVSampleFormat.DBL:
+        case LibAVSampleFormat.DBLP:
+            return LibAVSampleFormat.DBLP;
+        default:
+            throw new Error("Unsupported format (to planar) " + format);
+    }
 }
 _$audioData_4.toPlanar = toPlanar;
 /**
@@ -5862,32 +5857,175 @@ _$audioData_4.toPlanar = toPlanar;
  * @param format  The input format, which may or may not be planar.
  */
 function fromPlanar(format) {
-    return ____awaiter_4(this, void 0, void 0, function () {
-        return ____generator_4(this, function (_a) {
-            switch (format) {
-                case LibAVSampleFormat.U8:
-                case LibAVSampleFormat.U8P:
-                    return [2 /*return*/, LibAVSampleFormat.U8];
-                case LibAVSampleFormat.S16:
-                case LibAVSampleFormat.S16P:
-                    return [2 /*return*/, LibAVSampleFormat.S16];
-                case LibAVSampleFormat.S32:
-                case LibAVSampleFormat.S32P:
-                    return [2 /*return*/, LibAVSampleFormat.S32];
-                case LibAVSampleFormat.FLT:
-                case LibAVSampleFormat.FLTP:
-                    return [2 /*return*/, LibAVSampleFormat.FLT];
-                case LibAVSampleFormat.DBL:
-                case LibAVSampleFormat.DBLP:
-                    return [2 /*return*/, LibAVSampleFormat.DBL];
-                default:
-                    throw new Error("Unsupported format (to planar) " + format);
+    switch (format) {
+        case LibAVSampleFormat.U8:
+        case LibAVSampleFormat.U8P:
+            return LibAVSampleFormat.U8;
+        case LibAVSampleFormat.S16:
+        case LibAVSampleFormat.S16P:
+            return LibAVSampleFormat.S16;
+        case LibAVSampleFormat.S32:
+        case LibAVSampleFormat.S32P:
+            return LibAVSampleFormat.S32;
+        case LibAVSampleFormat.FLT:
+        case LibAVSampleFormat.FLTP:
+            return LibAVSampleFormat.FLT;
+        case LibAVSampleFormat.DBL:
+        case LibAVSampleFormat.DBLP:
+            return LibAVSampleFormat.DBL;
+        default:
+            throw new Error("Unsupported format (to planar) " + format);
+    }
+}
+_$audioData_4.fromPlanar = fromPlanar;
+/**
+ * Convert a number of channels to a channel layout.
+ */
+function toChannelLayout(channels) {
+    if (channels === 1)
+        return 4;
+    else
+        return (1 << channels) - 1;
+}
+_$audioData_4.toChannelLayout = toChannelLayout;
+/**
+ * Sanitize this libav.js frame, by setting any missing fields.
+ */
+function sanitizeLibAVFrame(frame) {
+    if (typeof frame.channels !== "number") {
+        if (typeof frame.channel_layout !== "number") {
+            // BAD! One should be set!
+            frame.channels = 1;
+        }
+        else {
+            var l = frame.channel_layout;
+            var c = 0;
+            while (l) {
+                if (l & 1)
+                    c++;
+                l >>>= 1;
             }
-            return [2 /*return*/];
+            frame.channels = c;
+        }
+    }
+    if (typeof frame.channel_layout !== "number")
+        frame.channel_layout = toChannelLayout(frame.channels);
+    if (typeof frame.nb_samples !== "number")
+        frame.nb_samples = ~~(frame.data.length / frame.channels);
+}
+_$audioData_4.sanitizeLibAVFrame = sanitizeLibAVFrame;
+/**
+ * Convert this LibAVFrame stream to the desired sample rate, format, and
+ * channel count.
+ * @param stream  Input LibAVFrame stream.
+ * @param sampleRate  Desired sample rate.
+ * @param format  Desired sample format.
+ * @param channels  Desired channel count.
+ * @param fs  Optional filter string to perform while resampling.
+ */
+function resample(stream, sampleRate, format, channels, fs) {
+    if (fs === void 0) { fs = "anull"; }
+    return ____awaiter_4(this, void 0, void 0, function () {
+        var first, libav, frame, _a, buffersrc_ctx, buffersink_ctx;
+        return ____generator_4(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, stream.read()];
+                case 1:
+                    first = _b.sent();
+                    if (!first) {
+                        // No need to filter nothing!
+                        return [2 /*return*/, new _$stream_17.WSPReadableStream({
+                                start: function (controller) {
+                                    controller.close();
+                                }
+                            })];
+                    }
+                    stream.push(first);
+                    // Do we need to filter?
+                    sanitizeLibAVFrame(first);
+                    if (first.sample_rate === sampleRate &&
+                        first.format === format &&
+                        first.channels === channels) {
+                        // Nope, already good!
+                        return [2 /*return*/, new _$stream_17.WSPReadableStream({
+                                pull: function (controller) {
+                                    return ____awaiter_4(this, void 0, void 0, function () {
+                                        var chunk;
+                                        return ____generator_4(this, function (_a) {
+                                            switch (_a.label) {
+                                                case 0: return [4 /*yield*/, stream.read()];
+                                                case 1:
+                                                    chunk = _a.sent();
+                                                    if (chunk)
+                                                        controller.enqueue(chunk);
+                                                    else
+                                                        controller.close();
+                                                    return [2 /*return*/];
+                                            }
+                                        });
+                                    });
+                                }
+                            })];
+                    }
+                    return [4 /*yield*/, LibAV.LibAV()];
+                case 2:
+                    libav = _b.sent();
+                    return [4 /*yield*/, libav.av_frame_alloc()];
+                case 3:
+                    frame = _b.sent();
+                    return [4 /*yield*/, libav.ff_init_filter_graph(fs, {
+                            sample_rate: first.sample_rate,
+                            sample_fmt: first.format,
+                            channel_layout: first.channel_layout
+                        }, {
+                            sample_rate: sampleRate,
+                            sample_fmt: format,
+                            channel_layout: toChannelLayout(channels)
+                        })];
+                case 4:
+                    _a = _b.sent(), buffersrc_ctx = _a[1], buffersink_ctx = _a[2];
+                    // And the stream
+                    return [2 /*return*/, new _$stream_17.WSPReadableStream({
+                            pull: function (controller) {
+                                return ____awaiter_4(this, void 0, void 0, function () {
+                                    var chunk, fframes, _i, fframes_1, frame_1;
+                                    return ____generator_4(this, function (_a) {
+                                        switch (_a.label) {
+                                            case 0:
+                                                if (!true) return [3 /*break*/, 3];
+                                                return [4 /*yield*/, stream.read()];
+                                            case 1:
+                                                chunk = _a.sent();
+                                                if (chunk)
+                                                    chunk.node = null;
+                                                return [4 /*yield*/, libav.ff_filter_multi(buffersrc_ctx, buffersink_ctx, frame, chunk ? [chunk] : [], !chunk)];
+                                            case 2:
+                                                fframes = _a.sent();
+                                                for (_i = 0, fframes_1 = fframes; _i < fframes_1.length; _i++) {
+                                                    frame_1 = fframes_1[_i];
+                                                    controller.enqueue(frame_1);
+                                                }
+                                                if (!chunk) {
+                                                    controller.close();
+                                                    libav.terminate();
+                                                }
+                                                if (!chunk || fframes.length)
+                                                    return [3 /*break*/, 3];
+                                                return [3 /*break*/, 0];
+                                            case 3: return [2 /*return*/];
+                                        }
+                                    });
+                                });
+                            },
+                            cancel: function () {
+                                libav.terminate();
+                            }
+                        })];
+            }
         });
     });
 }
-_$audioData_4.fromPlanar = fromPlanar;
+_$audioData_4.resample = resample;
 /**
  * An audio track. Audio data is stored in a tree of AudioData nodes. The
  * AudioTrack itself holds information such as the format (in libav format
@@ -6063,89 +6201,101 @@ var AudioTrack = /** @class */ (function () {
         });
     };
     /**
-     * Append data from a stream of raw data chunks. The type of the chunks
-     * must correspond to the format specified in the format field.
+     * Append data from a stream of raw data. The chunks must be LibAVFrames.
+     * If they don't have the correct format, sample rate, or channel count,
+     * they will be filtered, but this is only applied after the first has
+     * arrived, so the caller can change the track properties before then.
      * @param rstream  The stream to read from.
      */
     AudioTrack.prototype.append = function (rstream) {
         return ____awaiter_4(this, void 0, void 0, function () {
-            var stream, store, cur, raw, chunk, _a, _b, _c, _d, remaining;
-            return ____generator_4(this, function (_e) {
-                switch (_e.label) {
+            var store, first, stream, _a, cur, raw, chunk, _b, _c, _d, _e, remaining;
+            return ____generator_4(this, function (_f) {
+                switch (_f.label) {
                     case 0:
-                        stream = new _$stream_17.EZStream(rstream);
                         store = this.project.store;
-                        cur = null;
-                        _e.label = 1;
-                    case 1: return [4 /*yield*/, stream.read()];
+                        return [4 /*yield*/, rstream.read()];
+                    case 1:
+                        first = _f.sent();
+                        if (first)
+                            rstream.push(first);
+                        _a = _$stream_17.EZStream.bind;
+                        return [4 /*yield*/, resample(rstream, this.sampleRate, this.format, this.channels)];
                     case 2:
-                        if (!((chunk = _e.sent()) !== null)) return [3 /*break*/, 13];
-                        if (!!cur) return [3 /*break*/, 9];
-                        if (!!this.root) return [3 /*break*/, 4];
-                        _a = this;
-                        _b = AudioData.bind;
-                        return [4 /*yield*/, _$id36_10.genFresh(store, "audio-data-")];
-                    case 3:
-                        // As the root
-                        cur = _a.root = new (_b.apply(AudioData, [void 0, _e.sent(), this]))();
-                        return [3 /*break*/, 6];
+                        stream = new (_a.apply(_$stream_17.EZStream, [void 0, _f.sent()]))();
+                        cur = null;
+                        _f.label = 3;
+                    case 3: return [4 /*yield*/, stream.read()];
                     case 4:
+                        if (!((chunk = _f.sent()) !== null)) return [3 /*break*/, 15];
+                        if (!!cur) return [3 /*break*/, 11];
+                        if (!!this.root) return [3 /*break*/, 6];
+                        _b = this;
+                        _c = AudioData.bind;
+                        return [4 /*yield*/, _$id36_10.genFresh(store, "audio-data-")];
+                    case 5:
+                        // As the root
+                        cur = _b.root = new (_c.apply(AudioData, [void 0, _f.sent(), this]))();
+                        return [3 /*break*/, 8];
+                    case 6:
                         // As the rightmost child
                         cur = this.root;
                         while (cur.right)
                             cur = cur.right;
-                        _c = cur;
-                        _d = AudioData.bind;
+                        _d = cur;
+                        _e = AudioData.bind;
                         return [4 /*yield*/, _$id36_10.genFresh(store, "audio-data-")];
-                    case 5:
-                        _c.right = new (_d.apply(AudioData, [void 0, _e.sent(), this]))();
+                    case 7:
+                        _d.right = new (_e.apply(AudioData, [void 0, _f.sent(), this]))();
                         cur.right.parent = cur;
                         cur = cur.right;
-                        _e.label = 6;
-                    case 6: return [4 /*yield*/, cur.initRaw(chunk)];
-                    case 7:
-                        // Allocate space
-                        raw = _e.sent();
-                        return [4 /*yield*/, cur.save()];
-                    case 8:
-                        _e.sent();
-                        _e.label = 9;
+                        _f.label = 8;
+                    case 8: return [4 /*yield*/, cur.initRaw(chunk.data)];
                     case 9:
-                        remaining = raw.length - cur.len;
-                        if (!(remaining >= chunk.length)) return [3 /*break*/, 10];
-                        // There's enough space for this chunk in full
-                        raw.set(chunk, cur.len);
-                        cur.len += chunk.length;
-                        return [3 /*break*/, 12];
+                        // Allocate space
+                        raw = _f.sent();
+                        return [4 /*yield*/, cur.save()];
                     case 10:
-                        // Need to take part of the chunk
-                        raw.set(chunk.subarray(0, remaining), cur.len);
-                        cur.len = raw.length;
-                        if (chunk.length !== remaining)
-                            stream.push(chunk.slice(remaining));
-                        return [4 /*yield*/, cur.closeRaw(true)];
+                        _f.sent();
+                        _f.label = 11;
                     case 11:
-                        _e.sent();
+                        remaining = raw.length - cur.len;
+                        if (!(remaining >= chunk.data.length)) return [3 /*break*/, 12];
+                        // There's enough space for this chunk in full
+                        raw.set(chunk.data, cur.len);
+                        cur.len += chunk.data.length;
+                        return [3 /*break*/, 14];
+                    case 12:
+                        // Need to take part of the chunk
+                        raw.set(chunk.data.subarray(0, remaining), cur.len);
+                        cur.len = raw.length;
+                        if (chunk.data.length !== remaining) {
+                            chunk.data = chunk.data.subarray(remaining);
+                            stream.push(chunk);
+                        }
+                        return [4 /*yield*/, cur.closeRaw(true)];
+                    case 13:
+                        _f.sent();
                         cur = null;
                         raw = null;
-                        _e.label = 12;
-                    case 12: return [3 /*break*/, 1];
-                    case 13:
-                        if (!cur) return [3 /*break*/, 15];
-                        return [4 /*yield*/, cur.closeRaw(true)];
-                    case 14:
-                        _e.sent();
-                        _e.label = 15;
+                        _f.label = 14;
+                    case 14: return [3 /*break*/, 3];
                     case 15:
+                        if (!cur) return [3 /*break*/, 17];
+                        return [4 /*yield*/, cur.closeRaw(true)];
+                    case 16:
+                        _f.sent();
+                        _f.label = 17;
+                    case 17:
                         // Rebalance the tree now that we're done
                         if (this.root)
                             this.root = this.root.rebalance();
                         return [4 /*yield*/, this.save()];
-                    case 16:
-                        _e.sent();
+                    case 18:
+                        _f.sent();
                         return [4 /*yield*/, _$avthreads_6.flush()];
-                    case 17:
-                        _e.sent();
+                    case 19:
+                        _f.sent();
                         return [2 /*return*/];
                 }
             });
@@ -6156,13 +6306,24 @@ var AudioTrack = /** @class */ (function () {
      * @param data  The single chunk of data.
      */
     AudioTrack.prototype.appendRaw = function (data) {
-        var stream = new _$stream_17.WSPReadableStream({
-            start: function (controller) {
-                controller.enqueue(data);
-                controller.close();
-            }
+        return ____awaiter_4(this, void 0, void 0, function () {
+            var stream;
+            return ____generator_4(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        stream = new _$stream_17.EZStream(new _$stream_17.WSPReadableStream({
+                            start: function (controller) {
+                                controller.enqueue(data);
+                                controller.close();
+                            }
+                        }));
+                        return [4 /*yield*/, this.append(stream)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
         });
-        this.append(stream);
     };
     /**
      * Get the duration, in seconds, of this track.
@@ -6211,7 +6372,7 @@ var AudioTrack = /** @class */ (function () {
             format: this.format,
             sample_rate: this.sampleRate,
             channels: this.channels,
-            channel_layout: (this.channels === 1) ? 4 : ((1 << this.channels) - 1)
+            channel_layout: toChannelLayout(this.channels)
         };
         // Create the stream
         return new _$stream_17.WSPReadableStream({
@@ -6310,17 +6471,17 @@ var AudioTrack = /** @class */ (function () {
      * must give TypedArray chunks, and must be of the same length as is being
      * overwritten. A stream() with keepOpen and an overwrite() with closeTwice
      * creates an effective filter.
+     * @param data  Input data.
      * @param opts  Options. In particular, you can set the start and end time
      *              here.
      */
     AudioTrack.prototype.overwrite = function (data, opts) {
         if (opts === void 0) { opts = {}; }
         return ____awaiter_4(this, void 0, void 0, function () {
-            var dataRd, curOutNode, curOutRaw, curOutPos, curOutRem, curInRaw, curInPos, curInRem, outStream, outRd, curOut, curIn, curOut, curIn;
+            var curOutNode, curOutRaw, curOutPos, curOutRem, curInRaw, curInPos, curInRem, stream, dataRd, outStream, outRd, curOut, curIn, curOut, curIn;
             return ____generator_4(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        dataRd = data.getReader();
                         curOutNode = null;
                         curOutRaw = null;
                         curOutPos = 0;
@@ -6328,53 +6489,57 @@ var AudioTrack = /** @class */ (function () {
                         curInRaw = null;
                         curInPos = 0;
                         curInRem = 0;
+                        return [4 /*yield*/, resample(data, this.sampleRate, this.format, this.channels)];
+                    case 1:
+                        stream = _a.sent();
+                        dataRd = stream.getReader();
                         outStream = this.stream({
                             start: opts.start,
                             end: opts.end,
                             keepOpen: true
                         });
                         outRd = outStream.getReader();
-                        _a.label = 1;
-                    case 1:
-                        if (!true) return [3 /*break*/, 15];
-                        if (!!curOutNode) return [3 /*break*/, 3];
-                        return [4 /*yield*/, outRd.read()];
+                        _a.label = 2;
                     case 2:
+                        if (!true) return [3 /*break*/, 16];
+                        if (!!curOutNode) return [3 /*break*/, 4];
+                        return [4 /*yield*/, outRd.read()];
+                    case 3:
                         curOut = _a.sent();
                         if (curOut.done) {
                             // We read all we could
-                            return [3 /*break*/, 15];
+                            return [3 /*break*/, 16];
                         }
                         curOutNode = curOut.value.node;
                         curOutRaw = curOut.value.data;
                         curOutPos = 0;
                         curOutRem = curOutRaw.length;
-                        _a.label = 3;
-                    case 3:
-                        if (!!curInRaw) return [3 /*break*/, 10];
-                        return [4 /*yield*/, dataRd.read()];
+                        _a.label = 4;
                     case 4:
-                        curIn = _a.sent();
-                        if (!curIn.done) return [3 /*break*/, 9];
-                        if (!curOutNode) return [3 /*break*/, 8];
-                        return [4 /*yield*/, curOutNode.closeRaw(true)];
+                        if (!!curInRaw) return [3 /*break*/, 11];
+                        return [4 /*yield*/, dataRd.read()];
                     case 5:
-                        _a.sent();
-                        if (!opts.closeTwice) return [3 /*break*/, 7];
-                        return [4 /*yield*/, curOutNode.closeRaw()];
+                        curIn = _a.sent();
+                        if (!curIn.done) return [3 /*break*/, 10];
+                        if (!curOutNode) return [3 /*break*/, 9];
+                        return [4 /*yield*/, curOutNode.closeRaw(true)];
                     case 6:
                         _a.sent();
-                        _a.label = 7;
+                        if (!opts.closeTwice) return [3 /*break*/, 8];
+                        return [4 /*yield*/, curOutNode.closeRaw()];
                     case 7:
-                        curOutNode = curOutRaw = null;
+                        _a.sent();
                         _a.label = 8;
-                    case 8: return [3 /*break*/, 15];
-                    case 9:
-                        curInRaw = curIn.value;
+                    case 8:
+                        curOutNode = curOutRaw = null;
+                        _a.label = 9;
+                    case 9: return [3 /*break*/, 16];
+                    case 10:
+                        curInRaw = curIn.value.data;
                         curInPos = 0;
                         curInRem = curInRaw.length;
-                        _a.label = 10;
-                    case 10:
+                        _a.label = 11;
+                    case 11:
                         // Now we can transfer some data
                         if (curInRem >= curOutRem) {
                             // Finish an out buffer
@@ -6393,49 +6558,49 @@ var AudioTrack = /** @class */ (function () {
                         // Close our input
                         if (curInRem === 0)
                             curInRaw = null;
-                        if (!(curOutRem === 0)) return [3 /*break*/, 14];
+                        if (!(curOutRem === 0)) return [3 /*break*/, 15];
                         return [4 /*yield*/, curOutNode.closeRaw(true)];
-                    case 11:
-                        _a.sent();
-                        if (!opts.closeTwice) return [3 /*break*/, 13];
-                        return [4 /*yield*/, curOutNode.closeRaw()];
                     case 12:
                         _a.sent();
-                        _a.label = 13;
+                        if (!opts.closeTwice) return [3 /*break*/, 14];
+                        return [4 /*yield*/, curOutNode.closeRaw()];
                     case 13:
-                        curOutNode = null;
+                        _a.sent();
                         _a.label = 14;
-                    case 14: return [3 /*break*/, 1];
-                    case 15:
-                        if (!true) return [3 /*break*/, 20];
-                        return [4 /*yield*/, outRd.read()];
+                    case 14:
+                        curOutNode = null;
+                        _a.label = 15;
+                    case 15: return [3 /*break*/, 2];
                     case 16:
+                        if (!true) return [3 /*break*/, 21];
+                        return [4 /*yield*/, outRd.read()];
+                    case 17:
                         curOut = _a.sent();
                         if (curOut.done)
-                            return [3 /*break*/, 20];
+                            return [3 /*break*/, 21];
                         curOutNode = curOut.value.node;
-                        return [4 /*yield*/, curOutNode.closeRaw()];
-                    case 17:
-                        _a.sent();
-                        if (!opts.closeTwice) return [3 /*break*/, 19];
                         return [4 /*yield*/, curOutNode.closeRaw()];
                     case 18:
                         _a.sent();
-                        _a.label = 19;
-                    case 19: return [3 /*break*/, 15];
-                    case 20:
-                        if (!true) return [3 /*break*/, 22];
-                        return [4 /*yield*/, dataRd.read()];
+                        if (!opts.closeTwice) return [3 /*break*/, 20];
+                        return [4 /*yield*/, curOutNode.closeRaw()];
+                    case 19:
+                        _a.sent();
+                        _a.label = 20;
+                    case 20: return [3 /*break*/, 16];
                     case 21:
+                        if (!true) return [3 /*break*/, 23];
+                        return [4 /*yield*/, dataRd.read()];
+                    case 22:
                         curIn = _a.sent();
                         if (curIn.done)
-                            return [3 /*break*/, 22];
-                        return [3 /*break*/, 20];
-                    case 22: return [4 /*yield*/, this.save()];
-                    case 23:
+                            return [3 /*break*/, 23];
+                        return [3 /*break*/, 21];
+                    case 23: return [4 /*yield*/, this.save()];
+                    case 24:
                         _a.sent();
                         return [4 /*yield*/, _$avthreads_6.flush()];
-                    case 24:
+                    case 25:
                         _a.sent();
                         return [2 /*return*/];
                 }
@@ -6873,9 +7038,7 @@ var AudioData = /** @class */ (function () {
                                                 return [4 /*yield*/, libav.ff_decode_multi(c, pkt, frame, packets[stream.index], true)];
                                             case 6:
                                                 frames = _e.sent();
-                                                return [4 /*yield*/, fromPlanar(frames[0].format)];
-                                            case 7:
-                                                toFormat = _e.sent();
+                                                toFormat = fromPlanar(frames[0].format);
                                                 return [4 /*yield*/, libav.ff_init_filter_graph("anull", {
                                                         sample_rate: frames[0].sample_rate,
                                                         sample_fmt: frames[0].format,
@@ -6885,24 +7048,24 @@ var AudioData = /** @class */ (function () {
                                                         sample_fmt: toFormat,
                                                         channel_layout: frames[0].channel_layout
                                                     })];
-                                            case 8:
+                                            case 7:
                                                 _d = _e.sent(), filter_graph = _d[0], buffersrc_ctx = _d[1], buffersink_ctx = _d[2];
                                                 return [4 /*yield*/, libav.ff_filter_multi(buffersrc_ctx, buffersink_ctx, frame, frames, true)];
-                                            case 9:
+                                            case 8:
                                                 rframes = _e.sent();
                                                 // Clean up
                                                 return [4 /*yield*/, libav.avfilter_graph_free_js(filter_graph)];
-                                            case 10:
+                                            case 9:
                                                 // Clean up
                                                 _e.sent();
                                                 return [4 /*yield*/, libav.ff_free_decoder(c, pkt, frame)];
-                                            case 11:
+                                            case 10:
                                                 _e.sent();
                                                 return [4 /*yield*/, libav.avformat_close_input_js(fmt_ctx)];
-                                            case 12:
+                                            case 11:
                                                 _e.sent();
                                                 return [4 /*yield*/, libav.unlink(fn)];
-                                            case 13:
+                                            case 12:
                                                 _e.sent();
                                                 return [2 /*return*/];
                                         }
@@ -7009,22 +7172,20 @@ var AudioData = /** @class */ (function () {
                 switch (_d.label) {
                     case 0:
                         track = this.track;
-                        return [4 /*yield*/, toPlanar(track.format)];
-                    case 1:
-                        toFormat = _d.sent();
-                        channel_layout = (track.channels === 1) ? 4 : ((1 << track.channels) - 1);
+                        toFormat = toPlanar(track.format);
+                        channel_layout = toChannelLayout(track.channels);
                         return [4 /*yield*/, libav.ff_init_encoder("wavpack", {
                                 sample_fmt: toFormat,
                                 sample_rate: track.sampleRate,
                                 channel_layout: channel_layout
                             })];
-                    case 2:
+                    case 1:
                         _a = _d.sent(), c = _a[1], frame = _a[2], pkt = _a[3], frame_size = _a[4];
                         return [4 /*yield*/, libav.ff_init_muxer({ filename: this.id + ".wv", open: true }, [[c, 1, track.sampleRate]])];
-                    case 3:
+                    case 2:
                         _b = _d.sent(), oc = _b[0], pb = _b[2];
                         return [4 /*yield*/, libav.avformat_write_header(oc, 0)];
-                    case 4:
+                    case 3:
                         _d.sent();
                         return [4 /*yield*/, libav.ff_init_filter_graph("anull", {
                                 sample_rate: track.sampleRate,
@@ -7036,7 +7197,7 @@ var AudioData = /** @class */ (function () {
                                 channel_layout: channel_layout,
                                 frame_size: frame_size
                             })];
-                    case 5:
+                    case 4:
                         _c = _d.sent(), filter_graph = _c[0], buffersrc_ctx = _c[1], buffersink_ctx = _c[2];
                         return [4 /*yield*/, libav.ff_filter_multi(buffersrc_ctx, buffersink_ctx, frame, [{
                                     data: raw.subarray(0, this.len),
@@ -7045,35 +7206,35 @@ var AudioData = /** @class */ (function () {
                                     pts: 0,
                                     sample_rate: track.sampleRate
                                 }], true)];
-                    case 6:
+                    case 5:
                         frames = _d.sent();
                         return [4 /*yield*/, libav.ff_encode_multi(c, frame, pkt, frames, true)];
-                    case 7:
+                    case 6:
                         packets = _d.sent();
                         return [4 /*yield*/, libav.ff_write_multi(oc, pkt, packets)];
-                    case 8:
+                    case 7:
                         _d.sent();
                         return [4 /*yield*/, libav.av_write_trailer(oc)];
-                    case 9:
+                    case 8:
                         _d.sent();
                         return [4 /*yield*/, libav.avfilter_graph_free_js(filter_graph)];
-                    case 10:
+                    case 9:
                         _d.sent();
                         return [4 /*yield*/, libav.ff_free_muxer(oc, pb)];
-                    case 11:
+                    case 10:
                         _d.sent();
                         return [4 /*yield*/, libav.ff_free_encoder(c, frame, pkt)];
-                    case 12:
+                    case 11:
                         _d.sent();
                         return [4 /*yield*/, libav.readFile(this.id + ".wv")];
-                    case 13:
+                    case 12:
                         u8 = _d.sent();
                         return [4 /*yield*/, libav.unlink(this.id + ".wv")];
-                    case 14:
+                    case 13:
                         _d.sent();
                         // And save it to the store
                         return [4 /*yield*/, track.project.store.setItem("audio-data-compressed-" + this.id, u8)];
-                    case 15:
+                    case 14:
                         // And save it to the store
                         _d.sent();
                         return [2 /*return*/];
@@ -7089,7 +7250,7 @@ var AudioData = /** @class */ (function () {
                 switch (_c.label) {
                     case 0:
                         track = this.track;
-                        channel_layout = (track.channels === 1) ? 4 : ((1 << track.channels) - 1);
+                        channel_layout = toChannelLayout(track.channels);
                         return [4 /*yield*/, libav.av_frame_alloc()];
                     case 1:
                         frame = _c.sent();
@@ -7369,7 +7530,7 @@ var ____generator_8 = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(_$filters_8, "__esModule", { value: true });
-_$filters_8.registerCustomFilter = _$filters_8.mixTracks = _$filters_8.ffmpegFilterString = _$filters_8.ffmpegFilter = _$filters_8.load = void 0;
+_$filters_8.registerCustomFilter = _$filters_8.mixTracks = _$filters_8.selectionFilter = _$filters_8.ffmpegFilter = _$filters_8.ffmpegStream = _$filters_8.resample = _$filters_8.load = void 0;
 /* removed: var _$audioData_4 = require("./audio-data"); */;
 /* removed: var _$hotkeys_9 = require("./hotkeys"); */;
 /* removed: var _$id36_10 = require("./id36"); */;
@@ -7390,6 +7551,8 @@ function __load_8() {
     });
 }
 _$filters_8.load = __load_8;
+// This really belongs here, but is in audioData because it needs it
+_$filters_8.resample = _$audioData_4.resample;
 /**
  * Standard FFmpeg filters.
  */
@@ -7495,6 +7658,92 @@ var standardFilters = (function () {
  */
 var customFilters = [];
 /**
+ * Create a stream to apply the given libav filter, described by a filter
+ * string.
+ * @param stream  The input stream.
+ * @param fs  The filter string.
+ */
+function ffmpegStream(stream, fs) {
+    return ____awaiter_8(this, void 0, void 0, function () {
+        var first, time, libav, frame, _a, buffersrc_ctx, buffersink_ctx;
+        return ____generator_8(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, stream.read()];
+                case 1:
+                    first = _b.sent();
+                    if (!first) {
+                        // No data!
+                        return [2 /*return*/, new _$stream_17.WSPReadableStream({
+                                start: function (controller) {
+                                    controller.close();
+                                }
+                            })];
+                    }
+                    stream.push(first);
+                    time = 0;
+                    // Make the filter
+                    _$audioData_4.sanitizeLibAVFrame(first);
+                    return [4 /*yield*/, LibAV.LibAV()];
+                case 2:
+                    libav = _b.sent();
+                    return [4 /*yield*/, libav.av_frame_alloc()];
+                case 3:
+                    frame = _b.sent();
+                    return [4 /*yield*/, libav.ff_init_filter_graph(fs, {
+                            sample_rate: first.sample_rate,
+                            sample_fmt: first.format,
+                            channel_layout: first.channel_layout
+                        }, {
+                            sample_rate: first.sample_rate,
+                            sample_fmt: first.format,
+                            channel_layout: first.channel_layout
+                        })];
+                case 4:
+                    _a = _b.sent(), buffersrc_ctx = _a[1], buffersink_ctx = _a[2];
+                    // And the stream
+                    return [2 /*return*/, new _$stream_17.WSPReadableStream({
+                            pull: function (controller) {
+                                return ____awaiter_8(this, void 0, void 0, function () {
+                                    var chunk, fframes, _i, fframes_1, frame_1;
+                                    return ____generator_8(this, function (_a) {
+                                        switch (_a.label) {
+                                            case 0:
+                                                if (!true) return [3 /*break*/, 3];
+                                                return [4 /*yield*/, stream.read()];
+                                            case 1:
+                                                chunk = _a.sent();
+                                                if (chunk)
+                                                    chunk.node = null;
+                                                return [4 /*yield*/, libav.ff_filter_multi(buffersrc_ctx, buffersink_ctx, frame, chunk ? [chunk] : [], !chunk)];
+                                            case 2:
+                                                fframes = _a.sent();
+                                                // Send it thru
+                                                for (_i = 0, fframes_1 = fframes; _i < fframes_1.length; _i++) {
+                                                    frame_1 = fframes_1[_i];
+                                                    controller.enqueue(frame_1);
+                                                }
+                                                if (!chunk) {
+                                                    controller.close();
+                                                    libav.terminate();
+                                                }
+                                                if (!chunk || fframes.length)
+                                                    return [3 /*break*/, 3];
+                                                return [3 /*break*/, 0];
+                                            case 3: return [2 /*return*/];
+                                        }
+                                    });
+                                });
+                            },
+                            cancel: function () {
+                                libav.terminate();
+                            }
+                        })];
+            }
+        });
+    });
+}
+_$filters_8.ffmpegStream = ffmpegStream;
+/**
  * Apply an FFmpeg filter with the given options.
  * @param filter  The filter and options.
  * @param sel  The selection to filter.
@@ -7514,7 +7763,7 @@ function ffmpegFilter(filter, sel, d) {
                             fs += "=";
                     }
                     fs += filter.args.map(function (x) { return (x.name ? x.name + "=" : "") + x.value; }).join(":");
-                    return [4 /*yield*/, ffmpegFilterString(fs, !!filter.changesDuration, sel, d)];
+                    return [4 /*yield*/, selectionFilter(function (x) { return ffmpegStream(x, fs); }, !!filter.changesDuration, sel, d)];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -7524,15 +7773,15 @@ function ffmpegFilter(filter, sel, d) {
 }
 _$filters_8.ffmpegFilter = ffmpegFilter;
 /**
- * Apply an FFmpeg filter, given a filter string.
- * @param fs  The filter string.
+ * Apply a filter function to a selection.
+ * @param ff  The filter function.
  * @param changesDuration  Set if this filter changes duration, so the process
  *                         must use a temporary track.
  * @param sel  The selection to filter.
  * @param d  (Optional) The dialog in which to show the status, if applicable.
  *           This dialog will *not* be closed.
  */
-function ffmpegFilterString(fs, changesDuration, sel, d) {
+function selectionFilter(ff, changesDuration, sel, d) {
     return ____awaiter_8(this, void 0, void 0, function () {
         // Function to show the current status
         function showStatus() {
@@ -7547,96 +7796,63 @@ function ffmpegFilterString(fs, changesDuration, sel, d) {
         // The filtering function for each track
         function filterThread(track, idx) {
             return ____awaiter_8(this, void 0, void 0, function () {
-                var libav, channelLayout, frame, _a, buffersrc_ctx, buffersink_ctx, inStream, filterStream, newTrack, _b, _c;
-                return ____generator_8(this, function (_d) {
-                    switch (_d.label) {
-                        case 0: return [4 /*yield*/, LibAV.LibAV()];
-                        case 1:
-                            libav = _d.sent();
-                            channelLayout = (track.channels === 1) ? 4 : ((1 << track.channels) - 1);
-                            return [4 /*yield*/, libav.av_frame_alloc()];
-                        case 2:
-                            frame = _d.sent();
-                            return [4 /*yield*/, libav.ff_init_filter_graph(fs, {
-                                    sample_rate: track.sampleRate,
-                                    sample_fmt: track.format,
-                                    channel_layout: channelLayout
-                                }, {
-                                    sample_rate: track.sampleRate,
-                                    sample_fmt: track.format,
-                                    channel_layout: channelLayout
-                                })];
-                        case 3:
-                            _a = _d.sent(), buffersrc_ctx = _a[1], buffersink_ctx = _a[2];
-                            inStream = track.stream(Object.assign({ keepOpen: !changesDuration }, streamOpts)).getReader();
-                            filterStream = new _$stream_17.WSPReadableStream({
+                var inStream, statusStream, filterStream, newTrack, _a, _b;
+                return ____generator_8(this, function (_c) {
+                    switch (_c.label) {
+                        case 0:
+                            inStream = track.stream(Object.assign({ keepOpen: !changesDuration }, streamOpts))
+                                .getReader();
+                            statusStream = new _$stream_17.WSPReadableStream({
                                 pull: function (controller) {
                                     return ____awaiter_8(this, void 0, void 0, function () {
-                                        var inp, outp, _i, outp_1, part;
+                                        var chunk;
                                         return ____generator_8(this, function (_a) {
                                             switch (_a.label) {
-                                                case 0:
-                                                    if (!true) return [3 /*break*/, 3];
-                                                    return [4 /*yield*/, inStream.read()];
+                                                case 0: return [4 /*yield*/, inStream.read()];
                                                 case 1:
-                                                    inp = _a.sent();
-                                                    if (inp.value)
-                                                        inp.value.node = null;
-                                                    return [4 /*yield*/, libav.ff_filter_multi(buffersrc_ctx, buffersink_ctx, frame, inp.done ? [] : [inp.value], inp.done)];
-                                                case 2:
-                                                    outp = _a.sent();
-                                                    // Update the status
-                                                    if (inp.done)
-                                                        status[idx].filtered = status[idx].duration;
-                                                    else
-                                                        status[idx].filtered += inp.value.data.length;
-                                                    showStatus();
-                                                    // Write it out
-                                                    if (outp.length) {
-                                                        for (_i = 0, outp_1 = outp; _i < outp_1.length; _i++) {
-                                                            part = outp_1[_i];
-                                                            controller.enqueue(part.data);
-                                                        }
-                                                    }
-                                                    // Maybe end it
-                                                    if (inp.done)
+                                                    chunk = _a.sent();
+                                                    if (chunk.done) {
                                                         controller.close();
-                                                    if (outp.length || inp.done)
-                                                        return [3 /*break*/, 3];
-                                                    return [3 /*break*/, 0];
-                                                case 3: return [2 /*return*/];
+                                                    }
+                                                    else {
+                                                        _$audioData_4.sanitizeLibAVFrame(chunk.value);
+                                                        status[idx].filtered += chunk.value.nb_samples / chunk.value.sample_rate;
+                                                        showStatus();
+                                                        controller.enqueue(chunk.value);
+                                                    }
+                                                    return [2 /*return*/];
                                             }
                                         });
                                     });
                                 }
                             });
-                            if (!changesDuration) return [3 /*break*/, 7];
-                            _c = (_b = _$audioData_4.AudioTrack).bind;
+                            return [4 /*yield*/, ff(new _$stream_17.EZStream(statusStream))];
+                        case 1:
+                            filterStream = _c.sent();
+                            if (!changesDuration) return [3 /*break*/, 5];
+                            _b = (_a = _$audioData_4.AudioTrack).bind;
                             return [4 /*yield*/, _$id36_10.genFresh(track.project.store, "audio-track-")];
-                        case 4:
-                            newTrack = new (_c.apply(_b, [void 0, _d.sent(), track.project, {
+                        case 2:
+                            newTrack = new (_b.apply(_a, [void 0, _c.sent(), track.project, {
                                     format: track.format,
                                     sampleRate: track.sampleRate,
                                     channels: track.channels
                                 }]))();
-                            return [4 /*yield*/, newTrack.append(filterStream)];
-                        case 5:
-                            _d.sent();
+                            return [4 /*yield*/, newTrack.append(new _$stream_17.EZStream(filterStream))];
+                        case 3:
+                            _c.sent();
                             return [4 /*yield*/, track.replace(sel.range ? sel.start : 0, sel.range ? sel.end : Infinity, newTrack)];
-                        case 6:
-                            _d.sent();
-                            return [3 /*break*/, 9];
-                        case 7: 
+                        case 4:
+                            _c.sent();
+                            return [3 /*break*/, 7];
+                        case 5: 
                         // Just overwrite it
-                        return [4 /*yield*/, track.overwrite(filterStream, Object.assign({ closeTwice: true }, streamOpts))];
-                        case 8:
+                        return [4 /*yield*/, track.overwrite(new _$stream_17.EZStream(filterStream), Object.assign({ closeTwice: true }, streamOpts))];
+                        case 6:
                             // Just overwrite it
-                            _d.sent();
-                            _d.label = 9;
-                        case 9:
-                            // And get rid of the libav instance
-                            libav.terminate();
-                            return [2 /*return*/];
+                            _c.sent();
+                            _c.label = 7;
+                        case 7: return [2 /*return*/];
                     }
                 });
             });
@@ -7659,7 +7875,7 @@ function ffmpegFilterString(fs, changesDuration, sel, d) {
                     status = tracks.map(function (x) { return ({
                         name: x.name,
                         filtered: 0,
-                        duration: x.sampleCount()
+                        duration: x.duration()
                     }); });
                     threads = navigator.hardwareConcurrency ? navigator.hardwareConcurrency : 2;
                     running = [];
@@ -7688,7 +7904,7 @@ function ffmpegFilterString(fs, changesDuration, sel, d) {
         });
     });
 }
-_$filters_8.ffmpegFilterString = ffmpegFilterString;
+_$filters_8.selectionFilter = selectionFilter;
 /**
  * Mix the selected tracks into a new track.
  * @param sel  The selection to mix.
@@ -7704,7 +7920,7 @@ function mixTracks(sel, d, opts) {
             if (d)
                 d.box.innerHTML = "Mixing... " + Math.round(mixed / duration * 100) + "%";
         }
-        var tracks, preFilter, postFilter, fs, mtracks, otracks, i, gtracks, streamOpts, outTrack, _a, _b, channelLayout, duration, mixed, libav, frame, _c, buffersrc_ctx, buffersink_ctx, inStreams, trackDone, trackDoneCt, mixStream;
+        var tracks, fs, mtracks, otracks, i, gtracks, streamOpts, outTrack, _a, _b, channelLayout, duration, mixed, libav, frame, _c, buffersrc_ctx, buffersink_ctx, inRStreams, inStreams, trackDone, trackDoneCt, mixStream, outStream;
         return ____generator_8(this, function (_d) {
             switch (_d.label) {
                 case 0:
@@ -7715,9 +7931,7 @@ function mixTracks(sel, d, opts) {
                     }
                     if (d)
                         d.box.innerHTML = "Mixing...";
-                    preFilter = opts.preFilter || "anull";
-                    postFilter = opts.postFilter || "anull";
-                    fs = tracks.map(function (x, idx) { return "[in" + idx + "]" + preFilter + "[aud" + idx + "]"; }).join(";");
+                    fs = tracks.map(function (x, idx) { return "[in" + idx + "]anull[aud" + idx + "]"; }).join(";");
                     mtracks = tracks.map(function (x, idx) { return "aud" + idx; });
                     while (mtracks.length > 16) {
                         otracks = [];
@@ -7731,7 +7945,7 @@ function mixTracks(sel, d, opts) {
                     }
                     // Then mix whatever remains as one
                     fs += ";" + mtracks.map(function (x) { return "[" + x + "]"; }).join("") +
-                        "amix=" + mtracks.length + "," + postFilter + "[out]";
+                        "amix=" + mtracks.length + "[out]";
                     streamOpts = {
                         start: sel.range ? sel.start : void 0,
                         end: sel.range ? sel.end : void 0
@@ -7745,7 +7959,7 @@ function mixTracks(sel, d, opts) {
                             format: _$audioData_4.LibAVSampleFormat.FLT,
                             channels: Math.max.apply(Math, tracks.map(function (x) { return x.channels; }))
                         }]))();
-                    channelLayout = (outTrack.channels === 1) ? 4 : ((1 << outTrack.channels) - 1);
+                    channelLayout = _$audioData_4.toChannelLayout(outTrack.channels);
                     duration = Math.max.apply(Math, tracks.map(function (x) { return x.duration(); }));
                     mixed = 0;
                     return [4 /*yield*/, LibAV.LibAV()];
@@ -7757,7 +7971,7 @@ function mixTracks(sel, d, opts) {
                     return [4 /*yield*/, libav.ff_init_filter_graph(fs, tracks.map(function (x) { return ({
                             sample_rate: x.sampleRate,
                             sample_fmt: x.format,
-                            channel_layout: (x.channels === 1) ? 4 : ((1 << x.channels) - 1)
+                            channel_layout: _$audioData_4.toChannelLayout(x.channels)
                         }); }), {
                             sample_rate: outTrack.sampleRate,
                             sample_fmt: outTrack.format,
@@ -7765,13 +7979,20 @@ function mixTracks(sel, d, opts) {
                         })];
                 case 4:
                     _c = _d.sent(), buffersrc_ctx = _c[1], buffersink_ctx = _c[2];
-                    inStreams = tracks.map(function (x) { return x.stream(streamOpts).getReader(); });
+                    inRStreams = tracks.map(function (x) { return x.stream(streamOpts); });
+                    if (!opts.preFilter) return [3 /*break*/, 6];
+                    return [4 /*yield*/, Promise.all(inRStreams.map(function (x) { return opts.preFilter(new _$stream_17.EZStream(x)); }))];
+                case 5:
+                    inRStreams = _d.sent();
+                    _d.label = 6;
+                case 6:
+                    inStreams = inRStreams.map(function (x) { return x.getReader(); });
                     trackDone = tracks.map(function () { return false; });
                     trackDoneCt = 0;
                     mixStream = new _$stream_17.WSPReadableStream({
                         pull: function (controller) {
                             return ____awaiter_8(this, void 0, void 0, function () {
-                                var inps, outp, _i, outp_2, part;
+                                var inps, outp, _i, outp_1, part;
                                 return ____generator_8(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
@@ -7805,9 +8026,9 @@ function mixTracks(sel, d, opts) {
                                             outp = _a.sent();
                                             // Write it out
                                             if (outp.length) {
-                                                for (_i = 0, outp_2 = outp; _i < outp_2.length; _i++) {
-                                                    part = outp_2[_i];
-                                                    controller.enqueue(part.data);
+                                                for (_i = 0, outp_1 = outp; _i < outp_1.length; _i++) {
+                                                    part = outp_1[_i];
+                                                    controller.enqueue(part);
                                                     mixed += part.nb_samples / outTrack.sampleRate;
                                                 }
                                                 showStatus();
@@ -7824,9 +8045,16 @@ function mixTracks(sel, d, opts) {
                             });
                         }
                     });
-                    // Append that to the new track
-                    return [4 /*yield*/, outTrack.append(mixStream)];
-                case 5:
+                    outStream = null;
+                    if (!opts.postFilter) return [3 /*break*/, 8];
+                    return [4 /*yield*/, opts.postFilter(new _$stream_17.EZStream(mixStream))];
+                case 7:
+                    outStream = _d.sent();
+                    _d.label = 8;
+                case 8: 
+                // Append that to the new track
+                return [4 /*yield*/, outTrack.append(new _$stream_17.EZStream(outStream || mixStream))];
+                case 9:
                     // Append that to the new track
                     _d.sent();
                     // And get rid of the libav instance
@@ -8052,256 +8280,6 @@ function registerCustomFilter(filter) {
     customFilters.push(filter);
 }
 _$filters_8.registerCustomFilter = registerCustomFilter;
-
-var _$audio_5 = {};
-"use strict";
-/*
- * Copyright (c) 2021 Yahweasel
- *
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
- *
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
- * SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
- * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
- * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- */
-var ____awaiter_5 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var ____generator_5 = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(_$audio_5, "__esModule", { value: true });
-_$audio_5.createSource = _$audio_5.getAudioContext = void 0;
-/* removed: var _$audioData_4 = require("./audio-data"); */;
-/* removed: var _$ui_20 = require("./ui"); */;
-var ac = null;
-/**
- * Get the audio context.
- */
-function getAudioContext() {
-    return ____awaiter_5(this, void 0, void 0, function () {
-        var ex_1, ex_2;
-        return ____generator_5(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (!!ac) return [3 /*break*/, 12];
-                    ac = new AudioContext();
-                    if (!(ac.state !== "running")) return [3 /*break*/, 4];
-                    _a.label = 1;
-                case 1:
-                    _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, ac.resume()];
-                case 2:
-                    _a.sent();
-                    return [3 /*break*/, 4];
-                case 3:
-                    ex_1 = _a.sent();
-                    return [3 /*break*/, 4];
-                case 4:
-                    if (!(ac.state !== "running")) return [3 /*break*/, 10];
-                    // OK, ask nicely
-                    return [4 /*yield*/, _$ui_20.alert("This tool needs permission to play audio. Press OK to grant this permission.")];
-                case 5:
-                    // OK, ask nicely
-                    _a.sent();
-                    _a.label = 6;
-                case 6:
-                    _a.trys.push([6, 8, , 10]);
-                    return [4 /*yield*/, ac.resume()];
-                case 7:
-                    _a.sent();
-                    return [3 /*break*/, 10];
-                case 8:
-                    ex_2 = _a.sent();
-                    return [4 /*yield*/, _$ui_20.alert(ex_2 + "")];
-                case 9:
-                    _a.sent();
-                    return [3 /*break*/, 10];
-                case 10: 
-                // Load in the AWP
-                return [4 /*yield*/, ac.audioWorklet.addModule("awp/ennuizel-player.js")];
-                case 11:
-                    // Load in the AWP
-                    _a.sent();
-                    _a.label = 12;
-                case 12: return [2 /*return*/, ac];
-            }
-        });
-    });
-}
-_$audio_5.getAudioContext = getAudioContext;
-/**
- * Create a source node for this stream of libav-like frames. Takes the reader,
- * so that the caller can cancel it.
- * @param stream  The input stream.
- */
-function createSource(stream, opts) {
-    if (opts === void 0) { opts = {}; }
-    return ____awaiter_5(this, void 0, void 0, function () {
-        var ac, rdr, first, libav, frame, _a, buffersrc_ctx, buffersink_ctx, finished, firstFrames, ret;
-        return ____generator_5(this, function (_b) {
-            switch (_b.label) {
-                case 0: return [4 /*yield*/, getAudioContext()];
-                case 1:
-                    ac = _b.sent();
-                    rdr = stream.getReader();
-                    return [4 /*yield*/, rdr.read()];
-                case 2:
-                    first = _b.sent();
-                    if (first.done) {
-                        // Useless
-                        if (opts.ready)
-                            opts.ready();
-                        return [2 /*return*/, {
-                                node: ac.createBufferSource(),
-                                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                                start: function () { },
-                                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                                stop: function () { }
-                            }];
-                    }
-                    return [4 /*yield*/, LibAV.LibAV()];
-                case 3:
-                    libav = _b.sent();
-                    return [4 /*yield*/, libav.av_frame_alloc()];
-                case 4:
-                    frame = _b.sent();
-                    return [4 /*yield*/, libav.ff_init_filter_graph("anull", {
-                            sample_rate: first.value.sample_rate,
-                            sample_fmt: first.value.format,
-                            channel_layout: first.value.channel_layout
-                        }, {
-                            sample_rate: ac.sampleRate,
-                            sample_fmt: _$audioData_4.LibAVSampleFormat.FLTP,
-                            channel_layout: 3
-                        })];
-                case 5:
-                    _a = _b.sent(), buffersrc_ctx = _a[1], buffersink_ctx = _a[2];
-                    finished = false;
-                    // Filter the first bit
-                    first.value.node = null;
-                    return [4 /*yield*/, libav.ff_filter_multi(buffersrc_ctx, buffersink_ctx, frame, [first.value])];
-                case 6:
-                    firstFrames = _b.sent();
-                    ret = new AudioWorkletNode(ac, "ennuizel-player", {
-                        parameterData: {
-                            sampleRate: ac.sampleRate
-                        },
-                        outputChannelCount: [2]
-                    });
-                    // Send the first bit
-                    ret.port.postMessage({ c: "data", d: firstFrames.map(function (x) { return x.data; }) });
-                    first = firstFrames = null;
-                    // Associate its port with reading
-                    ret.port.onmessage = function (ev) {
-                        return ____awaiter_5(this, void 0, void 0, function () {
-                            var rawData, frames_1, frames_2;
-                            return ____generator_5(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        if (ev.data.c === "time") {
-                                            // Time update
-                                            if (opts.status)
-                                                opts.status(ev.data.d);
-                                            return [2 /*return*/];
-                                        }
-                                        else if (ev.data.c === "ready") {
-                                            // Ready to play
-                                            if (opts.ready)
-                                                opts.ready();
-                                            return [2 /*return*/];
-                                        }
-                                        else if (ev.data.c === "done") {
-                                            // Stream over
-                                            if (opts.end)
-                                                opts.end();
-                                            return [2 /*return*/];
-                                        }
-                                        else if (ev.data.c !== "read") {
-                                            // Unknown!
-                                            return [2 /*return*/];
-                                        }
-                                        return [4 /*yield*/, rdr.read()];
-                                    case 1:
-                                        rawData = _a.sent();
-                                        if (!rawData.done) return [3 /*break*/, 5];
-                                        if (!!finished) return [3 /*break*/, 3];
-                                        finished = true;
-                                        return [4 /*yield*/, libav.ff_filter_multi(buffersrc_ctx, buffersink_ctx, frame, [], true)];
-                                    case 2:
-                                        frames_1 = _a.sent();
-                                        ret.port.postMessage({
-                                            c: "data",
-                                            d: frames_1.length ? frames_1.map(function (x) { return x.data; }) : null
-                                        });
-                                        return [3 /*break*/, 4];
-                                    case 3:
-                                        ret.port.postMessage({ c: "data", d: null });
-                                        _a.label = 4;
-                                    case 4: return [3 /*break*/, 7];
-                                    case 5:
-                                        rawData.value.node = null;
-                                        return [4 /*yield*/, libav.ff_filter_multi(buffersrc_ctx, buffersink_ctx, frame, [rawData.value])];
-                                    case 6:
-                                        frames_2 = _a.sent();
-                                        ret.port.postMessage({ c: "data", d: frames_2.map(function (x) { return x.data; }) });
-                                        _a.label = 7;
-                                    case 7: return [2 /*return*/];
-                                }
-                            });
-                        });
-                    };
-                    return [2 /*return*/, {
-                            node: ret,
-                            start: function () {
-                                ret.port.postMessage({ c: "play" });
-                            },
-                            stop: function () {
-                                rdr.cancel();
-                                libav.terminate();
-                            }
-                        }];
-            }
-        });
-    });
-}
-_$audio_5.createSource = createSource;
 
 var _$StreamSaver_2 = { exports: {} };
 /* global chrome location ReadableStream define MessageChannel TransformStream */
@@ -8668,7 +8646,7 @@ var ____generator_7 = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(_$export_7, "__esModule", { value: true });
-_$export_7.uiExport = _$export_7.exportAudio = void 0;
+_$export_7.uiExport = _$export_7.exportAudio = _$export_7.standardExports = void 0;
 /* removed: var _$audioData_4 = require("./audio-data"); */;
 /* removed: var _$hotkeys_9 = require("./hotkeys"); */;
 /* removed: var _$select_14 = require("./select"); */;
@@ -8678,13 +8656,13 @@ _$export_7.uiExport = _$export_7.exportAudio = void 0;
 /**
  * Standard export formats.
  */
-var standardExports = [
+_$export_7.standardExports = [
     { name: "_FLAC", options: { format: "flac", codec: "flac", sampleFormat: _$audioData_4.LibAVSampleFormat.S32 } },
     { name: "_M4A (MPEG-4 audio)", options: { format: "ipod", ext: "m4a", codec: "aac", sampleFormat: _$audioData_4.LibAVSampleFormat.FLTP } },
     { name: "Ogg _Vorbis", options: { format: "ogg", codec: "libvorbis", sampleFormat: _$audioData_4.LibAVSampleFormat.FLTP } },
     { name: "_Opus", options: { format: "ogg", ext: "opus", codec: "libopus", sampleFormat: _$audioData_4.LibAVSampleFormat.FLT, sampleRate: 48000 } },
     { name: "_ALAC (Apple Lossless)", options: { format: "ipod", ext: "m4a", codec: "alac", sampleFormat: _$audioData_4.LibAVSampleFormat.S32P } },
-    { name: "wav_pack", options: { format: "wavpack", ext: "wv", codec: "wavpack", sampleFormat: _$audioData_4.LibAVSampleFormat.FLTP } },
+    { name: "wav_pack", options: { format: "wv", codec: "wavpack", sampleFormat: _$audioData_4.LibAVSampleFormat.FLTP } },
     { name: "_wav", options: { format: "wav", codec: "pcm_s16le", sampleFormat: _$audioData_4.LibAVSampleFormat.S16 } }
 ];
 /**
@@ -8705,16 +8683,6 @@ function exportAudio(opts, sel, d) {
                 d.box.innerHTML = "Exporting...<br/>" + statusStr;
             }
         }
-        // Delete any existing export info
-        /*
-        {
-            const keys = await store.keys();
-            for (const key of keys) {
-                if (/^export-/.test(key))
-                    await store.removeItem(key);
-            }
-        }
-        */
         // The export function for each track
         function exportThread(track, idx) {
             return ____awaiter_7(this, void 0, void 0, function () {
@@ -8722,7 +8690,7 @@ function exportAudio(opts, sel, d) {
                 return ____generator_7(this, function (_c) {
                     switch (_c.label) {
                         case 0:
-                            channel_layout = (track.channels === 1) ? 4 : ((1 << track.channels) - 1);
+                            channel_layout = _$audioData_4.toChannelLayout(track.channels);
                             sample_rate = opts.sampleRate || track.sampleRate;
                             fname = opts.prefix +
                                 ((tracks.length > 1 || opts.suffixTrackName) ? "-" + track.name : "") +
@@ -8864,7 +8832,9 @@ function exportAudio(opts, sel, d) {
                             cache = null;
                             _c.label = 16;
                         case 16:
-                            writer = _$StreamSaver_2.createWriteStream(fname).getWriter();
+                            writer = _$StreamSaver_2
+                                .createWriteStream(fname, { size: fileLen })
+                                .getWriter();
                             lastNum = ~~(fileLen / bufLen);
                             lastLen = fileLen % bufLen;
                             i = 0;
@@ -8899,7 +8869,7 @@ function exportAudio(opts, sel, d) {
                 });
             });
         }
-        var tracks, store, range, streamOpts, status, threads, running, toRun, _a, sel_1, idx, fin;
+        var tracks, store, range, streamOpts, status, keys, _i, keys_1, key, threads, running, toRun, _a, sel_1, idx, fin;
         return ____generator_7(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -8921,26 +8891,43 @@ function exportAudio(opts, sel, d) {
                         exported: 0,
                         duration: x.sampleCount()
                     }); });
+                    return [4 /*yield*/, store.keys()];
+                case 1:
+                    keys = _b.sent();
+                    _i = 0, keys_1 = keys;
+                    _b.label = 2;
+                case 2:
+                    if (!(_i < keys_1.length)) return [3 /*break*/, 5];
+                    key = keys_1[_i];
+                    if (!/^export-/.test(key)) return [3 /*break*/, 4];
+                    return [4 /*yield*/, store.removeItem(key)];
+                case 3:
+                    _b.sent();
+                    _b.label = 4;
+                case 4:
+                    _i++;
+                    return [3 /*break*/, 2];
+                case 5:
                     threads = navigator.hardwareConcurrency ? navigator.hardwareConcurrency : 2;
                     running = [];
                     toRun = tracks.map(function (x, idx) { return [x, idx]; });
-                    _b.label = 1;
-                case 1:
-                    if (!toRun.length) return [3 /*break*/, 3];
+                    _b.label = 6;
+                case 6:
+                    if (!toRun.length) return [3 /*break*/, 8];
                     // Get the right number of threads running
                     while (running.length < threads && toRun.length) {
                         _a = toRun.shift(), sel_1 = _a[0], idx = _a[1];
                         running.push(exportThread(sel_1, idx));
                     }
                     return [4 /*yield*/, Promise.race(running.map(function (x, idx) { return x.then(function () { return idx; }); }))];
-                case 2:
+                case 7:
                     fin = _b.sent();
                     running.splice(fin, 1);
-                    return [3 /*break*/, 1];
-                case 3: 
+                    return [3 /*break*/, 6];
+                case 8: 
                 // Wait for them all to finish
                 return [4 /*yield*/, Promise.all(running)];
-                case 4:
+                case 9:
                     // Wait for them all to finish
                     _b.sent();
                     return [2 /*return*/];
@@ -8987,7 +8974,7 @@ function uiExport(d, name) {
                                     };
                                 };
                                 // Show each format
-                                for (_i = 0, standardExports_1 = standardExports; _i < standardExports_1.length; _i++) {
+                                for (_i = 0, standardExports_1 = _$export_7.standardExports; _i < standardExports_1.length; _i++) {
                                     format = standardExports_1[_i];
                                     _loop_1(format);
                                 }
@@ -9007,6 +8994,256 @@ function uiExport(d, name) {
     });
 }
 _$export_7.uiExport = uiExport;
+
+var _$audio_5 = {};
+"use strict";
+/*
+ * Copyright (c) 2021 Yahweasel
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+ * SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
+ * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+ * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+var ____awaiter_5 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var ____generator_5 = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(_$audio_5, "__esModule", { value: true });
+_$audio_5.createSource = _$audio_5.getAudioContext = void 0;
+/* removed: var _$audioData_4 = require("./audio-data"); */;
+/* removed: var _$ui_20 = require("./ui"); */;
+var ac = null;
+/**
+ * Get the audio context.
+ */
+function getAudioContext() {
+    return ____awaiter_5(this, void 0, void 0, function () {
+        var ex_1, ex_2;
+        return ____generator_5(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (!!ac) return [3 /*break*/, 12];
+                    ac = new AudioContext();
+                    if (!(ac.state !== "running")) return [3 /*break*/, 4];
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, ac.resume()];
+                case 2:
+                    _a.sent();
+                    return [3 /*break*/, 4];
+                case 3:
+                    ex_1 = _a.sent();
+                    return [3 /*break*/, 4];
+                case 4:
+                    if (!(ac.state !== "running")) return [3 /*break*/, 10];
+                    // OK, ask nicely
+                    return [4 /*yield*/, _$ui_20.alert("This tool needs permission to play audio. Press OK to grant this permission.")];
+                case 5:
+                    // OK, ask nicely
+                    _a.sent();
+                    _a.label = 6;
+                case 6:
+                    _a.trys.push([6, 8, , 10]);
+                    return [4 /*yield*/, ac.resume()];
+                case 7:
+                    _a.sent();
+                    return [3 /*break*/, 10];
+                case 8:
+                    ex_2 = _a.sent();
+                    return [4 /*yield*/, _$ui_20.alert(ex_2 + "")];
+                case 9:
+                    _a.sent();
+                    return [3 /*break*/, 10];
+                case 10: 
+                // Load in the AWP
+                return [4 /*yield*/, ac.audioWorklet.addModule("awp/ennuizel-player.js")];
+                case 11:
+                    // Load in the AWP
+                    _a.sent();
+                    _a.label = 12;
+                case 12: return [2 /*return*/, ac];
+            }
+        });
+    });
+}
+_$audio_5.getAudioContext = getAudioContext;
+/**
+ * Create a source node for this stream of libav-like frames. Takes the reader,
+ * so that the caller can cancel it.
+ * @param stream  The input stream.
+ */
+function createSource(stream, opts) {
+    if (opts === void 0) { opts = {}; }
+    return ____awaiter_5(this, void 0, void 0, function () {
+        var ac, rdr, first, libav, frame, _a, buffersrc_ctx, buffersink_ctx, finished, firstFrames, ret;
+        return ____generator_5(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, getAudioContext()];
+                case 1:
+                    ac = _b.sent();
+                    rdr = stream.getReader();
+                    return [4 /*yield*/, rdr.read()];
+                case 2:
+                    first = _b.sent();
+                    if (first.done) {
+                        // Useless
+                        if (opts.ready)
+                            opts.ready();
+                        return [2 /*return*/, {
+                                node: ac.createBufferSource(),
+                                // eslint-disable-next-line @typescript-eslint/no-empty-function
+                                start: function () { },
+                                // eslint-disable-next-line @typescript-eslint/no-empty-function
+                                stop: function () { }
+                            }];
+                    }
+                    return [4 /*yield*/, LibAV.LibAV()];
+                case 3:
+                    libav = _b.sent();
+                    return [4 /*yield*/, libav.av_frame_alloc()];
+                case 4:
+                    frame = _b.sent();
+                    return [4 /*yield*/, libav.ff_init_filter_graph("anull", {
+                            sample_rate: first.value.sample_rate,
+                            sample_fmt: first.value.format,
+                            channel_layout: first.value.channel_layout
+                        }, {
+                            sample_rate: ac.sampleRate,
+                            sample_fmt: _$audioData_4.LibAVSampleFormat.FLTP,
+                            channel_layout: 3
+                        })];
+                case 5:
+                    _a = _b.sent(), buffersrc_ctx = _a[1], buffersink_ctx = _a[2];
+                    finished = false;
+                    // Filter the first bit
+                    first.value.node = null;
+                    return [4 /*yield*/, libav.ff_filter_multi(buffersrc_ctx, buffersink_ctx, frame, [first.value])];
+                case 6:
+                    firstFrames = _b.sent();
+                    ret = new AudioWorkletNode(ac, "ennuizel-player", {
+                        parameterData: {
+                            sampleRate: ac.sampleRate
+                        },
+                        outputChannelCount: [2]
+                    });
+                    // Send the first bit
+                    ret.port.postMessage({ c: "data", d: firstFrames.map(function (x) { return x.data; }) });
+                    first = firstFrames = null;
+                    // Associate its port with reading
+                    ret.port.onmessage = function (ev) {
+                        return ____awaiter_5(this, void 0, void 0, function () {
+                            var rawData, frames_1, frames_2;
+                            return ____generator_5(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        if (ev.data.c === "time") {
+                                            // Time update
+                                            if (opts.status)
+                                                opts.status(ev.data.d);
+                                            return [2 /*return*/];
+                                        }
+                                        else if (ev.data.c === "ready") {
+                                            // Ready to play
+                                            if (opts.ready)
+                                                opts.ready();
+                                            return [2 /*return*/];
+                                        }
+                                        else if (ev.data.c === "done") {
+                                            // Stream over
+                                            if (opts.end)
+                                                opts.end();
+                                            return [2 /*return*/];
+                                        }
+                                        else if (ev.data.c !== "read") {
+                                            // Unknown!
+                                            return [2 /*return*/];
+                                        }
+                                        return [4 /*yield*/, rdr.read()];
+                                    case 1:
+                                        rawData = _a.sent();
+                                        if (!rawData.done) return [3 /*break*/, 5];
+                                        if (!!finished) return [3 /*break*/, 3];
+                                        finished = true;
+                                        return [4 /*yield*/, libav.ff_filter_multi(buffersrc_ctx, buffersink_ctx, frame, [], true)];
+                                    case 2:
+                                        frames_1 = _a.sent();
+                                        ret.port.postMessage({
+                                            c: "data",
+                                            d: frames_1.length ? frames_1.map(function (x) { return x.data; }) : null
+                                        });
+                                        return [3 /*break*/, 4];
+                                    case 3:
+                                        ret.port.postMessage({ c: "data", d: null });
+                                        _a.label = 4;
+                                    case 4: return [3 /*break*/, 7];
+                                    case 5:
+                                        rawData.value.node = null;
+                                        return [4 /*yield*/, libav.ff_filter_multi(buffersrc_ctx, buffersink_ctx, frame, [rawData.value])];
+                                    case 6:
+                                        frames_2 = _a.sent();
+                                        ret.port.postMessage({ c: "data", d: frames_2.map(function (x) { return x.data; }) });
+                                        _a.label = 7;
+                                    case 7: return [2 /*return*/];
+                                }
+                            });
+                        });
+                    };
+                    return [2 /*return*/, {
+                            node: ret,
+                            start: function () {
+                                ret.port.postMessage({ c: "play" });
+                            },
+                            stop: function () {
+                                rdr.cancel();
+                                libav.terminate();
+                            }
+                        }];
+            }
+        });
+    });
+}
+_$audio_5.createSource = createSource;
 
 var _$status_15 = {};
 "use strict";
@@ -9376,6 +9613,16 @@ var Store = /** @class */ (function () {
             });
         });
     };
+    Store.prototype.keys = function () {
+        return ____awaiter_16(this, void 0, void 0, function () {
+            return ____generator_16(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.localForage.keys()];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
     return Store;
 }());
 _$store_16.Store = Store;
@@ -9407,6 +9654,7 @@ var UndoableStore = /** @class */ (function (_super) {
         })();
         _this.undos = [];
         _this.ct = 0;
+        _this.noUndo = noUndo;
         return _this;
     }
     /**
@@ -9419,7 +9667,7 @@ var UndoableStore = /** @class */ (function (_super) {
      * Set this as an undo point (i.e., if you undo, you'll undo to here)
      */
     UndoableStore.prototype.undoPoint = function () {
-        if (!noUndo)
+        if (!noUndo && !this.noUndo)
             this.undos.push({ c: "undo" });
     };
     /**
@@ -9445,6 +9693,22 @@ var UndoableStore = /** @class */ (function (_super) {
         });
     };
     /**
+     * Disable undoing.
+     */
+    UndoableStore.prototype.disableUndo = function () {
+        return ____awaiter_16(this, void 0, void 0, function () {
+            return ____generator_16(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.dropUndo()];
+                    case 1:
+                        _a.sent();
+                        this.noUndo = true;
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
      * Set an item and remember the undo steps.
      */
     UndoableStore.prototype.setItem = function (name, value) {
@@ -9455,7 +9719,7 @@ var UndoableStore = /** @class */ (function (_super) {
                     case 0: return [4 /*yield*/, this.getItem(name)];
                     case 1:
                         orig = _a.sent();
-                        if (!!noUndo) return [3 /*break*/, 5];
+                        if (!(!noUndo && !this.noUndo)) return [3 /*break*/, 5];
                         return [4 /*yield*/, this.undoStorePromise];
                     case 2:
                         _a.sent();
@@ -9488,7 +9752,7 @@ var UndoableStore = /** @class */ (function (_super) {
                     case 0: return [4 /*yield*/, this.getItem(name)];
                     case 1:
                         orig = _a.sent();
-                        if (!(!noUndo && orig !== null)) return [3 /*break*/, 4];
+                        if (!(!noUndo && !this.noUndo && orig !== null)) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.undoStorePromise];
                     case 2:
                         _a.sent();
@@ -9515,7 +9779,7 @@ var UndoableStore = /** @class */ (function (_super) {
             return ____generator_16(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (noUndo)
+                        if (noUndo || this.noUndo)
                             return [2 /*return*/];
                         return [4 /*yield*/, this.undoStorePromise];
                     case 1:
@@ -9655,7 +9919,7 @@ var ____generator_13 = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(_$project_13, "__esModule", { value: true });
-_$project_13.play = _$project_13.undoPoint = _$project_13.deleteProjectById = _$project_13.unloadProject = _$project_13.loadProject = _$project_13.newProject = _$project_13.getProjects = _$project_13.load = _$project_13.project = _$project_13.Project = void 0;
+_$project_13.play = _$project_13.disableUndo = _$project_13.undoPoint = _$project_13.deleteProjectById = _$project_13.unloadProject = _$project_13.loadProject = _$project_13.newProject = _$project_13.getProjects = _$project_13.load = _$project_13.project = _$project_13.Project = void 0;
 /* removed: var _$audio_5 = require("./audio"); */;
 /* removed: var _$audioData_4 = require("./audio-data"); */;
 /* removed: var _$export_7 = require("./export"); */;
@@ -10323,7 +10587,7 @@ function deleteProjectById(id) {
                     // First drop the store
                     _a.sent();
                     // Then drop the ref in the main store
-                    return [4 /*yield*/, _$store_16.store.removeItem("ez-project-" + _$project_13.project.id)];
+                    return [4 /*yield*/, _$store_16.store.removeItem("ez-project-" + id)];
                 case 2:
                     // Then drop the ref in the main store
                     _a.sent();
@@ -10410,6 +10674,25 @@ function undoPoint() {
 }
 _$project_13.undoPoint = undoPoint;
 /**
+ * Disable undo for the currently loaded project.
+ */
+function disableUndo() {
+    return ____awaiter_13(this, void 0, void 0, function () {
+        return ____generator_13(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (!_$project_13.project) return [3 /*break*/, 2];
+                    return [4 /*yield*/, _$project_13.project.store.disableUndo()];
+                case 1:
+                    _a.sent();
+                    _a.label = 2;
+                case 2: return [2 /*return*/];
+            }
+        });
+    });
+}
+_$project_13.disableUndo = disableUndo;
+/**
  * Perform an undo.
  */
 function performUndo() {
@@ -10442,6 +10725,16 @@ function performUndo() {
  * Show the "tracks" menu.
  */
 function tracksMenu() {
+    function dynaudnorm(x) {
+        return ____awaiter_13(this, void 0, void 0, function () {
+            return ____generator_13(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, _$filters_8.ffmpegStream(x, "dynaudnorm")];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    }
     _$ui_20.dialog(function (d, show) {
         return ____awaiter_13(this, void 0, void 0, function () {
             var load, mix, mixKeep, mixLevel, mixLevelKeep;
@@ -10453,9 +10746,9 @@ function tracksMenu() {
                 mixKeep = _$hotkeys_9.btn(d, "_Mix selected tracks into new track", { className: "row" });
                 mixKeep.onclick = function () { return uiMix(d, true); };
                 mixLevel = _$hotkeys_9.btn(d, "Mix and le_vel selected tracks", { className: "row" });
-                mixLevel.onclick = function () { return uiMix(d, false, { preFilter: "dynaudnorm", postFilter: "dynaudnorm" }); };
+                mixLevel.onclick = function () { return uiMix(d, false, { preFilter: dynaudnorm, postFilter: dynaudnorm }); };
                 mixLevelKeep = _$hotkeys_9.btn(d, "M_ix and level selected tracks into new track", { className: "row" });
-                mixLevelKeep.onclick = function () { return uiMix(d, true, { preFilter: "dynaudnorm", postFilter: "dynaudnorm" }); };
+                mixLevelKeep.onclick = function () { return uiMix(d, true, { preFilter: dynaudnorm, postFilter: dynaudnorm }); };
                 show(load);
                 return [2 /*return*/];
             });
@@ -10705,27 +10998,24 @@ function loadFile(fileName, raw, opts) {
                                     reader = new _$stream_17.WSPReadableStream({
                                         pull: function (controller) {
                                             return ____awaiter_13(this, void 0, void 0, function () {
-                                                var packets, frames_1, _a, channel_layout, rframes, _i, rframes_1, frame_1;
-                                                var _b;
-                                                return ____generator_13(this, function (_c) {
-                                                    switch (_c.label) {
+                                                var packets, frames_1, channel_layout, rframes, _i, rframes_1, frame_1;
+                                                var _a;
+                                                return ____generator_13(this, function (_b) {
+                                                    switch (_b.label) {
                                                         case 0:
-                                                            if (!true) return [3 /*break*/, 8];
+                                                            if (!true) return [3 /*break*/, 7];
                                                             return [4 /*yield*/, demuxers[stream.index].read()];
                                                         case 1:
-                                                            packets = _c.sent();
+                                                            packets = _b.sent();
                                                             return [4 /*yield*/, libav.ff_decode_multi(c, pkt_1, frame, packets.done ? [] : packets.value, packets.done)];
                                                         case 2:
-                                                            frames_1 = _c.sent();
-                                                            if (!frames_1.length) return [3 /*break*/, 7];
-                                                            if (!!filter_graph) return [3 /*break*/, 5];
-                                                            _a = track_2;
-                                                            return [4 /*yield*/, _$audioData_4.fromPlanar(frames_1[0].format)];
-                                                        case 3:
-                                                            _a.format = _c.sent();
+                                                            frames_1 = _b.sent();
+                                                            if (!frames_1.length) return [3 /*break*/, 6];
+                                                            if (!!filter_graph) return [3 /*break*/, 4];
+                                                            track_2.format = _$audioData_4.fromPlanar(frames_1[0].format);
                                                             track_2.sampleRate = frames_1[0].sample_rate;
                                                             track_2.channels = frames_1[0].channels;
-                                                            channel_layout = (track_2.channels === 1) ? 4 : ((1 << track_2.channels) - 1);
+                                                            channel_layout = _$audioData_4.toChannelLayout(track_2.channels);
                                                             return [4 /*yield*/, libav.ff_init_filter_graph("anull", {
                                                                     sample_rate: track_2.sampleRate,
                                                                     sample_fmt: frames_1[0].format,
@@ -10735,15 +11025,15 @@ function loadFile(fileName, raw, opts) {
                                                                     sample_fmt: track_2.format,
                                                                     channel_layout: channel_layout
                                                                 })];
-                                                        case 4:
-                                                            _b = _c.sent(), filter_graph = _b[0], buffersrc_ctx = _b[1], buffersink_ctx = _b[2];
-                                                            _c.label = 5;
-                                                        case 5: return [4 /*yield*/, libav.ff_filter_multi(buffersrc_ctx, buffersink_ctx, frame, frames_1, packets.done)];
-                                                        case 6:
-                                                            rframes = _c.sent();
+                                                        case 3:
+                                                            _a = _b.sent(), filter_graph = _a[0], buffersrc_ctx = _a[1], buffersink_ctx = _a[2];
+                                                            _b.label = 4;
+                                                        case 4: return [4 /*yield*/, libav.ff_filter_multi(buffersrc_ctx, buffersink_ctx, frame, frames_1, packets.done)];
+                                                        case 5:
+                                                            rframes = _b.sent();
                                                             for (_i = 0, rframes_1 = rframes; _i < rframes_1.length; _i++) {
                                                                 frame_1 = rframes_1[_i];
-                                                                controller.enqueue(frame_1.data);
+                                                                controller.enqueue(frame_1);
                                                             }
                                                             // Tell the host
                                                             if (opts.status) {
@@ -10753,23 +11043,23 @@ function loadFile(fileName, raw, opts) {
                                                             if (rframes.length) {
                                                                 if (packets.done)
                                                                     controller.close();
-                                                                return [3 /*break*/, 8];
+                                                                return [3 /*break*/, 7];
                                                             }
-                                                            _c.label = 7;
-                                                        case 7:
+                                                            _b.label = 6;
+                                                        case 6:
                                                             if (packets.done) {
                                                                 controller.close();
-                                                                return [3 /*break*/, 8];
+                                                                return [3 /*break*/, 7];
                                                             }
                                                             return [3 /*break*/, 0];
-                                                        case 8: return [2 /*return*/];
+                                                        case 7: return [2 /*return*/];
                                                     }
                                                 });
                                             });
                                         }
                                     });
                                     // And start it reading
-                                    trackPromises.push(track_2.append(reader));
+                                    trackPromises.push(track_2.append(new _$stream_17.EZStream(reader)));
                                     return [2 /*return*/];
                             }
                         });
@@ -11111,6 +11401,7 @@ _$plugins_12.getPlugins = _$plugins_12.loadPlugin = _$plugins_12.load = _$plugin
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../ennuizel.d.ts" />
 /* removed: var _$audioData_4 = require("./audio-data"); */;
+/* removed: var _$export_7 = require("./export"); */;
 /* removed: var _$filters_8 = require("./filters"); */;
 /* removed: var _$hotkeys_9 = require("./hotkeys"); */;
 /* removed: var _$project_13 = require("./project"); */;
@@ -11118,6 +11409,7 @@ _$plugins_12.getPlugins = _$plugins_12.loadPlugin = _$plugins_12.load = _$plugin
 /* removed: var _$stream_17 = require("./stream"); */;
 /* removed: var _$track_18 = require("./track"); */;
 /* removed: var _$ui_20 = require("./ui"); */;
+/* removed: var _$util_21 = require("./util"); */;
 // If we have user-defined plugins, say so
 _$plugins_12.haveUserDefinedPlugins = false;
 // All loaded plugins
@@ -11137,18 +11429,25 @@ function __load_12() {
                 loadPlugin: loadPlugin,
                 getPlugin: getPlugin,
                 ReadableStream: _$stream_17.WSPReadableStream,
+                EZStream: _$stream_17.EZStream,
                 filters: _$filters_8,
+                util: _$util_21,
                 hotkeys: _$hotkeys_9,
                 ui: _$ui_20,
                 select: _$select_14,
                 TrackType: _$track_18.TrackType,
                 LibAVSampleFormat: _$audioData_4.LibAVSampleFormat,
+                toPlanar: _$audioData_4.toPlanar,
+                fromPlanar: _$audioData_4.fromPlanar,
                 newProject: _$project_13.newProject,
                 getProjects: _$project_13.getProjects,
                 loadProject: _$project_13.loadProject,
                 unloadProject: _$project_13.unloadProject,
                 deleteProjectById: _$project_13.deleteProjectById,
-                undoPoint: _$project_13.undoPoint
+                undoPoint: _$project_13.undoPoint,
+                disableUndo: _$project_13.disableUndo,
+                standardExports: _$export_7.standardExports,
+                exportAudio: _$export_7.exportAudio
             };
             return [2 /*return*/];
         });

@@ -1,5 +1,5 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.EnnuizelApp = f()}})(function(){var define,module,exports;
-var _$avthreads_6 = {};
+var _$avthreads_7 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -52,8 +52,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(_$avthreads_6, "__esModule", { value: true });
-_$avthreads_6.flush = _$avthreads_6.enqueueSync = _$avthreads_6.enqueue = _$avthreads_6.load = void 0;
+Object.defineProperty(_$avthreads_7, "__esModule", { value: true });
+_$avthreads_7.flush = _$avthreads_7.enqueueSync = _$avthreads_7.enqueue = _$avthreads_7.load = void 0;
 var threads = navigator.hardwareConcurrency ? navigator.hardwareConcurrency * 2 : 8;
 // Multiple parallel libav instances
 var libavPromises = [];
@@ -81,7 +81,7 @@ function load() {
         });
     });
 }
-_$avthreads_6.load = load;
+_$avthreads_7.load = load;
 /**
  * Enqueue a task. enqueue itself returns when the task *starts* running. The
  * task takes the assigned libav as an argument.
@@ -141,7 +141,7 @@ function enqueue(task) {
         });
     });
 }
-_$avthreads_6.enqueue = enqueue;
+_$avthreads_7.enqueue = enqueue;
 /**
  * Enqueue a task and wait for its completion.
  * @params task  The task.
@@ -189,7 +189,7 @@ function enqueueSync(task) {
         });
     });
 }
-_$avthreads_6.enqueueSync = enqueueSync;
+_$avthreads_7.enqueueSync = enqueueSync;
 /**
  * Wait for the queue of libav tasks to finish. You should usually do this at
  * the end of any processing, to make sure you don't create race conditions
@@ -222,9 +222,16 @@ function flush() {
         });
     });
 }
-_$avthreads_6.flush = flush;
+_$avthreads_7.flush = flush;
 
-var _$id36_10 = {};
+var _$FileSaverMin_2 = { exports: {} };
+(function (global){(function (){
+(function(a,b){if("function"==typeof define&&define.amd)define([],b);else if("undefined"!=typeof _$FileSaverMin_2.exports)b();else{b(),a.FileSaver={exports:{}}.exports}})(this,function(){"use strict";function b(a,b){return"undefined"==typeof b?b={autoBom:!1}:"object"!=typeof b&&(console.warn("Deprecated: Expected third argument to be a object"),b={autoBom:!b}),b.autoBom&&/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(a.type)?new Blob(["\uFEFF",a],{type:a.type}):a}function c(a,b,c){var d=new XMLHttpRequest;d.open("GET",a),d.responseType="blob",d.onload=function(){g(d.response,b,c)},d.onerror=function(){console.error("could not download file")},d.send()}function d(a){var b=new XMLHttpRequest;b.open("HEAD",a,!1);try{b.send()}catch(a){}return 200<=b.status&&299>=b.status}function e(a){try{a.dispatchEvent(new MouseEvent("click"))}catch(c){var b=document.createEvent("MouseEvents");b.initMouseEvent("click",!0,!0,window,0,0,0,80,20,!1,!1,!1,!1,0,null),a.dispatchEvent(b)}}var f="object"==typeof window&&window.window===window?window:"object"==typeof self&&self.self===self?self:"object"==typeof global&&global.global===global?global:void 0,a=f.navigator&&/Macintosh/.test(navigator.userAgent)&&/AppleWebKit/.test(navigator.userAgent)&&!/Safari/.test(navigator.userAgent),g=f.saveAs||("object"!=typeof window||window!==f?function(){}:"download"in HTMLAnchorElement.prototype&&!a?function(b,g,h){var i=f.URL||f.webkitURL,j=document.createElement("a");g=g||b.name||"download",j.download=g,j.rel="noopener","string"==typeof b?(j.href=b,j.origin===location.origin?e(j):d(j.href)?c(b,g,h):e(j,j.target="_blank")):(j.href=i.createObjectURL(b),setTimeout(function(){i.revokeObjectURL(j.href)},4E4),setTimeout(function(){e(j)},0))}:"msSaveOrOpenBlob"in navigator?function(f,g,h){if(g=g||f.name||"download","string"!=typeof f)navigator.msSaveOrOpenBlob(b(f,h),g);else if(d(f))c(f,g,h);else{var i=document.createElement("a");i.href=f,i.target="_blank",setTimeout(function(){e(i)})}}:function(b,d,e,g){if(g=g||open("","_blank"),g&&(g.document.title=g.document.body.innerText="downloading..."),"string"==typeof b)return c(b,d,e);var h="application/octet-stream"===b.type,i=/constructor/i.test(f.HTMLElement)||f.safari,j=/CriOS\/[\d]+/.test(navigator.userAgent);if((j||h&&i||a)&&"undefined"!=typeof FileReader){var k=new FileReader;k.onloadend=function(){var a=k.result;a=j?a:a.replace(/^data:[^;]*;/,"data:attachment/file;"),g?g.location.href=a:location=a,g=null},k.readAsDataURL(b)}else{var l=f.URL||f.webkitURL,m=l.createObjectURL(b);g?g.location=m:location.href=m,g=null,setTimeout(function(){l.revokeObjectURL(m)},4E4)}});f.saveAs=g.saveAs=g,"undefined"!="object"&&(_$FileSaverMin_2.exports=g)});
+
+//# sourceMappingURL=FileSaver.min.js.map
+}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+_$FileSaverMin_2 = _$FileSaverMin_2.exports
+var _$downloadStream_9 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -241,7 +248,7 @@ var _$id36_10 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-var ____awaiter_10 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var ____awaiter_9 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -250,7 +257,7 @@ var ____awaiter_10 = (this && this.__awaiter) || function (thisArg, _arguments, 
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var ____generator_10 = (this && this.__generator) || function (thisArg, body) {
+var ____generator_9 = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
@@ -277,8 +284,278 @@ var ____generator_10 = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(_$id36_10, "__esModule", { value: true });
-_$id36_10.genFresh = _$id36_10.gen = void 0;
+Object.defineProperty(_$downloadStream_9, "__esModule", { value: true });
+_$downloadStream_9.stream = _$downloadStream_9.load = void 0;
+/* removed: var _$FileSaverMin_2 = require("file-saver"); */;
+var scope = "/download-stream-service-worker/";
+// The registered service worker, if there is one
+var serviceWorker = null;
+// The port for communicating with the service worker
+var serviceWorkerPort = null;
+// Callbacks from the service worker
+var callbacks = Object.create(null);
+// Current callback number
+var callbackNo = 0;
+// Send a message to the service worker and expect a response
+function swPostMessage(msg) {
+    return ____awaiter_9(this, void 0, void 0, function () {
+        var no;
+        return ____generator_9(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    no = callbackNo++;
+                    msg.i = no;
+                    serviceWorkerPort.postMessage(msg);
+                    return [4 /*yield*/, new Promise(function (res) {
+                            callbacks[no] = res;
+                        })];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+/**
+ * Load support for streaming downloads.
+ */
+function __load_9() {
+    return ____awaiter_9(this, void 0, void 0, function () {
+        var swr_1, mc, ex_1;
+        return ____generator_9(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 12, , 13]);
+                    if (!navigator.serviceWorker) return [3 /*break*/, 11];
+                    return [4 /*yield*/, navigator.serviceWorker.getRegistration(scope)];
+                case 1:
+                    swr_1 = _a.sent();
+                    if (!(!swr_1 || !swr_1.active)) return [3 /*break*/, 9];
+                    return [4 /*yield*/, navigator.serviceWorker.register("sw.js", { scope: scope })];
+                case 2:
+                    // We need to register and activate it
+                    swr_1 = _a.sent();
+                    if (!(!swr_1.installing && !swr_1.waiting && !swr_1.active)) return [3 /*break*/, 4];
+                    // Wait for it to install
+                    return [4 /*yield*/, new Promise(function (res) {
+                            swr_1.onupdatefound = res;
+                        })];
+                case 3:
+                    // Wait for it to install
+                    _a.sent();
+                    _a.label = 4;
+                case 4:
+                    serviceWorker = swr_1.installing || swr_1.waiting || swr_1.active;
+                    _a.label = 5;
+                case 5:
+                    if (!(serviceWorker.state !== "activated")) return [3 /*break*/, 7];
+                    return [4 /*yield*/, new Promise(function (res) {
+                            serviceWorker.addEventListener("statechange", res, { once: true });
+                        })];
+                case 6:
+                    _a.sent();
+                    return [3 /*break*/, 5];
+                case 7:
+                    // We want it already active when the page loads
+                    location.reload();
+                    return [4 /*yield*/, new Promise(function () { })];
+                case 8:
+                    _a.sent();
+                    _a.label = 9;
+                case 9:
+                    serviceWorker = swr_1.active;
+                    mc = new MessageChannel();
+                    serviceWorker.postMessage({ c: "port", p: mc.port2 }, [mc.port2]);
+                    serviceWorkerPort = mc.port1;
+                    // Wait for messages
+                    serviceWorkerPort.onmessage = function (ev) {
+                        var msg = ev.data;
+                        var callback = callbacks[msg.i];
+                        if (callback) {
+                            delete callbacks[msg.i];
+                            callback(msg);
+                        }
+                    };
+                    // And ack
+                    return [4 /*yield*/, swPostMessage({ c: "setup" })];
+                case 10:
+                    // And ack
+                    _a.sent();
+                    _a.label = 11;
+                case 11: return [3 /*break*/, 13];
+                case 12:
+                    ex_1 = _a.sent();
+                    // No service worker
+                    console.log("WARNING: Not using service workers! " + ex_1);
+                    serviceWorker = serviceWorkerPort = null;
+                    return [3 /*break*/, 13];
+                case 13: return [2 /*return*/];
+            }
+        });
+    });
+}
+_$downloadStream_9.load = __load_9;
+/**
+ * Attempt to stream this.
+ */
+function stream(name, body, headers) {
+    return ____awaiter_9(this, void 0, void 0, function () {
+        var url, worked, iframe;
+        return ____generator_9(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    // Set up the most important header
+                    name = encodeURI(name).replace(/%/g, "_");
+                    headers["content-disposition"] = "attachment; filename=\"" + name + "\"";
+                    if (!serviceWorker) return [3 /*break*/, 5];
+                    url = scope + Math.random() + Math.random() + Math.random() + "/" + name;
+                    return [4 /*yield*/, Promise.race([
+                            swPostMessage({ c: "stream", u: url, h: headers }).then(function () { return true; }),
+                            (new Promise(function (res) { return setTimeout(res, 5000); })).then(function () { return false; })
+                        ])];
+                case 1:
+                    worked = _a.sent();
+                    if (!worked) return [3 /*break*/, 3];
+                    iframe = document.createElement("iframe");
+                    iframe.src = url;
+                    iframe.style.display = "none";
+                    document.body.appendChild(iframe);
+                    return [4 /*yield*/, Promise.race([
+                            swPostMessage({ c: "wait-start", u: url }).then(function () { return true; }),
+                            (new Promise(function (res) { return setTimeout(res, 5000); })).then(function () { return false; })
+                        ])];
+                case 2:
+                    // Make sure it actually starts downloading
+                    worked = _a.sent();
+                    _a.label = 3;
+                case 3:
+                    if (!worked) return [3 /*break*/, 5];
+                    return [4 /*yield*/, streamViaWorker(url, body)];
+                case 4: 
+                // Send it via the worker
+                return [2 /*return*/, _a.sent()];
+                case 5: return [4 /*yield*/, streamViaBlob(name, body)];
+                case 6: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+_$downloadStream_9.stream = stream;
+/**
+ * Stream this data via the service worker.
+ */
+function streamViaWorker(url, body) {
+    return ____awaiter_9(this, void 0, void 0, function () {
+        var rdr, d;
+        return ____generator_9(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    rdr = body.getReader();
+                    _a.label = 1;
+                case 1:
+                    if (!true) return [3 /*break*/, 6];
+                    return [4 /*yield*/, rdr.read()];
+                case 2:
+                    d = _a.sent();
+                    if (!d.done) return [3 /*break*/, 4];
+                    return [4 /*yield*/, swPostMessage({ c: "end", u: url })];
+                case 3:
+                    _a.sent();
+                    return [3 /*break*/, 6];
+                case 4: return [4 /*yield*/, swPostMessage({ c: "data", u: url, b: d.value })];
+                case 5:
+                    _a.sent();
+                    return [3 /*break*/, 1];
+                case 6: return [2 /*return*/];
+            }
+        });
+    });
+}
+/**
+ * Stream this data via a blob.
+ */
+function streamViaBlob(name, body) {
+    return ____awaiter_9(this, void 0, void 0, function () {
+        var data, rdr, part, blob;
+        return ____generator_9(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    console.log("WARNING: Saving data to a blob to download!");
+                    data = [];
+                    rdr = body.getReader();
+                    _a.label = 1;
+                case 1:
+                    if (!true) return [3 /*break*/, 3];
+                    return [4 /*yield*/, rdr.read()];
+                case 2:
+                    part = _a.sent();
+                    if (part.done)
+                        return [3 /*break*/, 3];
+                    data.push(part.value);
+                    return [3 /*break*/, 1];
+                case 3:
+                    blob = new Blob(data);
+                    // And download it
+                    _$FileSaverMin_2.saveAs(blob, name);
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+
+var _$id36_13 = {};
+"use strict";
+/*
+ * Copyright (c) 2021 Yahweasel
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+ * SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
+ * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+ * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+var ____awaiter_13 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var ____generator_13 = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(_$id36_13, "__esModule", { value: true });
+_$id36_13.genFresh = _$id36_13.gen = void 0;
 /**
  * Generate a random ID.
  * @param len  Length of the ID to generate.
@@ -290,7 +567,7 @@ function gen(len) {
         ret += Math.random().toString(36).slice(2);
     return ret.slice(0, len);
 }
-_$id36_10.gen = gen;
+_$id36_13.gen = gen;
 /**
  * Generate a random ID that isn't used in the store.
  * @param store  Store to check.
@@ -300,9 +577,9 @@ _$id36_10.gen = gen;
 function genFresh(store, prefix, len) {
     if (prefix === void 0) { prefix = ""; }
     if (len === void 0) { len = 12; }
-    return ____awaiter_10(this, void 0, void 0, function () {
+    return ____awaiter_13(this, void 0, void 0, function () {
         var id;
-        return ____generator_10(this, function (_a) {
+        return ____generator_13(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!true) return [3 /*break*/, 2];
@@ -317,16 +594,16 @@ function genFresh(store, prefix, len) {
         });
     });
 }
-_$id36_10.genFresh = genFresh;
+_$id36_13.genFresh = genFresh;
 
-var _$uiCode_19 = {};
+var _$uiCode_22 = {};
 "use strict";
-Object.defineProperty(_$uiCode_19, "__esModule", { value: true });
-_$uiCode_19.code = void 0;
+Object.defineProperty(_$uiCode_22, "__esModule", { value: true });
+_$uiCode_22.code = void 0;
 // This file was generated by mk-ui-code.js. Do not modify.
-_$uiCode_19.code = "<div class=\"main cflex\"><div class=\"menu\"><button id=\"b-project\"><i class=\"fas fa-file-audio\"></i> <u>P</u>roject</button>&nbsp;<button id=\"b-edit\"><i class=\"fas fa-edit\"></i> <u>E</u>dit</button>&nbsp;<button id=\"b-tracks\"><i class=\"fas fa-bars\"></i> <u>T</u>racks</button>&nbsp;<button id=\"b-filters\"><i class=\"fas fa-filter\"></i> <u>F</u>ilters</button><div class=\"stretch\"></div><button id=\"b-zoom\"><i class=\"fas fa-search\"></i> <u>Z</u>oom</button><button id=\"b-about\"><i class=\"fas fa-address-card\"></i> About</button></div><input id=\"zoom-selector\" type=\"range\" min=\"1\" max=\"100\" value=\"10\" /><canvas id=\"timeline\" height=32></canvas><div id=\"project\"></div><div class=\"status-bar\" id=\"status\">&nbsp;</div></div>";
+_$uiCode_22.code = "<div class=\"main cflex\"><div class=\"menu\"><button id=\"b-project\"><i class=\"fas fa-file-audio\"></i> <u>P</u>roject</button>&nbsp;<button id=\"b-edit\"><i class=\"fas fa-edit\"></i> <u>E</u>dit</button>&nbsp;<button id=\"b-tracks\"><i class=\"fas fa-bars\"></i> <u>T</u>racks</button>&nbsp;<button id=\"b-filters\"><i class=\"fas fa-filter\"></i> <u>F</u>ilters</button><div class=\"stretch\"></div><button id=\"b-zoom\"><i class=\"fas fa-search\"></i> <u>Z</u>oom</button><button id=\"b-about\"><i class=\"fas fa-address-card\"></i> About</button></div><input id=\"zoom-selector\" type=\"range\" min=\"1\" max=\"100\" value=\"10\" /><canvas id=\"timeline\" height=32></canvas><div id=\"project\"></div><div class=\"status-bar\" id=\"status\">&nbsp;</div></div>";
 
-var _$ui_20 = {};
+var _$ui_23 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -343,7 +620,7 @@ var _$ui_20 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-var ____awaiter_20 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var ____awaiter_23 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -352,7 +629,7 @@ var ____awaiter_20 = (this && this.__awaiter) || function (thisArg, _arguments, 
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var ____generator_20 = (this && this.__generator) || function (thisArg, body) {
+var ____generator_23 = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
@@ -379,15 +656,15 @@ var ____generator_20 = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(_$ui_20, "__esModule", { value: true });
-_$ui_20.txt = _$ui_20.lbl = _$ui_20.btn = _$ui_20.br = _$ui_20.mk = _$ui_20.alert = _$ui_20.loading = _$ui_20.dialogClose = _$ui_20.dialog = _$ui_20.loadLibrary = _$ui_20.load = _$ui_20.pixelsPerSecond = _$ui_20.trackMiddle = _$ui_20.trackHeight = _$ui_20.ui = _$ui_20.dce = _$ui_20.gebi = void 0;
-/* removed: var _$uiCode_19 = require("./ui-code"); */;
-_$ui_20.gebi = document.getElementById.bind(document);
-_$ui_20.dce = document.createElement.bind(document);
+Object.defineProperty(_$ui_23, "__esModule", { value: true });
+_$ui_23.txt = _$ui_23.lbl = _$ui_23.btn = _$ui_23.br = _$ui_23.mk = _$ui_23.alert = _$ui_23.loading = _$ui_23.dialogClose = _$ui_23.dialog = _$ui_23.loadLibrary = _$ui_23.load = _$ui_23.pixelsPerSecond = _$ui_23.trackMiddle = _$ui_23.trackHeight = _$ui_23.ui = _$ui_23.dce = _$ui_23.gebi = void 0;
+/* removed: var _$uiCode_22 = require("./ui-code"); */;
+_$ui_23.gebi = document.getElementById.bind(document);
+_$ui_23.dce = document.createElement.bind(document);
 /**
  * The UI elements.
  */
-_$ui_20.ui = {
+_$ui_23.ui = {
     // Main menu
     menu: {
         project: null,
@@ -416,49 +693,49 @@ _$ui_20.ui = {
 /**
  * Height of (audio) tracks.
  */
-_$ui_20.trackHeight = 128;
+_$ui_23.trackHeight = 128;
 /**
  * Middle of the height of audio tracks.
  */
-_$ui_20.trackMiddle = _$ui_20.trackHeight / 2;
+_$ui_23.trackMiddle = _$ui_23.trackHeight / 2;
 /**
  * Pixels per second at zoom 1.
  */
-_$ui_20.pixelsPerSecond = 128;
+_$ui_23.pixelsPerSecond = 128;
 /**
  * Load the UI.
  */
-function __load_20() {
+function __load_23() {
     // Load the UI
-    document.body.innerHTML = _$uiCode_19.code;
+    document.body.innerHTML = _$uiCode_22.code;
     // And export it
-    _$ui_20.ui.menu = {
-        project: (0, _$ui_20.gebi)("b-project"),
-        edit: (0, _$ui_20.gebi)("b-edit"),
-        tracks: (0, _$ui_20.gebi)("b-tracks"),
-        filters: (0, _$ui_20.gebi)("b-filters"),
-        zoom: (0, _$ui_20.gebi)("b-zoom"),
-        about: (0, _$ui_20.gebi)("b-about")
+    _$ui_23.ui.menu = {
+        project: (0, _$ui_23.gebi)("b-project"),
+        edit: (0, _$ui_23.gebi)("b-edit"),
+        tracks: (0, _$ui_23.gebi)("b-tracks"),
+        filters: (0, _$ui_23.gebi)("b-filters"),
+        zoom: (0, _$ui_23.gebi)("b-zoom"),
+        about: (0, _$ui_23.gebi)("b-about")
     };
-    _$ui_20.ui.timeline = (0, _$ui_20.gebi)("timeline");
-    _$ui_20.ui.main = (0, _$ui_20.gebi)("project");
-    _$ui_20.ui.status = (0, _$ui_20.gebi)("status");
-    _$ui_20.ui.zoomSelector = (0, _$ui_20.gebi)("zoom-selector");
-    _$ui_20.ui.utilityCSS = mk("style", document.body, { type: "text/css" });
+    _$ui_23.ui.timeline = (0, _$ui_23.gebi)("timeline");
+    _$ui_23.ui.main = (0, _$ui_23.gebi)("project");
+    _$ui_23.ui.status = (0, _$ui_23.gebi)("status");
+    _$ui_23.ui.zoomSelector = (0, _$ui_23.gebi)("zoom-selector");
+    _$ui_23.ui.utilityCSS = mk("style", document.body, { type: "text/css" });
     zoom();
-    _$ui_20.ui.zoomSelector.addEventListener("input", function () {
-        _$ui_20.ui.zoom = (+_$ui_20.ui.zoomSelector.value) / 100;
+    _$ui_23.ui.zoomSelector.addEventListener("input", function () {
+        _$ui_23.ui.zoom = (+_$ui_23.ui.zoomSelector.value) / 100;
         zoom();
     });
 }
-_$ui_20.load = __load_20;
+_$ui_23.load = __load_23;
 /**
  * Load a library.
  * @param name  URL of the library to load.
  */
 function loadLibrary(name) {
     return new Promise(function (res, rej) {
-        var scr = (0, _$ui_20.dce)("script");
+        var scr = (0, _$ui_23.dce)("script");
         scr.addEventListener("load", res);
         scr.addEventListener("error", function (ev) { return rej(new Error(ev.message)); });
         scr.src = name;
@@ -466,14 +743,14 @@ function loadLibrary(name) {
         document.body.appendChild(scr);
     });
 }
-_$ui_20.loadLibrary = loadLibrary;
+_$ui_23.loadLibrary = loadLibrary;
 // Set the zoom in CSS
 function zoom() {
-    _$ui_20.ui.utilityCSS.innerText =
+    _$ui_23.ui.utilityCSS.innerText =
         ":root {" +
-            "--zoom-wave: " + _$ui_20.ui.zoom + ";" +
+            "--zoom-wave: " + _$ui_23.ui.zoom + ";" +
             "}";
-    for (var _i = 0, _a = _$ui_20.ui.onzoom; _i < _a.length; _i++) {
+    for (var _i = 0, _a = _$ui_23.ui.onzoom; _i < _a.length; _i++) {
         var oz = _a[_i];
         oz();
     }
@@ -486,9 +763,9 @@ function zoom() {
  */
 function dialog(callback, opts) {
     if (opts === void 0) { opts = {}; }
-    return ____awaiter_20(this, void 0, void 0, function () {
+    return ____awaiter_23(this, void 0, void 0, function () {
         var d, layerSeparator, wrapper1, wrapper2, box, dIdx, clIdx, close_1, ret, dIdx, cIdx;
-        return ____generator_20(this, function (_a) {
+        return ____generator_23(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (opts.reuse) {
@@ -509,21 +786,21 @@ function dialog(callback, opts) {
                     }
                     // Remove any previous metadata
                     if (opts.reuse) {
-                        dIdx = _$ui_20.ui.dialogs.indexOf(d);
+                        dIdx = _$ui_23.ui.dialogs.indexOf(d);
                         if (dIdx >= 0)
-                            _$ui_20.ui.dialogs.splice(dIdx, 1);
-                        clIdx = _$ui_20.ui.closeable.indexOf(d);
+                            _$ui_23.ui.dialogs.splice(dIdx, 1);
+                        clIdx = _$ui_23.ui.closeable.indexOf(d);
                         if (clIdx >= 0)
-                            _$ui_20.ui.closeable.splice(clIdx, 1);
+                            _$ui_23.ui.closeable.splice(clIdx, 1);
                     }
                     // Remember it
-                    _$ui_20.ui.dialogs.push(d);
+                    _$ui_23.ui.dialogs.push(d);
                     // Make it closeable, if applicable
                     if (opts.closeable) {
                         close_1 = btn(d.box, "X", { className: "close-button" });
                         close_1.onclick = function () { return dialogClose(d); };
                         mk("div", d.box).style.height = "2em";
-                        _$ui_20.ui.closeable.push(d);
+                        _$ui_23.ui.closeable.push(d);
                     }
                     return [4 /*yield*/, callback(d, function (focus) {
                             d.wrapper.style.display = "flex";
@@ -535,12 +812,12 @@ function dialog(callback, opts) {
                     /* Close it (closeable things are assumed to be kept open and closed by the
                      * user) */
                     if ((!opts.closeable && !opts.keepOpen) || opts.forceClose) {
-                        dIdx = _$ui_20.ui.dialogs.indexOf(d);
+                        dIdx = _$ui_23.ui.dialogs.indexOf(d);
                         if (dIdx >= 0)
-                            _$ui_20.ui.dialogs.splice(dIdx, 1);
-                        cIdx = _$ui_20.ui.closeable.indexOf(d);
+                            _$ui_23.ui.dialogs.splice(dIdx, 1);
+                        cIdx = _$ui_23.ui.closeable.indexOf(d);
                         if (cIdx >= 0)
-                            _$ui_20.ui.closeable.splice(cIdx, 1);
+                            _$ui_23.ui.closeable.splice(cIdx, 1);
                         try {
                             document.body.removeChild(d.layerSeparator);
                             document.body.removeChild(d.wrapper);
@@ -552,14 +829,14 @@ function dialog(callback, opts) {
         });
     });
 }
-_$ui_20.dialog = dialog;
+_$ui_23.dialog = dialog;
 /**
  * Wrapper to quickly close a dialog box that's been kept open.
  * @param d  The dialog.
  */
 function dialogClose(d) {
-    return ____awaiter_20(this, void 0, void 0, function () {
-        return ____generator_20(this, function (_a) {
+    return ____awaiter_23(this, void 0, void 0, function () {
+        return ____generator_23(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, dialog(function () { return void 0; }, { reuse: d })];
                 case 1:
@@ -569,12 +846,12 @@ function dialogClose(d) {
         });
     });
 }
-_$ui_20.dialogClose = dialogClose;
+_$ui_23.dialogClose = dialogClose;
 // Handle closing with escape
 document.body.addEventListener("keydown", function (ev) {
-    if (ev.key === "Escape" && _$ui_20.ui.closeable.length) {
+    if (ev.key === "Escape" && _$ui_23.ui.closeable.length) {
         ev.preventDefault();
-        dialogClose(_$ui_20.ui.closeable.pop());
+        dialogClose(_$ui_23.ui.closeable.pop());
     }
 });
 /**
@@ -584,8 +861,8 @@ document.body.addEventListener("keydown", function (ev) {
 function loading(callback, opts) {
     if (opts === void 0) { opts = {}; }
     return dialog(function (d, show) {
-        return ____awaiter_20(this, void 0, void 0, function () {
-            return ____generator_20(this, function (_a) {
+        return ____awaiter_23(this, void 0, void 0, function () {
+            return ____generator_23(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         d.box.innerText = "Loading...";
@@ -599,19 +876,19 @@ function loading(callback, opts) {
         closeable: false
     }, opts));
 }
-_$ui_20.loading = loading;
+_$ui_23.loading = loading;
 /**
  * Show an OK-only alert box.
  * @param html  innerHTML of the dialog.
  */
 function alert(html) {
-    return ____awaiter_20(this, void 0, void 0, function () {
-        return ____generator_20(this, function (_a) {
+    return ____awaiter_23(this, void 0, void 0, function () {
+        return ____generator_23(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, dialog(function (d, show) {
-                        return ____awaiter_20(this, void 0, void 0, function () {
+                        return ____awaiter_23(this, void 0, void 0, function () {
                             var ok;
-                            return ____generator_20(this, function (_a) {
+                            return ____generator_23(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
                                         mk("div", d.box, { innerHTML: html + "<br/><br/>" });
@@ -632,7 +909,7 @@ function alert(html) {
         });
     });
 }
-_$ui_20.alert = alert;
+_$ui_23.alert = alert;
 // Standard interface elements
 /**
  * Make an element.
@@ -642,13 +919,13 @@ _$ui_20.alert = alert;
  */
 function mk(el, parent, opts) {
     if (opts === void 0) { opts = {}; }
-    var ret = (0, _$ui_20.dce)(el);
+    var ret = (0, _$ui_23.dce)(el);
     if (parent)
         parent.appendChild(ret);
     Object.assign(ret, opts);
     return ret;
 }
-_$ui_20.mk = mk;
+_$ui_23.mk = mk;
 /**
  * Make a <br/>
  * @param parent  Element to add it to.
@@ -656,7 +933,7 @@ _$ui_20.mk = mk;
 function br(parent) {
     return mk("br", parent);
 }
-_$ui_20.br = br;
+_$ui_23.br = br;
 /**
  * Make a <button/>
  * @param parent  Element to add it to.
@@ -667,7 +944,7 @@ function btn(parent, innerHTML, opts) {
     if (opts === void 0) { opts = {}; }
     return mk("button", parent, Object.assign({ innerHTML: innerHTML }, opts));
 }
-_$ui_20.btn = btn;
+_$ui_23.btn = btn;
 /**
  * Make a <label/>
  * @param parent  Element to add it to.
@@ -679,7 +956,7 @@ function lbl(parent, htmlFor, innerHTML, opts) {
     if (opts === void 0) { opts = {}; }
     return mk("label", parent, Object.assign({ htmlFor: htmlFor, innerHTML: innerHTML }, opts));
 }
-_$ui_20.lbl = lbl;
+_$ui_23.lbl = lbl;
 /**
  * Make an <input type="text"/>
  * @param parent  Element to add it to.
@@ -691,9 +968,9 @@ function txt(parent, opts) {
         type: "text"
     }, opts));
 }
-_$ui_20.txt = txt;
+_$ui_23.txt = txt;
 
-var _$util_21 = {};
+var _$util_24 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -710,8 +987,8 @@ var _$util_21 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-Object.defineProperty(_$util_21, "__esModule", { value: true });
-_$util_21.timestamp = void 0;
+Object.defineProperty(_$util_24, "__esModule", { value: true });
+_$util_24.timestamp = void 0;
 /**
  * Convert a time in seconds to a string timestamp.
  * @param s  The time.
@@ -753,9 +1030,9 @@ function timestamp(s, min) {
     }
     return hs + ":" + ms + ":" + ss;
 }
-_$util_21.timestamp = timestamp;
+_$util_24.timestamp = timestamp;
 
-var _$select_14 = {};
+var _$select_17 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -772,7 +1049,7 @@ var _$select_14 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-var ____awaiter_14 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var ____awaiter_17 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -781,7 +1058,7 @@ var ____awaiter_14 = (this && this.__awaiter) || function (thisArg, _arguments, 
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var ____generator_14 = (this && this.__generator) || function (thisArg, body) {
+var ____generator_17 = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
@@ -808,10 +1085,10 @@ var ____generator_14 = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(_$select_14, "__esModule", { value: true });
-_$select_14.load = _$select_14.setPlayHead = _$select_14.selectAll = _$select_14.selectTracks = _$select_14.selectTime = _$select_14.getSelection = _$select_14.clearSelectables = _$select_14.removeSelectable = _$select_14.addSelectable = _$select_14.playHead = void 0;
-/* removed: var _$ui_20 = require("./ui"); */;
-/* removed: var _$util_21 = require("./util"); */;
+Object.defineProperty(_$select_17, "__esModule", { value: true });
+_$select_17.load = _$select_17.setPlayHead = _$select_17.selectAll = _$select_17.selectTracks = _$select_17.selectTime = _$select_17.getSelection = _$select_17.clearSelectables = _$select_17.removeSelectable = _$select_17.addSelectable = _$select_17.playHead = void 0;
+/* removed: var _$ui_23 = require("./ui"); */;
+/* removed: var _$util_24 = require("./util"); */;
 /**
  * All of the selectable entities currently known.
  */
@@ -838,21 +1115,21 @@ var selectedEls = new Set();
 /**
  * The play head, only visible while playing audio.
  */
-_$select_14.playHead = null;
+_$select_17.playHead = null;
 /**
  * Add a selectable.
  * @param sel  Selectable to add.
  */
 function addSelectable(sel) {
-    return ____awaiter_14(this, void 0, void 0, function () {
+    return ____awaiter_17(this, void 0, void 0, function () {
         var c;
-        return ____generator_14(this, function (_a) {
+        return ____generator_17(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    c = sel.display = _$ui_20.mk("canvas", sel.wrapper, {
+                    c = sel.display = _$ui_23.mk("canvas", sel.wrapper, {
                         className: "selection-canvas",
                         width: 1280,
-                        height: _$ui_20.trackHeight
+                        height: _$ui_23.trackHeight
                     });
                     selectables.push(sel);
                     selectedEls.add(sel);
@@ -861,7 +1138,7 @@ function addSelectable(sel) {
                         ev.preventDefault();
                         if (document.activeElement)
                             document.activeElement.blur();
-                        var x = ev.offsetX + _$ui_20.ui.main.scrollLeft;
+                        var x = ev.offsetX + _$ui_23.ui.main.scrollLeft;
                         /* Behavior of clicking on selection:
                          * With ctrl: Add or remove this track from the selection list.
                          * With shift: Add this track if it's not selected; extend the time
@@ -880,7 +1157,7 @@ function addSelectable(sel) {
                             // Extending an existing selection
                             if (selectedEls.has(sel)) {
                                 // In time
-                                var selectTime_1 = x / (_$ui_20.pixelsPerSecond * _$ui_20.ui.zoom);
+                                var selectTime_1 = x / (_$ui_23.pixelsPerSecond * _$ui_23.ui.zoom);
                                 var startDist = Math.abs(selectTime_1 - selectStart);
                                 var endDist = Math.abs(selectTime_1 - selectEnd);
                                 if (selectTime_1 < selectStart ||
@@ -903,7 +1180,7 @@ function addSelectable(sel) {
                         else {
                             // Starting a fresh selection
                             selectStart = selectEnd = selectAnchorTime =
-                                x / (_$ui_20.pixelsPerSecond * _$ui_20.ui.zoom);
+                                x / (_$ui_23.pixelsPerSecond * _$ui_23.ui.zoom);
                             selectAnchor = x;
                             selectedEls.clear();
                             selectedEls.add(sel);
@@ -915,7 +1192,7 @@ function addSelectable(sel) {
                         if (selectAnchor === null)
                             return;
                         ev.preventDefault();
-                        var x = ev.offsetX + _$ui_20.ui.main.scrollLeft;
+                        var x = ev.offsetX + _$ui_23.ui.main.scrollLeft;
                         // Make sure we're in the selection
                         if (!selectedEls.has(sel))
                             selectedEls.add(sel);
@@ -923,7 +1200,7 @@ function addSelectable(sel) {
                         if (!activeSelectingRange && Math.abs(x - selectAnchor) >= 16)
                             activeSelectingRange = true;
                         // Update the range selection
-                        var time = x / (_$ui_20.pixelsPerSecond * _$ui_20.ui.zoom);
+                        var time = x / (_$ui_23.pixelsPerSecond * _$ui_23.ui.zoom);
                         if (activeSelectingRange) {
                             if (time < selectAnchorTime) {
                                 selectStart = time;
@@ -947,7 +1224,7 @@ function addSelectable(sel) {
         });
     });
 }
-_$select_14.addSelectable = addSelectable;
+_$select_17.addSelectable = addSelectable;
 // When we lift the mouse *anywhere*, unanchor
 document.body.addEventListener("mouseup", function () {
     if (selectAnchor !== null)
@@ -958,9 +1235,9 @@ document.body.addEventListener("mouseup", function () {
  * @param track  Track to remove.
  */
 function removeSelectable(track) {
-    return ____awaiter_14(this, void 0, void 0, function () {
+    return ____awaiter_17(this, void 0, void 0, function () {
         var sel, idx;
-        return ____generator_14(this, function (_a) {
+        return ____generator_17(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     sel = selectables.filter(function (x) { return x.track === track; })[0];
@@ -976,13 +1253,13 @@ function removeSelectable(track) {
         });
     });
 }
-_$select_14.removeSelectable = removeSelectable;
+_$select_17.removeSelectable = removeSelectable;
 /**
  * Clear all selectables.
  */
 function clearSelectables() {
-    return ____awaiter_14(this, void 0, void 0, function () {
-        return ____generator_14(this, function (_a) {
+    return ____awaiter_17(this, void 0, void 0, function () {
+        return ____generator_17(this, function (_a) {
             selectables = [];
             selectStart = selectEnd = 0;
             selectedEls.clear();
@@ -990,7 +1267,7 @@ function clearSelectables() {
         });
     });
 }
-_$select_14.clearSelectables = clearSelectables;
+_$select_17.clearSelectables = clearSelectables;
 /**
  * Get the current selection.
  */
@@ -1002,7 +1279,7 @@ function getSelection() {
         tracks: selectables.filter(function (x) { return selectedEls.has(x); }).map(function (x) { return x.track; })
     };
 }
-_$select_14.getSelection = getSelection;
+_$select_17.getSelection = getSelection;
 /**
  * Set the *time* of the selection. Don't set the end time to select all time.
  * @param start  Start time. Default 0.
@@ -1010,8 +1287,8 @@ _$select_14.getSelection = getSelection;
  */
 function selectTime(start, end) {
     if (start === void 0) { start = 0; }
-    return ____awaiter_14(this, void 0, void 0, function () {
-        return ____generator_14(this, function (_a) {
+    return ____awaiter_17(this, void 0, void 0, function () {
+        return ____generator_17(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     selectStart = start;
@@ -1024,15 +1301,15 @@ function selectTime(start, end) {
         });
     });
 }
-_$select_14.selectTime = selectTime;
+_$select_17.selectTime = selectTime;
 /**
  * Set the *tracks* currently selected. Does not update the time.
  * @param tracks  Array of tracks to select. May be empty.
  */
 function selectTracks(tracks) {
-    return ____awaiter_14(this, void 0, void 0, function () {
+    return ____awaiter_17(this, void 0, void 0, function () {
         var trackSet, _i, selectables_1, sel;
-        return ____generator_14(this, function (_a) {
+        return ____generator_17(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     trackSet = new Set(tracks);
@@ -1051,16 +1328,16 @@ function selectTracks(tracks) {
         });
     });
 }
-_$select_14.selectTracks = selectTracks;
+_$select_17.selectTracks = selectTracks;
 /**
  * Select all selectables, and clear the range so that everything is selected.
  * @param opts  Selection options.
  */
 function selectAll(opts) {
     if (opts === void 0) { opts = {}; }
-    return ____awaiter_14(this, void 0, void 0, function () {
+    return ____awaiter_17(this, void 0, void 0, function () {
         var _i, selectables_2, sel;
-        return ____generator_14(this, function (_a) {
+        return ____generator_17(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!opts.tracksOnly)
@@ -1077,7 +1354,7 @@ function selectAll(opts) {
         });
     });
 }
-_$select_14.selectAll = selectAll;
+_$select_17.selectAll = selectAll;
 /**
  * Get the maximum duration of any selectable.
  */
@@ -1094,11 +1371,11 @@ function maxDuration() {
  * @param to  Value to set the play head to.
  */
 function setPlayHead(to) {
-    return ____awaiter_14(this, void 0, void 0, function () {
-        return ____generator_14(this, function (_a) {
+    return ____awaiter_17(this, void 0, void 0, function () {
+        return ____generator_17(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _$select_14.playHead = to;
+                    _$select_17.playHead = to;
                     return [4 /*yield*/, updateDisplay()];
                 case 1:
                     _a.sent();
@@ -1107,15 +1384,15 @@ function setPlayHead(to) {
         });
     });
 }
-_$select_14.setPlayHead = setPlayHead;
+_$select_17.setPlayHead = setPlayHead;
 // The animation frame currently being awaited
 var animationFrame = null;
 /**
  * Update the selection display.
  */
 function updateDisplay() {
-    return ____awaiter_14(this, void 0, void 0, function () {
-        return ____generator_14(this, function (_a) {
+    return ____awaiter_17(this, void 0, void 0, function () {
+        return ____generator_17(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (animationFrame !== null) {
@@ -1136,10 +1413,10 @@ function updateDisplay() {
                     // Wait for an animation frame
                     _a.sent();
                     selPromise = (function () {
-                        return ____awaiter_14(this, void 0, void 0, function () {
+                        return ____awaiter_17(this, void 0, void 0, function () {
                             var scrollLeft, width, _i, selectables_4, sel, selectingRange, startPx, endPx, playHeadPx, timeline, tw, th, ctx, pps, labelScale, firstSec, sec, x, ts, m, _a, selectables_5, sel, ctx, w;
-                            return ____generator_14(this, function (_b) {
-                                scrollLeft = _$ui_20.ui.main.scrollLeft;
+                            return ____generator_17(this, function (_b) {
+                                scrollLeft = _$ui_23.ui.main.scrollLeft;
                                 width = window.innerWidth - 128 /* FIXME: magic number */;
                                 // Relocate each canvas
                                 for (_i = 0, selectables_4 = selectables; _i < selectables_4.length; _i++) {
@@ -1148,18 +1425,18 @@ function updateDisplay() {
                                     sel.display.width = width;
                                 }
                                 selectingRange = (selectStart !== selectEnd);
-                                startPx = Math.max(Math.floor(selectStart * _$ui_20.pixelsPerSecond * _$ui_20.ui.zoom - scrollLeft), -2);
-                                endPx = Math.min(Math.max(Math.ceil(selectEnd * _$ui_20.pixelsPerSecond * _$ui_20.ui.zoom - scrollLeft), startPx + 1), width + 2);
-                                playHeadPx = (_$select_14.playHead === null) ? null : Math.round(_$select_14.playHead * _$ui_20.pixelsPerSecond * _$ui_20.ui.zoom - scrollLeft);
+                                startPx = Math.max(Math.floor(selectStart * _$ui_23.pixelsPerSecond * _$ui_23.ui.zoom - scrollLeft), -2);
+                                endPx = Math.min(Math.max(Math.ceil(selectEnd * _$ui_23.pixelsPerSecond * _$ui_23.ui.zoom - scrollLeft), startPx + 1), width + 2);
+                                playHeadPx = (_$select_17.playHead === null) ? null : Math.round(_$select_17.playHead * _$ui_23.pixelsPerSecond * _$ui_23.ui.zoom - scrollLeft);
                                 // Draw the timeline
                                 {
-                                    timeline = _$ui_20.ui.timeline;
+                                    timeline = _$ui_23.ui.timeline;
                                     tw = timeline.width = window.innerWidth;
                                     th = 32 /* FIXME: magic number */;
                                     ctx = timeline.getContext("2d");
                                     ctx.clearRect(0, 0, tw, th);
                                     ctx.textBaseline = "top";
-                                    pps = _$ui_20.pixelsPerSecond * _$ui_20.ui.zoom;
+                                    pps = _$ui_23.pixelsPerSecond * _$ui_23.ui.zoom;
                                     labelScale = 1;
                                     if (pps >= 32) {
                                         // 32 pixels per second, enough to label every second
@@ -1183,7 +1460,7 @@ function updateDisplay() {
                                         if (sec % labelScale === 0) {
                                             ctx.fillStyle = "#fff";
                                             ctx.fillRect(~~x, 0, 1, th / 2);
-                                            ts = _$util_21.timestamp(sec, true);
+                                            ts = _$util_24.timestamp(sec, true);
                                             m = ctx.measureText(ts);
                                             ctx.fillText(ts, ~~x - m.width / 2, th / 2 + 2);
                                         }
@@ -1198,30 +1475,30 @@ function updateDisplay() {
                                     sel = selectables_5[_a];
                                     ctx = sel.display.getContext("2d");
                                     w = sel.display.width;
-                                    ctx.clearRect(0, 0, w, _$ui_20.trackHeight);
+                                    ctx.clearRect(0, 0, w, _$ui_23.trackHeight);
                                     // Don't show the selection if we're not selected
                                     if (selectedEls.has(sel)) {
                                         if (selectingRange) {
                                             // Blur what isn't selected
                                             ctx.fillStyle = "rgba(0,0,0,0.5)";
-                                            ctx.fillRect(0, 0, startPx, _$ui_20.trackHeight);
-                                            ctx.fillRect(endPx, 0, w - endPx, _$ui_20.trackHeight);
+                                            ctx.fillRect(0, 0, startPx, _$ui_23.trackHeight);
+                                            ctx.fillRect(endPx, 0, w - endPx, _$ui_23.trackHeight);
                                         }
                                         else {
                                             // Just draw a line for the point selected
                                             ctx.fillStyle = "#fff";
-                                            ctx.fillRect(startPx, 0, 1, _$ui_20.trackHeight);
+                                            ctx.fillRect(startPx, 0, 1, _$ui_23.trackHeight);
                                         }
                                     }
                                     else {
                                         // Black it out
                                         ctx.fillStyle = "rgba(0,0,0,0.5)";
-                                        ctx.fillRect(0, 0, width, _$ui_20.trackHeight);
+                                        ctx.fillRect(0, 0, width, _$ui_23.trackHeight);
                                     }
                                     // Also draw the play head
                                     if (playHeadPx !== null) {
                                         ctx.fillStyle = "#fff";
-                                        ctx.fillRect(playHeadPx, 0, 1, _$ui_20.trackHeight);
+                                        ctx.fillRect(playHeadPx, 0, 1, _$ui_23.trackHeight);
                                     }
                                 }
                                 return [2 /*return*/];
@@ -1238,8 +1515,8 @@ function updateDisplay() {
 }
 // Selection hotkeys
 document.body.addEventListener("keydown", function (ev) {
-    return ____awaiter_14(this, void 0, void 0, function () {
-        return ____generator_14(this, function (_a) {
+    return ____awaiter_17(this, void 0, void 0, function () {
+        return ____generator_17(this, function (_a) {
             if (selectAnchor !== null)
                 return [2 /*return*/];
             if (ev.key === "Home") {
@@ -1263,18 +1540,18 @@ document.body.addEventListener("keydown", function (ev) {
 /**
  * Loader for selection. Just makes sure the graphics are updated when we scroll.
  */
-function __load_14() {
-    return ____awaiter_14(this, void 0, void 0, function () {
-        return ____generator_14(this, function (_a) {
-            _$ui_20.ui.main.addEventListener("scroll", updateDisplay);
-            _$ui_20.ui.onzoom.push(updateDisplay);
+function __load_17() {
+    return ____awaiter_17(this, void 0, void 0, function () {
+        return ____generator_17(this, function (_a) {
+            _$ui_23.ui.main.addEventListener("scroll", updateDisplay);
+            _$ui_23.ui.onzoom.push(updateDisplay);
             return [2 /*return*/];
         });
     });
 }
-_$select_14.load = __load_14;
+_$select_17.load = __load_17;
 
-var _$track_18 = {};
+var _$track_21 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -1291,15 +1568,16 @@ var _$track_18 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-Object.defineProperty(_$track_18, "__esModule", { value: true });
-_$track_18.TrackType = void 0;
+Object.defineProperty(_$track_21, "__esModule", { value: true });
+_$track_21.TrackType = void 0;
 /**
  * All supported track types.
  */
 var TrackType;
 (function (TrackType) {
     TrackType[TrackType["Audio"] = 1] = "Audio";
-})(TrackType = _$track_18.TrackType || (_$track_18.TrackType = {}));
+    TrackType[TrackType["Caption"] = 2] = "Caption";
+})(TrackType = _$track_21.TrackType || (_$track_21.TrackType = {}));
 
 var _$ponyfill_3 = { exports: {} };
 (function (global){(function (){
@@ -5612,7 +5890,7 @@ var _$ponyfill_3 = { exports: {} };
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 _$ponyfill_3 = _$ponyfill_3.exports
-var _$stream_17 = {};
+var _$stream_20 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -5629,7 +5907,7 @@ var _$stream_17 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-var ____awaiter_17 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var ____awaiter_20 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -5638,7 +5916,7 @@ var ____awaiter_17 = (this && this.__awaiter) || function (thisArg, _arguments, 
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var ____generator_17 = (this && this.__generator) || function (thisArg, body) {
+var ____generator_20 = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
@@ -5665,11 +5943,11 @@ var ____generator_17 = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(_$stream_17, "__esModule", { value: true });
-_$stream_17.ezStreamFrom = _$stream_17.EZStream = _$stream_17.WSPReadableStream = void 0;
+Object.defineProperty(_$stream_20, "__esModule", { value: true });
+_$stream_20.ezStreamFrom = _$stream_20.EZStream = _$stream_20.WSPReadableStream = void 0;
 /* removed: var _$ponyfill_3 = require("web-streams-polyfill/ponyfill"); */;
 // Force WSP's ReadableStream type to overlap
-_$stream_17.WSPReadableStream = _$ponyfill_3.ReadableStream;
+_$stream_20.WSPReadableStream = _$ponyfill_3.ReadableStream;
 /**
  * A ReadableStream paired with the ability to push back data.
  */
@@ -5694,9 +5972,9 @@ var EZStream = /** @class */ (function () {
      * Read an element. Returns null if the stream has ended.
      */
     EZStream.prototype.read = function () {
-        return ____awaiter_17(this, void 0, void 0, function () {
+        return ____awaiter_20(this, void 0, void 0, function () {
             var chunk;
-            return ____generator_17(this, function (_a) {
+            return ____generator_20(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (this.buf.length)
@@ -5737,16 +6015,16 @@ var EZStream = /** @class */ (function () {
     };
     return EZStream;
 }());
-_$stream_17.EZStream = EZStream;
+_$stream_20.EZStream = EZStream;
 // Create an EZStream from a single item
 function ezStreamFrom(x) {
     var ret = new EZStream(null);
     ret.push(x);
     return ret;
 }
-_$stream_17.ezStreamFrom = ezStreamFrom;
+_$stream_20.ezStreamFrom = ezStreamFrom;
 
-var _$audioData_4 = {};
+var _$audioData_5 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -5763,7 +6041,7 @@ var _$audioData_4 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-var ____awaiter_4 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var ____awaiter_5 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -5772,7 +6050,7 @@ var ____awaiter_4 = (this && this.__awaiter) || function (thisArg, _arguments, P
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var ____generator_4 = (this && this.__generator) || function (thisArg, body) {
+var ____generator_5 = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
@@ -5799,14 +6077,14 @@ var ____generator_4 = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(_$audioData_4, "__esModule", { value: true });
-_$audioData_4.AudioData = _$audioData_4.AudioTrack = _$audioData_4.resample = _$audioData_4.sanitizeLibAVFrame = _$audioData_4.toChannelLayout = _$audioData_4.fromPlanar = _$audioData_4.toPlanar = _$audioData_4.LibAVSampleFormat = void 0;
-/* removed: var _$avthreads_6 = require("./avthreads"); */;
-/* removed: var _$id36_10 = require("./id36"); */;
-/* removed: var _$select_14 = require("./select"); */;
-/* removed: var _$track_18 = require("./track"); */;
-/* removed: var _$stream_17 = require("./stream"); */;
-/* removed: var _$ui_20 = require("./ui"); */;
+Object.defineProperty(_$audioData_5, "__esModule", { value: true });
+_$audioData_5.AudioData = _$audioData_5.AudioTrack = _$audioData_5.resample = _$audioData_5.sanitizeLibAVFrame = _$audioData_5.toChannelLayout = _$audioData_5.fromPlanar = _$audioData_5.toPlanar = _$audioData_5.LibAVSampleFormat = void 0;
+/* removed: var _$avthreads_7 = require("./avthreads"); */;
+/* removed: var _$id36_13 = require("./id36"); */;
+/* removed: var _$select_17 = require("./select"); */;
+/* removed: var _$track_21 = require("./track"); */;
+/* removed: var _$stream_20 = require("./stream"); */;
+/* removed: var _$ui_23 = require("./ui"); */;
 /**
  * libav's sample formats.
  */
@@ -5824,7 +6102,7 @@ var LibAVSampleFormat;
     LibAVSampleFormat[LibAVSampleFormat["DBLP"] = 9] = "DBLP";
     LibAVSampleFormat[LibAVSampleFormat["S64"] = 10] = "S64";
     LibAVSampleFormat[LibAVSampleFormat["S64P"] = 11] = "S64P";
-})(LibAVSampleFormat = _$audioData_4.LibAVSampleFormat || (_$audioData_4.LibAVSampleFormat = {}));
+})(LibAVSampleFormat = _$audioData_5.LibAVSampleFormat || (_$audioData_5.LibAVSampleFormat = {}));
 var log2 = Math.log(2);
 /**
  * Convert a (libav) format to its planar equivalent.
@@ -5851,7 +6129,7 @@ function toPlanar(format) {
             throw new Error("Unsupported format (to planar) " + format);
     }
 }
-_$audioData_4.toPlanar = toPlanar;
+_$audioData_5.toPlanar = toPlanar;
 /**
  * Convert a (libav) format to its non-planar equivalent.
  * @param format  The input format, which may or may not be planar.
@@ -5877,7 +6155,7 @@ function fromPlanar(format) {
             throw new Error("Unsupported format (to planar) " + format);
     }
 }
-_$audioData_4.fromPlanar = fromPlanar;
+_$audioData_5.fromPlanar = fromPlanar;
 /**
  * Convert a number of channels to a channel layout.
  */
@@ -5887,7 +6165,7 @@ function toChannelLayout(channels) {
     else
         return (1 << channels) - 1;
 }
-_$audioData_4.toChannelLayout = toChannelLayout;
+_$audioData_5.toChannelLayout = toChannelLayout;
 /**
  * Sanitize this libav.js frame, by setting any missing fields.
  */
@@ -5913,7 +6191,7 @@ function sanitizeLibAVFrame(frame) {
     if (typeof frame.nb_samples !== "number")
         frame.nb_samples = ~~(frame.data.length / frame.channels);
 }
-_$audioData_4.sanitizeLibAVFrame = sanitizeLibAVFrame;
+_$audioData_5.sanitizeLibAVFrame = sanitizeLibAVFrame;
 /**
  * Convert this LibAVFrame stream to the desired sample rate, format, and
  * channel count.
@@ -5925,16 +6203,16 @@ _$audioData_4.sanitizeLibAVFrame = sanitizeLibAVFrame;
  */
 function resample(stream, sampleRate, format, channels, fs) {
     if (fs === void 0) { fs = "anull"; }
-    return ____awaiter_4(this, void 0, void 0, function () {
+    return ____awaiter_5(this, void 0, void 0, function () {
         var first, libav, frame, _a, buffersrc_ctx, buffersink_ctx;
-        return ____generator_4(this, function (_b) {
+        return ____generator_5(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4 /*yield*/, stream.read()];
                 case 1:
                     first = _b.sent();
                     if (!first) {
                         // No need to filter nothing!
-                        return [2 /*return*/, new _$stream_17.WSPReadableStream({
+                        return [2 /*return*/, new _$stream_20.WSPReadableStream({
                                 start: function (controller) {
                                     controller.close();
                                 }
@@ -5947,11 +6225,11 @@ function resample(stream, sampleRate, format, channels, fs) {
                         first.format === format &&
                         first.channels === channels) {
                         // Nope, already good!
-                        return [2 /*return*/, new _$stream_17.WSPReadableStream({
+                        return [2 /*return*/, new _$stream_20.WSPReadableStream({
                                 pull: function (controller) {
-                                    return ____awaiter_4(this, void 0, void 0, function () {
+                                    return ____awaiter_5(this, void 0, void 0, function () {
                                         var chunk;
-                                        return ____generator_4(this, function (_a) {
+                                        return ____generator_5(this, function (_a) {
                                             switch (_a.label) {
                                                 case 0: return [4 /*yield*/, stream.read()];
                                                 case 1:
@@ -5985,11 +6263,11 @@ function resample(stream, sampleRate, format, channels, fs) {
                 case 4:
                     _a = _b.sent(), buffersrc_ctx = _a[1], buffersink_ctx = _a[2];
                     // And the stream
-                    return [2 /*return*/, new _$stream_17.WSPReadableStream({
+                    return [2 /*return*/, new _$stream_20.WSPReadableStream({
                             pull: function (controller) {
-                                return ____awaiter_4(this, void 0, void 0, function () {
+                                return ____awaiter_5(this, void 0, void 0, function () {
                                     var chunk, fframes, _i, fframes_1, frame_1;
-                                    return ____generator_4(this, function (_a) {
+                                    return ____generator_5(this, function (_a) {
                                         switch (_a.label) {
                                             case 0:
                                                 if (!true) return [3 /*break*/, 3];
@@ -6025,7 +6303,7 @@ function resample(stream, sampleRate, format, channels, fs) {
         });
     });
 }
-_$audioData_4.resample = resample;
+_$audioData_5.resample = resample;
 /**
  * An audio track. Audio data is stored in a tree of AudioData nodes. The
  * AudioTrack itself holds information such as the format (in libav format
@@ -6052,11 +6330,11 @@ var AudioTrack = /** @class */ (function () {
         this.sampleRate = opts.sampleRate || 48000;
         this.channels = opts.channels || 1;
         // UI
-        this.spacer = _$ui_20.mk("div", _$ui_20.ui.main, { className: "track-spacer" });
-        this.info = _$ui_20.mk("div", _$ui_20.ui.main, { className: "track-info" });
-        this.display = _$ui_20.mk("div", _$ui_20.ui.main, { className: "track-display" });
-        this.waveform = _$ui_20.mk("div", this.display, { className: "track-waveform" });
-        _$select_14.addSelectable({
+        this.spacer = _$ui_23.mk("div", _$ui_23.ui.main, { className: "track-spacer" });
+        this.info = _$ui_23.mk("div", _$ui_23.ui.main, { className: "track-info" });
+        this.display = _$ui_23.mk("div", _$ui_23.ui.main, { className: "track-display" });
+        this.waveform = _$ui_23.mk("div", this.display, { className: "track-waveform" });
+        _$select_17.addSelectable({
             track: this,
             wrapper: this.display,
             duration: this.duration.bind(this)
@@ -6065,7 +6343,7 @@ var AudioTrack = /** @class */ (function () {
     /**
      * AudioTracks are track type Audio.
      */
-    AudioTrack.prototype.type = function () { return _$track_18.TrackType.Audio; };
+    AudioTrack.prototype.type = function () { return _$track_21.TrackType.Audio; };
     /**
      * Save this track to the store.
      * @param opts  Other options, in particular whether to perform a deep save
@@ -6073,9 +6351,9 @@ var AudioTrack = /** @class */ (function () {
      */
     AudioTrack.prototype.save = function (opts) {
         if (opts === void 0) { opts = {}; }
-        return ____awaiter_4(this, void 0, void 0, function () {
+        return ____awaiter_5(this, void 0, void 0, function () {
             var t, d, _i, d_1, el, _a, d_2, el;
-            return ____generator_4(this, function (_b) {
+            return ____generator_5(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         t = {
@@ -6120,9 +6398,9 @@ var AudioTrack = /** @class */ (function () {
      * Load this track from the store.
      */
     AudioTrack.prototype.load = function () {
-        return ____awaiter_4(this, void 0, void 0, function () {
+        return ____awaiter_5(this, void 0, void 0, function () {
             var t, d, _i, _a, dataId, part;
-            return ____generator_4(this, function (_b) {
+            return ____generator_5(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, this.project.store.getItem("audio-track-" + this.id)];
                     case 1:
@@ -6160,9 +6438,9 @@ var AudioTrack = /** @class */ (function () {
      * Delete this track.
      */
     AudioTrack.prototype.del = function () {
-        return ____awaiter_4(this, void 0, void 0, function () {
+        return ____awaiter_5(this, void 0, void 0, function () {
             var d, _i, d_3, ad;
-            return ____generator_4(this, function (_a) {
+            return ____generator_5(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         d = [];
@@ -6194,7 +6472,7 @@ var AudioTrack = /** @class */ (function () {
                         }
                         catch (ex) { }
                         // Remove it as a selectable
-                        _$select_14.removeSelectable(this);
+                        _$select_17.removeSelectable(this);
                         return [2 /*return*/];
                 }
             });
@@ -6208,9 +6486,9 @@ var AudioTrack = /** @class */ (function () {
      * @param rstream  The stream to read from.
      */
     AudioTrack.prototype.append = function (rstream) {
-        return ____awaiter_4(this, void 0, void 0, function () {
+        return ____awaiter_5(this, void 0, void 0, function () {
             var store, first, stream, _a, cur, raw, chunk, _b, _c, _d, _e, remaining;
-            return ____generator_4(this, function (_f) {
+            return ____generator_5(this, function (_f) {
                 switch (_f.label) {
                     case 0:
                         store = this.project.store;
@@ -6219,10 +6497,10 @@ var AudioTrack = /** @class */ (function () {
                         first = _f.sent();
                         if (first)
                             rstream.push(first);
-                        _a = _$stream_17.EZStream.bind;
+                        _a = _$stream_20.EZStream.bind;
                         return [4 /*yield*/, resample(rstream, this.sampleRate, this.format, this.channels)];
                     case 2:
-                        stream = new (_a.apply(_$stream_17.EZStream, [void 0, _f.sent()]))();
+                        stream = new (_a.apply(_$stream_20.EZStream, [void 0, _f.sent()]))();
                         cur = null;
                         _f.label = 3;
                     case 3: return [4 /*yield*/, stream.read()];
@@ -6232,7 +6510,7 @@ var AudioTrack = /** @class */ (function () {
                         if (!!this.root) return [3 /*break*/, 6];
                         _b = this;
                         _c = AudioData.bind;
-                        return [4 /*yield*/, _$id36_10.genFresh(store, "audio-data-")];
+                        return [4 /*yield*/, _$id36_13.genFresh(store, "audio-data-")];
                     case 5:
                         // As the root
                         cur = _b.root = new (_c.apply(AudioData, [void 0, _f.sent(), this]))();
@@ -6244,7 +6522,7 @@ var AudioTrack = /** @class */ (function () {
                             cur = cur.right;
                         _d = cur;
                         _e = AudioData.bind;
-                        return [4 /*yield*/, _$id36_10.genFresh(store, "audio-data-")];
+                        return [4 /*yield*/, _$id36_13.genFresh(store, "audio-data-")];
                     case 7:
                         _d.right = new (_e.apply(AudioData, [void 0, _f.sent(), this]))();
                         cur.right.parent = cur;
@@ -6293,7 +6571,7 @@ var AudioTrack = /** @class */ (function () {
                         return [4 /*yield*/, this.save()];
                     case 18:
                         _f.sent();
-                        return [4 /*yield*/, _$avthreads_6.flush()];
+                        return [4 /*yield*/, _$avthreads_7.flush()];
                     case 19:
                         _f.sent();
                         return [2 /*return*/];
@@ -6306,12 +6584,12 @@ var AudioTrack = /** @class */ (function () {
      * @param data  The single chunk of data.
      */
     AudioTrack.prototype.appendRaw = function (data) {
-        return ____awaiter_4(this, void 0, void 0, function () {
+        return ____awaiter_5(this, void 0, void 0, function () {
             var stream;
-            return ____generator_4(this, function (_a) {
+            return ____generator_5(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        stream = new _$stream_17.EZStream(new _$stream_17.WSPReadableStream({
+                        stream = new _$stream_20.EZStream(new _$stream_20.WSPReadableStream({
                             start: function (controller) {
                                 controller.enqueue(data);
                                 controller.close();
@@ -6360,7 +6638,7 @@ var AudioTrack = /** @class */ (function () {
         var sd = this.root ? this.root.find(start) : null;
         if (!sd) {
             // No data, just give an empty stream
-            return new _$stream_17.WSPReadableStream({
+            return new _$stream_20.WSPReadableStream({
                 start: function (controller) {
                     controller.close();
                 }
@@ -6375,11 +6653,11 @@ var AudioTrack = /** @class */ (function () {
             channel_layout: toChannelLayout(this.channels)
         };
         // Create the stream
-        return new _$stream_17.WSPReadableStream({
+        return new _$stream_20.WSPReadableStream({
             start: function (controller) {
-                return ____awaiter_4(this, void 0, void 0, function () {
+                return ____awaiter_5(this, void 0, void 0, function () {
                     var buf;
-                    return ____generator_4(this, function (_a) {
+                    return ____generator_5(this, function (_a) {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, cur.openRaw()];
                             case 1:
@@ -6409,9 +6687,9 @@ var AudioTrack = /** @class */ (function () {
                 });
             },
             pull: function (controller) {
-                return ____awaiter_4(this, void 0, void 0, function () {
+                return ____awaiter_5(this, void 0, void 0, function () {
                     var next, buf;
-                    return ____generator_4(this, function (_a) {
+                    return ____generator_5(this, function (_a) {
                         switch (_a.label) {
                             case 0:
                                 // Move to the next part
@@ -6477,9 +6755,9 @@ var AudioTrack = /** @class */ (function () {
      */
     AudioTrack.prototype.overwrite = function (data, opts) {
         if (opts === void 0) { opts = {}; }
-        return ____awaiter_4(this, void 0, void 0, function () {
+        return ____awaiter_5(this, void 0, void 0, function () {
             var curOutNode, curOutRaw, curOutPos, curOutRem, curInRaw, curInPos, curInRem, stream, dataRd, outStream, outRd, curOut, curIn, curOut, curIn;
-            return ____generator_4(this, function (_a) {
+            return ____generator_5(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         curOutNode = null;
@@ -6599,7 +6877,7 @@ var AudioTrack = /** @class */ (function () {
                     case 23: return [4 /*yield*/, this.save()];
                     case 24:
                         _a.sent();
-                        return [4 /*yield*/, _$avthreads_6.flush()];
+                        return [4 /*yield*/, _$avthreads_7.flush()];
                     case 25:
                         _a.sent();
                         return [2 /*return*/];
@@ -6617,15 +6895,15 @@ var AudioTrack = /** @class */ (function () {
      *                     the same format, sample rate, number of tracks.
      */
     AudioTrack.prototype.replace = function (start, end, replacement) {
-        return ____awaiter_4(this, void 0, void 0, function () {
+        return ____awaiter_5(this, void 0, void 0, function () {
             var _a, _b, startLoc, startNode_1, startNode, startRaw, splitNext, _c, splitNextRaw, remaining, cur, next, raw, newData, _i, newData_1, next, nnext, d, i, el;
-            return ____generator_4(this, function (_d) {
+            return ____generator_5(this, function (_d) {
                 switch (_d.label) {
                     case 0:
                         if (!!this.root) return [3 /*break*/, 2];
                         _a = this;
                         _b = AudioData.bind;
-                        return [4 /*yield*/, _$id36_10.genFresh(this.project.store, "audio-data-")];
+                        return [4 /*yield*/, _$id36_13.genFresh(this.project.store, "audio-data-")];
                     case 1:
                         _a.root = new (_b.apply(AudioData, [void 0, _d.sent(), this]))();
                         this.root.initRaw(new Uint8Array(0)); /* Type doesn't matter since
@@ -6648,7 +6926,7 @@ var AudioTrack = /** @class */ (function () {
                     case 3:
                         startRaw = _d.sent();
                         _c = AudioData.bind;
-                        return [4 /*yield*/, _$id36_10.genFresh(this.project.store, "audio-data-")];
+                        return [4 /*yield*/, _$id36_13.genFresh(this.project.store, "audio-data-")];
                     case 4:
                         splitNext = new (_c.apply(AudioData, [void 0, _d.sent(), this, { insertAfter: startNode }]))();
                         return [4 /*yield*/, splitNext.initRaw(startRaw)];
@@ -6663,7 +6941,7 @@ var AudioTrack = /** @class */ (function () {
                         return [4 /*yield*/, startNode.closeRaw(true)];
                     case 7:
                         _d.sent();
-                        return [4 /*yield*/, _$avthreads_6.flush()];
+                        return [4 /*yield*/, _$avthreads_7.flush()];
                     case 8:
                         _d.sent();
                         splitNext.right = startNode.right;
@@ -6777,7 +7055,7 @@ var AudioTrack = /** @class */ (function () {
                         return [4 /*yield*/, this.save()];
                     case 23:
                         _d.sent();
-                        return [4 /*yield*/, _$avthreads_6.flush()];
+                        return [4 /*yield*/, _$avthreads_7.flush()];
                     case 24:
                         _d.sent();
                         return [2 /*return*/];
@@ -6787,7 +7065,7 @@ var AudioTrack = /** @class */ (function () {
     };
     return AudioTrack;
 }());
-_$audioData_4.AudioTrack = AudioTrack;
+_$audioData_5.AudioTrack = AudioTrack;
 /**
  * A single piece of audio data. Stored in the store as audio-data-id,
  * audio-data-compressed-id, and audio-data-wave-id.
@@ -6808,7 +7086,7 @@ var AudioData = /** @class */ (function () {
         this.rawModified = false;
         this.readers = 0;
         this.parent = this.left = this.right = null;
-        this.img = _$ui_20.mk("img", track.waveform);
+        this.img = _$ui_23.mk("img", track.waveform);
         if (opts.insertAfter) {
             var before = opts.insertAfter.img.nextSibling;
             if (before && before !== this.img)
@@ -6819,8 +7097,8 @@ var AudioData = /** @class */ (function () {
      * Save this AudioData. *Never* recurses: only saves *this* AudioData.
      */
     AudioData.prototype.save = function () {
-        return ____awaiter_4(this, void 0, void 0, function () {
-            return ____generator_4(this, function (_a) {
+        return ____awaiter_5(this, void 0, void 0, function () {
+            return ____generator_5(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.track.project.store.setItem("audio-data-" + this.id, {
                             len: this.len
@@ -6837,9 +7115,9 @@ var AudioData = /** @class */ (function () {
      * demand.
      */
     AudioData.prototype.load = function () {
-        return ____awaiter_4(this, void 0, void 0, function () {
+        return ____awaiter_5(this, void 0, void 0, function () {
             var store, d, _a, w;
-            return ____generator_4(this, function (_b) {
+            return ____generator_5(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         store = this.track.project.store;
@@ -6856,10 +7134,10 @@ var AudioData = /** @class */ (function () {
                         // Waveform gets displayed immediately if applicable
                         _a.waveform = _b.sent();
                         if (this.waveform) {
-                            w = ~~(this.len / this.track.channels / this.track.sampleRate * _$ui_20.pixelsPerSecond);
+                            w = ~~(this.len / this.track.channels / this.track.sampleRate * _$ui_23.pixelsPerSecond);
                             Object.assign(this.img.style, {
                                 width: "calc(" + w + "px * var(--zoom-wave))",
-                                height: _$ui_20.trackHeight + "px"
+                                height: _$ui_23.trackHeight + "px"
                             });
                             this.img.src = URL.createObjectURL(this.waveform);
                         }
@@ -6872,9 +7150,9 @@ var AudioData = /** @class */ (function () {
      * Delete this AudioData.
      */
     AudioData.prototype.del = function () {
-        return ____awaiter_4(this, void 0, void 0, function () {
+        return ____awaiter_5(this, void 0, void 0, function () {
             var store;
-            return ____generator_4(this, function (_a) {
+            return ____generator_5(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         // Make sure it doesn't get written later
@@ -6990,9 +7268,9 @@ var AudioData = /** @class */ (function () {
      * involve uncompressing it. Each openRaw must be balanced with a closeRaw.
      */
     AudioData.prototype.openRaw = function () {
-        return ____awaiter_4(this, void 0, void 0, function () {
+        return ____awaiter_5(this, void 0, void 0, function () {
             var rawRes, self, rframes, len, _i, rframes_1, frame, ret, offset, _a, rframes_2, frame;
-            return ____generator_4(this, function (_b) {
+            return ____generator_5(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         this.readers++;
@@ -7009,10 +7287,10 @@ var AudioData = /** @class */ (function () {
                         rawRes = null;
                         this.rawPromise = new Promise(function (res) { return rawRes = res; });
                         self = this;
-                        return [4 /*yield*/, _$avthreads_6.enqueueSync(function (libav) {
-                                return ____awaiter_4(this, void 0, void 0, function () {
+                        return [4 /*yield*/, _$avthreads_7.enqueueSync(function (libav) {
+                                return ____awaiter_5(this, void 0, void 0, function () {
                                     var wavpack, fn, _a, fmt_ctx, stream, _b, c, pkt, frame, _c, packets, frames, toFormat, _d, filter_graph, buffersrc_ctx, buffersink_ctx;
-                                    return ____generator_4(this, function (_e) {
+                                    return ____generator_5(this, function (_e) {
                                         switch (_e.label) {
                                             case 0: return [4 /*yield*/, self.track.project.store.getItem("audio-data-compressed-" + self.id)];
                                             case 1:
@@ -7102,8 +7380,8 @@ var AudioData = /** @class */ (function () {
      * @param exa  Example of the correct TypedArray format.
      */
     AudioData.prototype.initRaw = function (exa) {
-        return ____awaiter_4(this, void 0, void 0, function () {
-            return ____generator_4(this, function (_a) {
+        return ____awaiter_5(this, void 0, void 0, function () {
+            return ____generator_5(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         this.raw = new exa.constructor(this.track.channels * this.track.sampleRate * 30);
@@ -7120,8 +7398,8 @@ var AudioData = /** @class */ (function () {
      */
     AudioData.prototype.closeRaw = function (modified) {
         if (modified === void 0) { modified = false; }
-        return ____awaiter_4(this, void 0, void 0, function () {
-            return ____generator_4(this, function (_a) {
+        return ____awaiter_5(this, void 0, void 0, function () {
+            return ____generator_5(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         this.rawModified = this.rawModified || modified;
@@ -7146,16 +7424,16 @@ var AudioData = /** @class */ (function () {
     };
     // Compress and render this data, and store it
     AudioData.prototype.compress = function () {
-        return ____awaiter_4(this, void 0, void 0, function () {
+        return ____awaiter_5(this, void 0, void 0, function () {
             var _this = this;
-            return ____generator_4(this, function (_a) {
+            return ____generator_5(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!this.len) return [3 /*break*/, 3];
-                        return [4 /*yield*/, _$avthreads_6.enqueue(function (libav) { return _this.wavpack(libav, _this.raw); })];
+                        return [4 /*yield*/, _$avthreads_7.enqueue(function (libav) { return _this.wavpack(libav, _this.raw); })];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, _$avthreads_6.enqueue(function (libav) { return _this.render(libav, _this.raw); })];
+                        return [4 /*yield*/, _$avthreads_7.enqueue(function (libav) { return _this.render(libav, _this.raw); })];
                     case 2:
                         _a.sent();
                         _a.label = 3;
@@ -7166,9 +7444,9 @@ var AudioData = /** @class */ (function () {
     };
     // wavpack-compress this data
     AudioData.prototype.wavpack = function (libav, raw) {
-        return ____awaiter_4(this, void 0, void 0, function () {
+        return ____awaiter_5(this, void 0, void 0, function () {
             var track, toFormat, channel_layout, _a, c, frame, pkt, frame_size, _b, oc, pb, _c, filter_graph, buffersrc_ctx, buffersink_ctx, frames, packets, u8;
-            return ____generator_4(this, function (_d) {
+            return ____generator_5(this, function (_d) {
                 switch (_d.label) {
                     case 0:
                         track = this.track;
@@ -7244,9 +7522,9 @@ var AudioData = /** @class */ (function () {
     };
     // Render the waveform for this data
     AudioData.prototype.render = function (libav, raw) {
-        return ____awaiter_4(this, void 0, void 0, function () {
+        return ____awaiter_5(this, void 0, void 0, function () {
             var track, channel_layout, frame, _a, filter_graph, buffersrc_ctx, buffersink_ctx, frameD, data, spp, w, canvas, ctx, max, min, x, step, i, dbishMax, dbishMin, _b;
-            return ____generator_4(this, function (_c) {
+            return ____generator_5(this, function (_c) {
                 switch (_c.label) {
                     case 0:
                         track = this.track;
@@ -7282,9 +7560,9 @@ var AudioData = /** @class */ (function () {
                     case 5:
                         _c.sent();
                         data = frameD.data;
-                        spp = ~~(track.sampleRate / _$ui_20.pixelsPerSecond);
-                        w = Math.max(~~(data.length / track.sampleRate * _$ui_20.pixelsPerSecond), 1);
-                        canvas = _$ui_20.mk("canvas", null, { width: w, height: _$ui_20.trackHeight });
+                        spp = ~~(track.sampleRate / _$ui_23.pixelsPerSecond);
+                        w = Math.max(~~(data.length / track.sampleRate * _$ui_23.pixelsPerSecond), 1);
+                        canvas = _$ui_23.mk("canvas", null, { width: w, height: _$ui_23.trackHeight });
                         ctx = canvas.getContext("2d");
                         ctx.fillStyle = "#000";
                         ctx.fillRect(0, 63, w, 2);
@@ -7297,7 +7575,7 @@ var AudioData = /** @class */ (function () {
                             if (++step === spp) {
                                 dbishMax = Math.sign(max) * Math.log(Math.abs(max) + 1) / log2;
                                 dbishMin = Math.sign(min) * Math.log(Math.abs(min) + 1) / log2;
-                                ctx.fillRect(x, ~~(_$ui_20.trackMiddle - dbishMax * _$ui_20.trackMiddle), 1, Math.max(~~((dbishMax - dbishMin) * _$ui_20.trackMiddle), 2));
+                                ctx.fillRect(x, ~~(_$ui_23.trackMiddle - dbishMax * _$ui_23.trackMiddle), 1, Math.max(~~((dbishMax - dbishMin) * _$ui_23.trackMiddle), 2));
                                 // Reset
                                 max = -Infinity;
                                 min = Infinity;
@@ -7317,7 +7595,7 @@ var AudioData = /** @class */ (function () {
                         // And make it an image
                         Object.assign(this.img.style, {
                             width: "calc(" + w + "px * var(--zoom-wave))",
-                            height: _$ui_20.trackHeight + "px"
+                            height: _$ui_23.trackHeight + "px"
                         });
                         this.img.src = URL.createObjectURL(this.waveform);
                         return [2 /*return*/];
@@ -7327,9 +7605,9 @@ var AudioData = /** @class */ (function () {
     };
     return AudioData;
 }());
-_$audioData_4.AudioData = AudioData;
+_$audioData_5.AudioData = AudioData;
 
-var _$hotkeys_9 = {};
+var _$hotkeys_12 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -7346,10 +7624,10 @@ var _$hotkeys_9 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-Object.defineProperty(_$hotkeys_9, "__esModule", { value: true });
-_$hotkeys_9.lbl = _$hotkeys_9.btn = _$hotkeys_9.mk = _$hotkeys_9.unregisterHotkey = _$hotkeys_9.registerHotkey = void 0;
+Object.defineProperty(_$hotkeys_12, "__esModule", { value: true });
+_$hotkeys_12.lbl = _$hotkeys_12.btn = _$hotkeys_12.mk = _$hotkeys_12.unregisterHotkey = _$hotkeys_12.registerHotkey = void 0;
 // Support for alt hotkeys
-/* removed: var _$ui_20 = require("./ui"); */;
+/* removed: var _$ui_23 = require("./ui"); */;
 // Currently registered hotkeys
 var hotkeys = Object.create(null);
 // Currently registered objects
@@ -7380,7 +7658,7 @@ function registerHotkey(el, dialog, key) {
     hotkeyObjects.set(el, key);
     observer.observe(el.parentNode, { childList: true });
 }
-_$hotkeys_9.registerHotkey = registerHotkey;
+_$hotkeys_12.registerHotkey = registerHotkey;
 /**
  * Unregister an element's hotkey.
  * @param el  The element.
@@ -7397,7 +7675,7 @@ function unregisterHotkey(el) {
         hks.splice(idx, 1);
     hotkeyObjects.delete(el);
 }
-_$hotkeys_9.unregisterHotkey = unregisterHotkey;
+_$hotkeys_12.unregisterHotkey = unregisterHotkey;
 /**
  * Make an element hotkeyable.
  * @param parent  The dialog that the element will be placed in (but note that
@@ -7407,7 +7685,7 @@ _$hotkeys_9.unregisterHotkey = unregisterHotkey;
  * @param callback  The function to actually create the element, and presumably
  *                  add it to the DOM (though you're free to do that later).
  */
-function __mk_9(parent, lbl, callback) {
+function __mk_12(parent, lbl, callback) {
     // Find the hotkey
     var hotkey = null;
     var idx = lbl.indexOf("_");
@@ -7422,7 +7700,7 @@ function __mk_9(parent, lbl, callback) {
         registerHotkey(el, parent, hotkey);
     return el;
 }
-_$hotkeys_9.mk = __mk_9;
+_$hotkeys_12.mk = __mk_12;
 /**
  * Make a button with a hotkey.
  * @param parent  The dialog to place the button in.
@@ -7430,11 +7708,11 @@ _$hotkeys_9.mk = __mk_9;
  *             representing the hotkey.
  * @param opts  Other options.
  */
-function __btn_9(parent, lbl, opts) {
+function __btn_12(parent, lbl, opts) {
     if (opts === void 0) { opts = {}; }
-    return __mk_9(parent, lbl, function (lbl) { return _$ui_20.btn(parent.box, lbl, opts); });
+    return __mk_12(parent, lbl, function (lbl) { return _$ui_23.btn(parent.box, lbl, opts); });
 }
-_$hotkeys_9.btn = __btn_9;
+_$hotkeys_12.btn = __btn_12;
 /**
  * Make a <label/> with a hotkey.
  * @param parent  The dialog to place the label in.
@@ -7442,11 +7720,11 @@ _$hotkeys_9.btn = __btn_9;
  * @param lbl  Text of the label.
  * @param opts  Other options.
  */
-function __lbl_9(parent, htmlFor, lbl, opts) {
+function __lbl_12(parent, htmlFor, lbl, opts) {
     if (opts === void 0) { opts = {}; }
-    return __mk_9(parent, lbl, function (lbl) { return _$ui_20.lbl(parent.box, htmlFor, lbl, opts); });
+    return __mk_12(parent, lbl, function (lbl) { return _$ui_23.lbl(parent.box, htmlFor, lbl, opts); });
 }
-_$hotkeys_9.lbl = __lbl_9;
+_$hotkeys_12.lbl = __lbl_12;
 // The actual hotkey handler
 document.body.addEventListener("keydown", function (ev) {
     if (!ev.altKey || ev.ctrlKey || ev.shiftKey)
@@ -7460,13 +7738,13 @@ document.body.addEventListener("keydown", function (ev) {
         var hk = hks_1[_i];
         if (hk.dialog) {
             // Make sure it's the topmost dialog
-            if (_$ui_20.ui.dialogs.length === 0 ||
-                _$ui_20.ui.dialogs[_$ui_20.ui.dialogs.length - 1] !== hk.dialog)
+            if (_$ui_23.ui.dialogs.length === 0 ||
+                _$ui_23.ui.dialogs[_$ui_23.ui.dialogs.length - 1] !== hk.dialog)
                 continue;
         }
         else {
             // Make sure there is no dialog
-            if (_$ui_20.ui.dialogs.length !== 0)
+            if (_$ui_23.ui.dialogs.length !== 0)
                 continue;
         }
         // Perform this hotkey
@@ -7476,7 +7754,7 @@ document.body.addEventListener("keydown", function (ev) {
     }
 });
 
-var _$filters_8 = {};
+var _$filters_11 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -7493,7 +7771,7 @@ var _$filters_8 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-var ____awaiter_8 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var ____awaiter_11 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -7502,7 +7780,7 @@ var ____awaiter_8 = (this && this.__awaiter) || function (thisArg, _arguments, P
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var ____generator_8 = (this && this.__generator) || function (thisArg, body) {
+var ____generator_11 = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
@@ -7529,30 +7807,30 @@ var ____generator_8 = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(_$filters_8, "__esModule", { value: true });
-_$filters_8.registerCustomFilter = _$filters_8.mixTracks = _$filters_8.selectionFilter = _$filters_8.ffmpegFilter = _$filters_8.ffmpegStream = _$filters_8.resample = _$filters_8.load = void 0;
-/* removed: var _$audioData_4 = require("./audio-data"); */;
-/* removed: var _$hotkeys_9 = require("./hotkeys"); */;
-/* removed: var _$id36_10 = require("./id36"); */;
-/* removed: var _$select_14 = require("./select"); */;
-/* removed: var _$stream_17 = require("./stream"); */;
-/* removed: var _$track_18 = require("./track"); */;
-/* removed: var _$ui_20 = require("./ui"); */;
+Object.defineProperty(_$filters_11, "__esModule", { value: true });
+_$filters_11.registerCustomFilter = _$filters_11.mixTracks = _$filters_11.selectionFilter = _$filters_11.ffmpegFilter = _$filters_11.ffmpegStream = _$filters_11.resample = _$filters_11.load = void 0;
+/* removed: var _$audioData_5 = require("./audio-data"); */;
+/* removed: var _$hotkeys_12 = require("./hotkeys"); */;
+/* removed: var _$id36_13 = require("./id36"); */;
+/* removed: var _$select_17 = require("./select"); */;
+/* removed: var _$stream_20 = require("./stream"); */;
+/* removed: var _$track_21 = require("./track"); */;
+/* removed: var _$ui_23 = require("./ui"); */;
 /**
  * Load filtering options.
  */
-function __load_8() {
-    return ____awaiter_8(this, void 0, void 0, function () {
-        return ____generator_8(this, function (_a) {
-            _$ui_20.ui.menu.filters.onclick = filterMenu;
-            _$hotkeys_9.registerHotkey(_$ui_20.ui.menu.filters, null, "f");
+function __load_11() {
+    return ____awaiter_11(this, void 0, void 0, function () {
+        return ____generator_11(this, function (_a) {
+            _$ui_23.ui.menu.filters.onclick = filterMenu;
+            _$hotkeys_12.registerHotkey(_$ui_23.ui.menu.filters, null, "f");
             return [2 /*return*/];
         });
     });
 }
-_$filters_8.load = __load_8;
+_$filters_11.load = __load_11;
 // This really belongs here, but is in audioData because it needs it
-_$filters_8.resample = _$audioData_4.resample;
+_$filters_11.resample = _$audioData_5.resample;
 /**
  * Standard FFmpeg filters.
  */
@@ -7664,16 +7942,16 @@ var customFilters = [];
  * @param fs  The filter string.
  */
 function ffmpegStream(stream, fs) {
-    return ____awaiter_8(this, void 0, void 0, function () {
+    return ____awaiter_11(this, void 0, void 0, function () {
         var first, time, libav, frame, _a, buffersrc_ctx, buffersink_ctx;
-        return ____generator_8(this, function (_b) {
+        return ____generator_11(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4 /*yield*/, stream.read()];
                 case 1:
                     first = _b.sent();
                     if (!first) {
                         // No data!
-                        return [2 /*return*/, new _$stream_17.WSPReadableStream({
+                        return [2 /*return*/, new _$stream_20.WSPReadableStream({
                                 start: function (controller) {
                                     controller.close();
                                 }
@@ -7682,7 +7960,7 @@ function ffmpegStream(stream, fs) {
                     stream.push(first);
                     time = 0;
                     // Make the filter
-                    _$audioData_4.sanitizeLibAVFrame(first);
+                    _$audioData_5.sanitizeLibAVFrame(first);
                     return [4 /*yield*/, LibAV.LibAV()];
                 case 2:
                     libav = _b.sent();
@@ -7701,11 +7979,11 @@ function ffmpegStream(stream, fs) {
                 case 4:
                     _a = _b.sent(), buffersrc_ctx = _a[1], buffersink_ctx = _a[2];
                     // And the stream
-                    return [2 /*return*/, new _$stream_17.WSPReadableStream({
+                    return [2 /*return*/, new _$stream_20.WSPReadableStream({
                             pull: function (controller) {
-                                return ____awaiter_8(this, void 0, void 0, function () {
+                                return ____awaiter_11(this, void 0, void 0, function () {
                                     var chunk, fframes, _i, fframes_1, frame_1;
-                                    return ____generator_8(this, function (_a) {
+                                    return ____generator_11(this, function (_a) {
                                         switch (_a.label) {
                                             case 0:
                                                 if (!true) return [3 /*break*/, 3];
@@ -7742,7 +8020,7 @@ function ffmpegStream(stream, fs) {
         });
     });
 }
-_$filters_8.ffmpegStream = ffmpegStream;
+_$filters_11.ffmpegStream = ffmpegStream;
 /**
  * Apply an FFmpeg filter with the given options.
  * @param filter  The filter and options.
@@ -7751,9 +8029,9 @@ _$filters_8.ffmpegStream = ffmpegStream;
  *           This dialog will *not* be closed.
  */
 function ffmpegFilter(filter, sel, d) {
-    return ____awaiter_8(this, void 0, void 0, function () {
+    return ____awaiter_11(this, void 0, void 0, function () {
         var fs;
-        return ____generator_8(this, function (_a) {
+        return ____generator_11(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     fs = "";
@@ -7771,7 +8049,7 @@ function ffmpegFilter(filter, sel, d) {
         });
     });
 }
-_$filters_8.ffmpegFilter = ffmpegFilter;
+_$filters_11.ffmpegFilter = ffmpegFilter;
 /**
  * Apply a filter function to a selection.
  * @param ff  The filter function.
@@ -7782,7 +8060,7 @@ _$filters_8.ffmpegFilter = ffmpegFilter;
  *           This dialog will *not* be closed.
  */
 function selectionFilter(ff, changesDuration, sel, d) {
-    return ____awaiter_8(this, void 0, void 0, function () {
+    return ____awaiter_11(this, void 0, void 0, function () {
         // Function to show the current status
         function showStatus() {
             if (d) {
@@ -7795,18 +8073,18 @@ function selectionFilter(ff, changesDuration, sel, d) {
         }
         // The filtering function for each track
         function filterThread(track, idx) {
-            return ____awaiter_8(this, void 0, void 0, function () {
+            return ____awaiter_11(this, void 0, void 0, function () {
                 var inStream, statusStream, filterStream, newTrack, _a, _b;
-                return ____generator_8(this, function (_c) {
+                return ____generator_11(this, function (_c) {
                     switch (_c.label) {
                         case 0:
                             inStream = track.stream(Object.assign({ keepOpen: !changesDuration }, streamOpts))
                                 .getReader();
-                            statusStream = new _$stream_17.WSPReadableStream({
+                            statusStream = new _$stream_20.WSPReadableStream({
                                 pull: function (controller) {
-                                    return ____awaiter_8(this, void 0, void 0, function () {
+                                    return ____awaiter_11(this, void 0, void 0, function () {
                                         var chunk;
-                                        return ____generator_8(this, function (_a) {
+                                        return ____generator_11(this, function (_a) {
                                             switch (_a.label) {
                                                 case 0: return [4 /*yield*/, inStream.read()];
                                                 case 1:
@@ -7815,7 +8093,7 @@ function selectionFilter(ff, changesDuration, sel, d) {
                                                         controller.close();
                                                     }
                                                     else {
-                                                        _$audioData_4.sanitizeLibAVFrame(chunk.value);
+                                                        _$audioData_5.sanitizeLibAVFrame(chunk.value);
                                                         status[idx].filtered += chunk.value.nb_samples / chunk.value.sample_rate;
                                                         showStatus();
                                                         controller.enqueue(chunk.value);
@@ -7826,19 +8104,19 @@ function selectionFilter(ff, changesDuration, sel, d) {
                                     });
                                 }
                             });
-                            return [4 /*yield*/, ff(new _$stream_17.EZStream(statusStream))];
+                            return [4 /*yield*/, ff(new _$stream_20.EZStream(statusStream))];
                         case 1:
                             filterStream = _c.sent();
                             if (!changesDuration) return [3 /*break*/, 5];
-                            _b = (_a = _$audioData_4.AudioTrack).bind;
-                            return [4 /*yield*/, _$id36_10.genFresh(track.project.store, "audio-track-")];
+                            _b = (_a = _$audioData_5.AudioTrack).bind;
+                            return [4 /*yield*/, _$id36_13.genFresh(track.project.store, "audio-track-")];
                         case 2:
                             newTrack = new (_b.apply(_a, [void 0, _c.sent(), track.project, {
                                     format: track.format,
                                     sampleRate: track.sampleRate,
                                     channels: track.channels
                                 }]))();
-                            return [4 /*yield*/, newTrack.append(new _$stream_17.EZStream(filterStream))];
+                            return [4 /*yield*/, newTrack.append(new _$stream_20.EZStream(filterStream))];
                         case 3:
                             _c.sent();
                             return [4 /*yield*/, track.replace(sel.range ? sel.start : 0, sel.range ? sel.end : Infinity, newTrack)];
@@ -7847,7 +8125,7 @@ function selectionFilter(ff, changesDuration, sel, d) {
                             return [3 /*break*/, 7];
                         case 5: 
                         // Just overwrite it
-                        return [4 /*yield*/, track.overwrite(new _$stream_17.EZStream(filterStream), Object.assign({ closeTwice: true }, streamOpts))];
+                        return [4 /*yield*/, track.overwrite(new _$stream_20.EZStream(filterStream), Object.assign({ closeTwice: true }, streamOpts))];
                         case 6:
                             // Just overwrite it
                             _c.sent();
@@ -7858,10 +8136,10 @@ function selectionFilter(ff, changesDuration, sel, d) {
             });
         }
         var tracks, streamOpts, status, threads, running, toRun, _a, sel_1, idx, fin;
-        return ____generator_8(this, function (_b) {
+        return ____generator_11(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    tracks = sel.tracks.filter(function (x) { return x.type() === _$track_18.TrackType.Audio; });
+                    tracks = sel.tracks.filter(function (x) { return x.type() === _$track_21.TrackType.Audio; });
                     if (tracks.length === 0) {
                         // Well that was easy
                         return [2 /*return*/];
@@ -7904,7 +8182,7 @@ function selectionFilter(ff, changesDuration, sel, d) {
         });
     });
 }
-_$filters_8.selectionFilter = selectionFilter;
+_$filters_11.selectionFilter = selectionFilter;
 /**
  * Mix the selected tracks into a new track.
  * @param sel  The selection to mix.
@@ -7914,17 +8192,17 @@ _$filters_8.selectionFilter = selectionFilter;
  */
 function mixTracks(sel, d, opts) {
     if (opts === void 0) { opts = {}; }
-    return ____awaiter_8(this, void 0, void 0, function () {
+    return ____awaiter_11(this, void 0, void 0, function () {
         // Function to show the current status
         function showStatus() {
             if (d)
                 d.box.innerHTML = "Mixing... " + Math.round(mixed / duration * 100) + "%";
         }
         var tracks, fs, mtracks, otracks, i, gtracks, streamOpts, outTrack, _a, _b, channelLayout, duration, mixed, libav, frame, _c, buffersrc_ctx, buffersink_ctx, inRStreams, inStreams, trackDone, trackDoneCt, mixStream, outStream;
-        return ____generator_8(this, function (_d) {
+        return ____generator_11(this, function (_d) {
             switch (_d.label) {
                 case 0:
-                    tracks = sel.tracks.filter(function (x) { return x.type() === _$track_18.TrackType.Audio; });
+                    tracks = sel.tracks.filter(function (x) { return x.type() === _$track_21.TrackType.Audio; });
                     if (tracks.length === 0) {
                         // Well that was easy
                         return [2 /*return*/, null];
@@ -7950,16 +8228,16 @@ function mixTracks(sel, d, opts) {
                         start: sel.range ? sel.start : void 0,
                         end: sel.range ? sel.end : void 0
                     };
-                    _b = (_a = _$audioData_4.AudioTrack).bind;
-                    return [4 /*yield*/, _$id36_10.genFresh(tracks[0].project.store, "audio-track-")];
+                    _b = (_a = _$audioData_5.AudioTrack).bind;
+                    return [4 /*yield*/, _$id36_13.genFresh(tracks[0].project.store, "audio-track-")];
                 case 1:
                     outTrack = new (_b.apply(_a, [void 0, _d.sent(), tracks[0].project, {
                             name: "Mix",
                             sampleRate: Math.max.apply(Math, tracks.map(function (x) { return x.sampleRate; })),
-                            format: _$audioData_4.LibAVSampleFormat.FLT,
+                            format: _$audioData_5.LibAVSampleFormat.FLT,
                             channels: Math.max.apply(Math, tracks.map(function (x) { return x.channels; }))
                         }]))();
-                    channelLayout = _$audioData_4.toChannelLayout(outTrack.channels);
+                    channelLayout = _$audioData_5.toChannelLayout(outTrack.channels);
                     duration = Math.max.apply(Math, tracks.map(function (x) { return x.duration(); }));
                     mixed = 0;
                     return [4 /*yield*/, LibAV.LibAV()];
@@ -7971,7 +8249,7 @@ function mixTracks(sel, d, opts) {
                     return [4 /*yield*/, libav.ff_init_filter_graph(fs, tracks.map(function (x) { return ({
                             sample_rate: x.sampleRate,
                             sample_fmt: x.format,
-                            channel_layout: _$audioData_4.toChannelLayout(x.channels)
+                            channel_layout: _$audioData_5.toChannelLayout(x.channels)
                         }); }), {
                             sample_rate: outTrack.sampleRate,
                             sample_fmt: outTrack.format,
@@ -7981,7 +8259,7 @@ function mixTracks(sel, d, opts) {
                     _c = _d.sent(), buffersrc_ctx = _c[1], buffersink_ctx = _c[2];
                     inRStreams = tracks.map(function (x) { return x.stream(streamOpts); });
                     if (!opts.preFilter) return [3 /*break*/, 6];
-                    return [4 /*yield*/, Promise.all(inRStreams.map(function (x) { return opts.preFilter(new _$stream_17.EZStream(x)); }))];
+                    return [4 /*yield*/, Promise.all(inRStreams.map(function (x) { return opts.preFilter(new _$stream_20.EZStream(x)); }))];
                 case 5:
                     inRStreams = _d.sent();
                     _d.label = 6;
@@ -7989,18 +8267,18 @@ function mixTracks(sel, d, opts) {
                     inStreams = inRStreams.map(function (x) { return x.getReader(); });
                     trackDone = tracks.map(function () { return false; });
                     trackDoneCt = 0;
-                    mixStream = new _$stream_17.WSPReadableStream({
+                    mixStream = new _$stream_20.WSPReadableStream({
                         pull: function (controller) {
-                            return ____awaiter_8(this, void 0, void 0, function () {
+                            return ____awaiter_11(this, void 0, void 0, function () {
                                 var inps, outp, _i, outp_1, part;
-                                return ____generator_8(this, function (_a) {
+                                return ____generator_11(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
                                             if (!true) return [3 /*break*/, 3];
                                             return [4 /*yield*/, Promise.all(inStreams.map(function (x, idx) {
-                                                    return ____awaiter_8(this, void 0, void 0, function () {
+                                                    return ____awaiter_11(this, void 0, void 0, function () {
                                                         var inp;
-                                                        return ____generator_8(this, function (_a) {
+                                                        return ____generator_11(this, function (_a) {
                                                             switch (_a.label) {
                                                                 case 0:
                                                                     if (trackDone[idx])
@@ -8047,13 +8325,13 @@ function mixTracks(sel, d, opts) {
                     });
                     outStream = null;
                     if (!opts.postFilter) return [3 /*break*/, 8];
-                    return [4 /*yield*/, opts.postFilter(new _$stream_17.EZStream(mixStream))];
+                    return [4 /*yield*/, opts.postFilter(new _$stream_20.EZStream(mixStream))];
                 case 7:
                     outStream = _d.sent();
                     _d.label = 8;
                 case 8: 
                 // Append that to the new track
-                return [4 /*yield*/, outTrack.append(new _$stream_17.EZStream(outStream || mixStream))];
+                return [4 /*yield*/, outTrack.append(new _$stream_20.EZStream(outStream || mixStream))];
                 case 9:
                     // Append that to the new track
                     _d.sent();
@@ -8064,21 +8342,21 @@ function mixTracks(sel, d, opts) {
         });
     });
 }
-_$filters_8.mixTracks = mixTracks;
+_$filters_11.mixTracks = mixTracks;
 /**
  * Show the main filter menu.
  */
 function filterMenu() {
-    return ____awaiter_8(this, void 0, void 0, function () {
-        return ____generator_8(this, function (_a) {
+    return ____awaiter_11(this, void 0, void 0, function () {
+        return ____generator_11(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, _$ui_20.dialog(function (d, show) {
-                        return ____awaiter_8(this, void 0, void 0, function () {
+                case 0: return [4 /*yield*/, _$ui_23.dialog(function (d, show) {
+                        return ____awaiter_11(this, void 0, void 0, function () {
                             var first, _loop_1, _i, standardFilters_1, filter, _loop_2, _a, customFilters_1, filter;
-                            return ____generator_8(this, function (_b) {
+                            return ____generator_11(this, function (_b) {
                                 first = null;
                                 _loop_1 = function (filter) {
-                                    var b = _$hotkeys_9.btn(d, filter.name, { className: "row small" });
+                                    var b = _$hotkeys_12.btn(d, filter.name, { className: "row small" });
                                     if (!first)
                                         first = b;
                                     b.onclick = function () { return uiFilter(d, filter); };
@@ -8089,7 +8367,7 @@ function filterMenu() {
                                     _loop_1(filter);
                                 }
                                 _loop_2 = function (filter) {
-                                    var b = _$hotkeys_9.btn(d, filter.name, { className: "row small" });
+                                    var b = _$hotkeys_12.btn(d, filter.name, { className: "row small" });
                                     b.onclick = function () { return filter.filter(d); };
                                 };
                                 // And for each filter in the custom list
@@ -8117,24 +8395,24 @@ function filterMenu() {
  * @param filter  The filter itself.
  */
 function uiFilter(d, filter) {
-    return ____awaiter_8(this, void 0, void 0, function () {
-        return ____generator_8(this, function (_a) {
+    return ____awaiter_11(this, void 0, void 0, function () {
+        return ____generator_11(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, _$ui_20.dialog(function (d, show) {
-                        return ____awaiter_8(this, void 0, void 0, function () {
+                case 0: return [4 /*yield*/, _$ui_23.dialog(function (d, show) {
+                        return ____awaiter_11(this, void 0, void 0, function () {
                             // Perform the actual filter
                             function doIt() {
                                 uiFilterGo(d, filter, pels);
                             }
                             var first, pels, _loop_3, _i, _a, param, btn;
-                            return ____generator_8(this, function (_b) {
+                            return ____generator_11(this, function (_b) {
                                 first = null;
                                 pels = Object.create(null);
                                 _loop_3 = function (param) {
                                     var id = "ez-filter-param-" + filter.ffName + "-" + param.ffName;
-                                    var div = _$ui_20.mk("div", d.box, { className: "row" });
-                                    _$hotkeys_9.mk(d, param.name + ":&nbsp;", function (lbl) { return _$ui_20.lbl(div, id, lbl, { className: "ez" }); });
-                                    var inp = pels[param.ffName] = _$ui_20.mk("input", div, {
+                                    var div = _$ui_23.mk("div", d.box, { className: "row" });
+                                    _$hotkeys_12.mk(d, param.name + ":&nbsp;", function (lbl) { return _$ui_23.lbl(div, id, lbl, { className: "ez" }); });
+                                    var inp = pels[param.ffName] = _$ui_23.mk("input", div, {
                                         id: id,
                                         type: param.type === "number" ? "text" : param.type
                                     });
@@ -8181,7 +8459,7 @@ function uiFilter(d, filter) {
                                     param = _a[_i];
                                     _loop_3(param);
                                 }
-                                btn = _$hotkeys_9.btn(d, "_Filter", { className: "row" });
+                                btn = _$hotkeys_12.btn(d, "_Filter", { className: "row" });
                                 btn.onclick = doIt;
                                 show(first);
                                 return [2 /*return*/];
@@ -8205,13 +8483,13 @@ function uiFilter(d, filter) {
  * @param pels  Elements corresponding to the parameters.
  */
 function uiFilterGo(d, filter, pels) {
-    return ____awaiter_8(this, void 0, void 0, function () {
-        return ____generator_8(this, function (_a) {
+    return ____awaiter_11(this, void 0, void 0, function () {
+        return ____generator_11(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, _$ui_20.loading(function (d) {
-                        return ____awaiter_8(this, void 0, void 0, function () {
+                case 0: return [4 /*yield*/, _$ui_23.loading(function (d) {
+                        return ____awaiter_11(this, void 0, void 0, function () {
                             var args, _i, _a, param, val, v, opts, sel;
-                            return ____generator_8(this, function (_b) {
+                            return ____generator_11(this, function (_b) {
                                 switch (_b.label) {
                                     case 0:
                                         args = [];
@@ -8246,7 +8524,7 @@ function uiFilterGo(d, filter, pels) {
                                             args: args,
                                             changesDuration: !!filter.changesDuration
                                         };
-                                        sel = _$select_14.getSelection();
+                                        sel = _$select_17.getSelection();
                                         if (sel.tracks.length === 0) {
                                             // Nothing to do!
                                             return [2 /*return*/];
@@ -8279,320 +8557,9 @@ function uiFilterGo(d, filter, pels) {
 function registerCustomFilter(filter) {
     customFilters.push(filter);
 }
-_$filters_8.registerCustomFilter = registerCustomFilter;
+_$filters_11.registerCustomFilter = registerCustomFilter;
 
-var _$StreamSaver_2 = { exports: {} };
-/* global chrome location ReadableStream define MessageChannel TransformStream */
-
-;((name, definition) => {
-  "object" !== 'undefined'
-    ? _$StreamSaver_2.exports = definition()
-    : typeof define === 'function' && typeof define.amd === 'object'
-      ? define(definition)
-      : this[name] = definition()
-})('streamSaver', () => {
-  'use strict'
-
-  const global = typeof window === 'object' ? window : this
-  if (!global.HTMLElement) console.warn('streamsaver is meant to run on browsers main thread')
-
-  let mitmTransporter = null
-  let supportsTransferable = false
-  const test = fn => { try { fn() } catch (e) {} }
-  const ponyfill = global.WebStreamsPolyfill || {}
-  const isSecureContext = global.isSecureContext
-  // TODO: Must come up with a real detection test (#69)
-  let useBlobFallback = /constructor/i.test(global.HTMLElement) || !!global.safari || !!global.WebKitPoint
-  const downloadStrategy = isSecureContext || 'MozAppearance' in document.documentElement.style
-    ? 'iframe'
-    : 'navigate'
-
-  const streamSaver = {
-    createWriteStream,
-    WritableStream: global.WritableStream || ponyfill.WritableStream,
-    supported: true,
-    version: { full: '2.0.5', major: 2, minor: 0, dot: 5 },
-    mitm: 'https://jimmywarting.github.io/StreamSaver.js/mitm.html?version=2.0.0'
-  }
-
-  /**
-   * create a hidden iframe and append it to the DOM (body)
-   *
-   * @param  {string} src page to load
-   * @return {HTMLIFrameElement} page to load
-   */
-  function makeIframe (src) {
-    if (!src) throw new Error('meh')
-    const iframe = document.createElement('iframe')
-    iframe.hidden = true
-    iframe.src = src
-    iframe.loaded = false
-    iframe.name = 'iframe'
-    iframe.isIframe = true
-    iframe.postMessage = (...args) => iframe.contentWindow.postMessage(...args)
-    iframe.addEventListener('load', () => {
-      iframe.loaded = true
-    }, { once: true })
-    document.body.appendChild(iframe)
-    return iframe
-  }
-
-  /**
-   * create a popup that simulates the basic things
-   * of what a iframe can do
-   *
-   * @param  {string} src page to load
-   * @return {object}     iframe like object
-   */
-  function makePopup (src) {
-    const options = 'width=200,height=100'
-    const delegate = document.createDocumentFragment()
-    const popup = {
-      frame: global.open(src, 'popup', options),
-      loaded: false,
-      isIframe: false,
-      isPopup: true,
-      remove () { popup.frame.close() },
-      addEventListener (...args) { delegate.addEventListener(...args) },
-      dispatchEvent (...args) { delegate.dispatchEvent(...args) },
-      removeEventListener (...args) { delegate.removeEventListener(...args) },
-      postMessage (...args) { popup.frame.postMessage(...args) }
-    }
-
-    const onReady = evt => {
-      if (evt.source === popup.frame) {
-        popup.loaded = true
-        global.removeEventListener('message', onReady)
-        popup.dispatchEvent(new Event('load'))
-      }
-    }
-
-    global.addEventListener('message', onReady)
-
-    return popup
-  }
-
-  try {
-    // We can't look for service worker since it may still work on http
-    new Response(new ReadableStream())
-    if (isSecureContext && !('serviceWorker' in navigator)) {
-      useBlobFallback = true
-    }
-  } catch (err) {
-    useBlobFallback = true
-  }
-
-  test(() => {
-    // Transfariable stream was first enabled in chrome v73 behind a flag
-    const { readable } = new TransformStream()
-    const mc = new MessageChannel()
-    mc.port1.postMessage(readable, [readable])
-    mc.port1.close()
-    mc.port2.close()
-    supportsTransferable = true
-    // Freeze TransformStream object (can only work with native)
-    Object.defineProperty(streamSaver, 'TransformStream', {
-      configurable: false,
-      writable: false,
-      value: TransformStream
-    })
-  })
-
-  function loadTransporter () {
-    if (!mitmTransporter) {
-      mitmTransporter = isSecureContext
-        ? makeIframe(streamSaver.mitm)
-        : makePopup(streamSaver.mitm)
-    }
-  }
-
-  /**
-   * @param  {string} filename filename that should be used
-   * @param  {object} options  [description]
-   * @param  {number} size     depricated
-   * @return {WritableStream<Uint8Array>}
-   */
-  function createWriteStream (filename, options, size) {
-    let opts = {
-      size: null,
-      pathname: null,
-      writableStrategy: undefined,
-      readableStrategy: undefined
-    }
-
-    let bytesWritten = 0 // by StreamSaver.js (not the service worker)
-    let downloadUrl = null
-    let channel = null
-    let ts = null
-
-    // normalize arguments
-    if (Number.isFinite(options)) {
-      [ size, options ] = [ options, size ]
-      console.warn('[StreamSaver] Depricated pass an object as 2nd argument when creating a write stream')
-      opts.size = size
-      opts.writableStrategy = options
-    } else if (options && options.highWaterMark) {
-      console.warn('[StreamSaver] Depricated pass an object as 2nd argument when creating a write stream')
-      opts.size = size
-      opts.writableStrategy = options
-    } else {
-      opts = options || {}
-    }
-    if (!useBlobFallback) {
-      loadTransporter()
-
-      channel = new MessageChannel()
-
-      // Make filename RFC5987 compatible
-      filename = encodeURIComponent(filename.replace(/\//g, ':'))
-        .replace(/['()]/g, escape)
-        .replace(/\*/g, '%2A')
-
-      const response = {
-        transferringReadable: supportsTransferable,
-        pathname: opts.pathname || Math.random().toString().slice(-6) + '/' + filename,
-        headers: {
-          'Content-Type': 'application/octet-stream; charset=utf-8',
-          'Content-Disposition': "attachment; filename*=UTF-8''" + filename
-        }
-      }
-
-      if (opts.size) {
-        response.headers['Content-Length'] = opts.size
-      }
-
-      const args = [ response, '*', [ channel.port2 ] ]
-
-      if (supportsTransferable) {
-        const transformer = downloadStrategy === 'iframe' ? undefined : {
-          // This transformer & flush method is only used by insecure context.
-          transform (chunk, controller) {
-            if (!(chunk instanceof Uint8Array)) {
-              throw new TypeError('Can only wirte Uint8Arrays')
-            }
-            bytesWritten += chunk.length
-            controller.enqueue(chunk)
-
-            if (downloadUrl) {
-              location.href = downloadUrl
-              downloadUrl = null
-            }
-          },
-          flush () {
-            if (downloadUrl) {
-              location.href = downloadUrl
-            }
-          }
-        }
-        ts = new streamSaver.TransformStream(
-          transformer,
-          opts.writableStrategy,
-          opts.readableStrategy
-        )
-        const readableStream = ts.readable
-
-        channel.port1.postMessage({ readableStream }, [ readableStream ])
-      }
-
-      channel.port1.onmessage = evt => {
-        // Service worker sent us a link that we should open.
-        if (evt.data.download) {
-          // Special treatment for popup...
-          if (downloadStrategy === 'navigate') {
-            mitmTransporter.remove()
-            mitmTransporter = null
-            if (bytesWritten) {
-              location.href = evt.data.download
-            } else {
-              downloadUrl = evt.data.download
-            }
-          } else {
-            if (mitmTransporter.isPopup) {
-              mitmTransporter.remove()
-              mitmTransporter = null
-              // Special case for firefox, they can keep sw alive with fetch
-              if (downloadStrategy === 'iframe') {
-                makeIframe(streamSaver.mitm)
-              }
-            }
-
-            // We never remove this iframes b/c it can interrupt saving
-            makeIframe(evt.data.download)
-          }
-        }
-      }
-
-      if (mitmTransporter.loaded) {
-        mitmTransporter.postMessage(...args)
-      } else {
-        mitmTransporter.addEventListener('load', () => {
-          mitmTransporter.postMessage(...args)
-        }, { once: true })
-      }
-    }
-
-    let chunks = []
-
-    return (!useBlobFallback && ts && ts.writable) || new streamSaver.WritableStream({
-      write (chunk) {
-        if (!(chunk instanceof Uint8Array)) {
-          throw new TypeError('Can only wirte Uint8Arrays')
-        }
-        if (useBlobFallback) {
-          // Safari... The new IE6
-          // https://github.com/jimmywarting/StreamSaver.js/issues/69
-          //
-          // even doe it has everything it fails to download anything
-          // that comes from the service worker..!
-          chunks.push(chunk)
-          return
-        }
-
-        // is called when a new chunk of data is ready to be written
-        // to the underlying sink. It can return a promise to signal
-        // success or failure of the write operation. The stream
-        // implementation guarantees that this method will be called
-        // only after previous writes have succeeded, and never after
-        // close or abort is called.
-
-        // TODO: Kind of important that service worker respond back when
-        // it has been written. Otherwise we can't handle backpressure
-        // EDIT: Transfarable streams solvs this...
-        channel.port1.postMessage(chunk)
-        bytesWritten += chunk.length
-
-        if (downloadUrl) {
-          location.href = downloadUrl
-          downloadUrl = null
-        }
-      },
-      close () {
-        if (useBlobFallback) {
-          const blob = new Blob(chunks, { type: 'application/octet-stream; charset=utf-8' })
-          const link = document.createElement('a')
-          link.href = URL.createObjectURL(blob)
-          link.download = filename
-          link.click()
-        } else {
-          channel.port1.postMessage('end')
-        }
-      },
-      abort () {
-        chunks = []
-        channel.port1.postMessage('abort')
-        channel.port1.onmessage = null
-        channel.port1.close()
-        channel.port2.close()
-        channel = null
-      }
-    }, opts.writableStrategy)
-  }
-
-  return streamSaver
-})
-
-_$StreamSaver_2 = _$StreamSaver_2.exports
-var _$export_7 = {};
+var _$export_10 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -8609,7 +8576,7 @@ var _$export_7 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-var ____awaiter_7 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var ____awaiter_10 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -8618,7 +8585,7 @@ var ____awaiter_7 = (this && this.__awaiter) || function (thisArg, _arguments, P
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var ____generator_7 = (this && this.__generator) || function (thisArg, body) {
+var ____generator_10 = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
@@ -8645,25 +8612,26 @@ var ____generator_7 = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(_$export_7, "__esModule", { value: true });
-_$export_7.uiExport = _$export_7.exportAudio = _$export_7.standardExports = void 0;
-/* removed: var _$audioData_4 = require("./audio-data"); */;
-/* removed: var _$hotkeys_9 = require("./hotkeys"); */;
-/* removed: var _$select_14 = require("./select"); */;
-/* removed: var _$track_18 = require("./track"); */;
-/* removed: var _$ui_20 = require("./ui"); */;
-/* removed: var _$StreamSaver_2 = require("streamsaver"); */;
+Object.defineProperty(_$export_10, "__esModule", { value: true });
+_$export_10.uiExportCaption = _$export_10.uiExport = _$export_10.exportCaption = _$export_10.exportAudio = _$export_10.standardExports = void 0;
+/* removed: var _$audioData_5 = require("./audio-data"); */;
+/* removed: var _$downloadStream_9 = require("./download-stream"); */;
+/* removed: var _$hotkeys_12 = require("./hotkeys"); */;
+/* removed: var _$select_17 = require("./select"); */;
+/* removed: var _$stream_20 = require("./stream"); */;
+/* removed: var _$track_21 = require("./track"); */;
+/* removed: var _$ui_23 = require("./ui"); */;
 /**
  * Standard export formats.
  */
-_$export_7.standardExports = [
-    { name: "_FLAC", options: { format: "flac", codec: "flac", sampleFormat: _$audioData_4.LibAVSampleFormat.S32 } },
-    { name: "_M4A (MPEG-4 audio)", options: { format: "ipod", ext: "m4a", codec: "aac", sampleFormat: _$audioData_4.LibAVSampleFormat.FLTP } },
-    { name: "Ogg _Vorbis", options: { format: "ogg", codec: "libvorbis", sampleFormat: _$audioData_4.LibAVSampleFormat.FLTP } },
-    { name: "_Opus", options: { format: "ogg", ext: "opus", codec: "libopus", sampleFormat: _$audioData_4.LibAVSampleFormat.FLT, sampleRate: 48000 } },
-    { name: "_ALAC (Apple Lossless)", options: { format: "ipod", ext: "m4a", codec: "alac", sampleFormat: _$audioData_4.LibAVSampleFormat.S32P } },
-    { name: "wav_pack", options: { format: "wv", codec: "wavpack", sampleFormat: _$audioData_4.LibAVSampleFormat.FLTP } },
-    { name: "_wav", options: { format: "wav", codec: "pcm_s16le", sampleFormat: _$audioData_4.LibAVSampleFormat.S16 } }
+_$export_10.standardExports = [
+    { name: "_FLAC", options: { format: "flac", codec: "flac", sampleFormat: _$audioData_5.LibAVSampleFormat.S32 } },
+    { name: "_M4A (MPEG-4 audio)", options: { format: "ipod", ext: "m4a", codec: "aac", sampleFormat: _$audioData_5.LibAVSampleFormat.FLTP } },
+    { name: "Ogg _Vorbis", options: { format: "ogg", codec: "libvorbis", sampleFormat: _$audioData_5.LibAVSampleFormat.FLTP } },
+    { name: "_Opus", options: { format: "ogg", ext: "opus", codec: "libopus", sampleFormat: _$audioData_5.LibAVSampleFormat.FLT, sampleRate: 48000 } },
+    { name: "_ALAC (Apple Lossless)", options: { format: "ipod", ext: "m4a", codec: "alac", sampleFormat: _$audioData_5.LibAVSampleFormat.S32P } },
+    { name: "wav_pack", options: { format: "wv", codec: "wavpack", sampleFormat: _$audioData_5.LibAVSampleFormat.FLTP } },
+    { name: "_wav", options: { format: "wav", codec: "pcm_s16le", sampleFormat: _$audioData_5.LibAVSampleFormat.S16 } }
 ];
 /**
  * Export selected audio with the given options.
@@ -8672,7 +8640,7 @@ _$export_7.standardExports = [
  * @param d  A dialog in which to show progress, if desired.
  */
 function exportAudio(opts, sel, d) {
-    return ____awaiter_7(this, void 0, void 0, function () {
+    return ____awaiter_10(this, void 0, void 0, function () {
         // Function to show the current status
         function showStatus() {
             if (d) {
@@ -8685,12 +8653,12 @@ function exportAudio(opts, sel, d) {
         }
         // The export function for each track
         function exportThread(track, idx) {
-            return ____awaiter_7(this, void 0, void 0, function () {
-                var channel_layout, sample_rate, fname, inStream, libav, bufLen, fileLen, writePromise, cacheName, cacheNum, cache, _a, c, frame, pkt, frame_size, oc, _b, buffersrc_ctx, buffersink_ctx, pts, inFrame, fFrames, _i, fFrames_1, frame_1, packets, writer, lastNum, lastLen, i, storeName, part;
-                return ____generator_7(this, function (_c) {
+            return ____awaiter_10(this, void 0, void 0, function () {
+                var channel_layout, sample_rate, fname, inStream, libav, bufLen, fileLen, writePromise, cacheName, cacheNum, cache, _a, c, frame, pkt, frame_size, oc, _b, buffersrc_ctx, buffersink_ctx, pts, inFrame, fFrames, _i, fFrames_1, frame_1, packets, lastNum, lastLen, eidx, exportStream;
+                return ____generator_10(this, function (_c) {
                     switch (_c.label) {
                         case 0:
-                            channel_layout = _$audioData_4.toChannelLayout(track.channels);
+                            channel_layout = _$audioData_5.toChannelLayout(track.channels);
                             sample_rate = opts.sampleRate || track.sampleRate;
                             fname = opts.prefix +
                                 ((tracks.length > 1 || opts.suffixTrackName) ? "-" + track.name : "") +
@@ -8708,9 +8676,9 @@ function exportAudio(opts, sel, d) {
                             libav.onwrite = function (name, pos, buf) {
                                 writePromise = writePromise.then(function () { return write(pos, buf); });
                                 function write(pos, buf) {
-                                    return ____awaiter_7(this, void 0, void 0, function () {
+                                    return ____awaiter_10(this, void 0, void 0, function () {
                                         var storeNum, storeName, storeStart, storeEnd, nextBuf, storeOff, part;
-                                        return ____generator_7(this, function (_a) {
+                                        return ____generator_10(this, function (_a) {
                                             switch (_a.label) {
                                                 case 0:
                                                     // Make sure our length is right
@@ -8832,37 +8800,43 @@ function exportAudio(opts, sel, d) {
                             cache = null;
                             _c.label = 16;
                         case 16:
-                            writer = _$StreamSaver_2
-                                .createWriteStream(fname, { size: fileLen })
-                                .getWriter();
                             lastNum = ~~(fileLen / bufLen);
                             lastLen = fileLen % bufLen;
-                            i = 0;
-                            _c.label = 17;
+                            eidx = 0;
+                            exportStream = new _$stream_20.WSPReadableStream({
+                                pull: function (controller) {
+                                    return ____awaiter_10(this, void 0, void 0, function () {
+                                        var storeName, part;
+                                        return ____generator_10(this, function (_a) {
+                                            switch (_a.label) {
+                                                case 0:
+                                                    storeName = "export-" + fname + "-" + eidx;
+                                                    return [4 /*yield*/, store.getItem(storeName)];
+                                                case 1:
+                                                    part = _a.sent();
+                                                    return [4 /*yield*/, store.removeItem(storeName)];
+                                                case 2:
+                                                    _a.sent();
+                                                    if (eidx === lastNum) {
+                                                        controller.enqueue(part.subarray(0, lastLen));
+                                                        controller.close();
+                                                    }
+                                                    else {
+                                                        controller.enqueue(part);
+                                                    }
+                                                    eidx++;
+                                                    return [2 /*return*/];
+                                            }
+                                        });
+                                    });
+                                }
+                            });
+                            // And stream it out
+                            return [4 /*yield*/, _$downloadStream_9.stream(fname, exportStream, {
+                                    "content-length": fileLen + ""
+                                })];
                         case 17:
-                            if (!(i <= lastNum)) return [3 /*break*/, 25];
-                            storeName = "export-" + fname + "-" + i;
-                            return [4 /*yield*/, store.getItem(storeName)];
-                        case 18:
-                            part = _c.sent();
-                            if (!(i === lastNum)) return [3 /*break*/, 20];
-                            return [4 /*yield*/, writer.write(part.subarray(0, lastLen))];
-                        case 19:
-                            _c.sent();
-                            return [3 /*break*/, 22];
-                        case 20: return [4 /*yield*/, writer.write(part)];
-                        case 21:
-                            _c.sent();
-                            _c.label = 22;
-                        case 22: return [4 /*yield*/, store.removeItem(storeName)];
-                        case 23:
-                            _c.sent();
-                            _c.label = 24;
-                        case 24:
-                            i++;
-                            return [3 /*break*/, 17];
-                        case 25: return [4 /*yield*/, writer.close()];
-                        case 26:
+                            // And stream it out
                             _c.sent();
                             return [2 /*return*/];
                     }
@@ -8870,10 +8844,10 @@ function exportAudio(opts, sel, d) {
             });
         }
         var tracks, store, range, streamOpts, status, keys, _i, keys_1, key, threads, running, toRun, _a, sel_1, idx, fin;
-        return ____generator_7(this, function (_b) {
+        return ____generator_10(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    tracks = sel.tracks.filter(function (x) { return x.type() === _$track_18.TrackType.Audio; });
+                    tracks = sel.tracks.filter(function (x) { return x.type() === _$track_21.TrackType.Audio; });
                     if (tracks.length === 0) {
                         // Easy!
                         return [2 /*return*/];
@@ -8935,33 +8909,99 @@ function exportAudio(opts, sel, d) {
         });
     });
 }
-_$export_7.exportAudio = exportAudio;
+_$export_10.exportAudio = exportAudio;
+/**
+ * Export selected captions.
+ * @param opts  Export options.
+ * @param sel  The selection to export.
+ * @param d  A dialog in which to show progress, if desired.
+ */
+function exportCaption(opts, sel, d) {
+    return ____awaiter_10(this, void 0, void 0, function () {
+        var tracks, store, _loop_1, _i, tracks_1, track_1;
+        return ____generator_10(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    tracks = sel.tracks.filter(function (x) { return x.type() === _$track_21.TrackType.Caption; });
+                    if (tracks.length === 0) {
+                        // Easy!
+                        return [2 /*return*/];
+                    }
+                    store = tracks[0].project.store;
+                    if (d)
+                        d.box.innerHTML = "Exporting...";
+                    _loop_1 = function (track_1) {
+                        var fname, vtt, enc, vttu8, stream;
+                        return ____generator_10(this, function (_b) {
+                            switch (_b.label) {
+                                case 0:
+                                    fname = opts.prefix +
+                                        ((tracks.length > 1) ? "-" + track_1.name : "") +
+                                        ".vtt";
+                                    vtt = track_1.toVTT();
+                                    enc = new TextEncoder();
+                                    vttu8 = enc.encode(vtt);
+                                    stream = new _$stream_20.WSPReadableStream({
+                                        start: function (controller) {
+                                            controller.enqueue(vttu8);
+                                            controller.close();
+                                        }
+                                    });
+                                    // And stream it out
+                                    return [4 /*yield*/, _$downloadStream_9.stream(fname, stream, {
+                                            "content-length": vttu8.length + ""
+                                        })];
+                                case 1:
+                                    // And stream it out
+                                    _b.sent();
+                                    return [2 /*return*/];
+                            }
+                        });
+                    };
+                    _i = 0, tracks_1 = tracks;
+                    _a.label = 1;
+                case 1:
+                    if (!(_i < tracks_1.length)) return [3 /*break*/, 4];
+                    track_1 = tracks_1[_i];
+                    return [5 /*yield**/, _loop_1(track_1)];
+                case 2:
+                    _a.sent();
+                    _a.label = 3;
+                case 3:
+                    _i++;
+                    return [3 /*break*/, 1];
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+}
+_$export_10.exportCaption = exportCaption;
 /**
  * Show the user interface to export audio.
  * @param d  The dialog to reuse.
  * @param name  Name prefix for export.
  */
 function uiExport(d, name) {
-    return ____awaiter_7(this, void 0, void 0, function () {
-        return ____generator_7(this, function (_a) {
+    return ____awaiter_10(this, void 0, void 0, function () {
+        return ____generator_10(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, _$ui_20.dialog(function (d, show) {
-                        return ____awaiter_7(this, void 0, void 0, function () {
-                            var first, _loop_1, _i, standardExports_1, format;
-                            return ____generator_7(this, function (_a) {
+                case 0: return [4 /*yield*/, _$ui_23.dialog(function (d, show) {
+                        return ____awaiter_10(this, void 0, void 0, function () {
+                            var first, _loop_2, _i, standardExports_1, format;
+                            return ____generator_10(this, function (_a) {
                                 first = null;
                                 // Label
-                                _$ui_20.mk("div", d.box, { innerHTML: "Format:", className: "row" }).style.textAlign = "center";
-                                _loop_1 = function (format) {
-                                    var btn = _$hotkeys_9.btn(d, format.name, { className: "row small" });
+                                _$ui_23.mk("div", d.box, { innerHTML: "Format:", className: "row" }).style.textAlign = "center";
+                                _loop_2 = function (format) {
+                                    var btn = _$hotkeys_12.btn(d, format.name, { className: "row small" });
                                     if (!first)
                                         first = btn;
                                     btn.onclick = function () {
-                                        _$ui_20.loading(function (d) {
-                                            return ____awaiter_7(this, void 0, void 0, function () {
-                                                return ____generator_7(this, function (_a) {
+                                        _$ui_23.loading(function (d) {
+                                            return ____awaiter_10(this, void 0, void 0, function () {
+                                                return ____generator_10(this, function (_a) {
                                                     switch (_a.label) {
-                                                        case 0: return [4 /*yield*/, exportAudio(Object.assign({ prefix: name }, format.options), _$select_14.getSelection(), d)];
+                                                        case 0: return [4 /*yield*/, exportAudio(Object.assign({ prefix: name }, format.options), _$select_17.getSelection(), d)];
                                                         case 1:
                                                             _a.sent();
                                                             return [2 /*return*/];
@@ -8974,9 +9014,9 @@ function uiExport(d, name) {
                                     };
                                 };
                                 // Show each format
-                                for (_i = 0, standardExports_1 = _$export_7.standardExports; _i < standardExports_1.length; _i++) {
+                                for (_i = 0, standardExports_1 = _$export_10.standardExports; _i < standardExports_1.length; _i++) {
                                     format = standardExports_1[_i];
-                                    _loop_1(format);
+                                    _loop_2(format);
                                 }
                                 show(first);
                                 return [2 /*return*/];
@@ -8993,9 +9033,40 @@ function uiExport(d, name) {
         });
     });
 }
-_$export_7.uiExport = uiExport;
+_$export_10.uiExport = uiExport;
+/**
+ * Show the user interface to export captions.
+ * @param d  The dialog to reuse.
+ * @param name  Name prefix for export.
+ */
+function uiExportCaption(d, name) {
+    return ____awaiter_10(this, void 0, void 0, function () {
+        return ____generator_10(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, _$ui_23.loading(function (d) {
+                        return ____awaiter_10(this, void 0, void 0, function () {
+                            return ____generator_10(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0: return [4 /*yield*/, exportCaption({ prefix: name }, _$select_17.getSelection(), d)];
+                                    case 1:
+                                        _a.sent();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        });
+                    }, {
+                        reuse: d
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+_$export_10.uiExportCaption = uiExportCaption;
 
-var _$audio_5 = {};
+var _$audio_6 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -9012,7 +9083,7 @@ var _$audio_5 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-var ____awaiter_5 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var ____awaiter_6 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -9021,7 +9092,7 @@ var ____awaiter_5 = (this && this.__awaiter) || function (thisArg, _arguments, P
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var ____generator_5 = (this && this.__generator) || function (thisArg, body) {
+var ____generator_6 = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
@@ -9048,18 +9119,18 @@ var ____generator_5 = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(_$audio_5, "__esModule", { value: true });
-_$audio_5.createSource = _$audio_5.getAudioContext = void 0;
-/* removed: var _$audioData_4 = require("./audio-data"); */;
-/* removed: var _$ui_20 = require("./ui"); */;
+Object.defineProperty(_$audio_6, "__esModule", { value: true });
+_$audio_6.createSource = _$audio_6.getAudioContext = void 0;
+/* removed: var _$audioData_5 = require("./audio-data"); */;
+/* removed: var _$ui_23 = require("./ui"); */;
 var ac = null;
 /**
  * Get the audio context.
  */
 function getAudioContext() {
-    return ____awaiter_5(this, void 0, void 0, function () {
+    return ____awaiter_6(this, void 0, void 0, function () {
         var ex_1, ex_2;
-        return ____generator_5(this, function (_a) {
+        return ____generator_6(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!!ac) return [3 /*break*/, 12];
@@ -9078,7 +9149,7 @@ function getAudioContext() {
                 case 4:
                     if (!(ac.state !== "running")) return [3 /*break*/, 10];
                     // OK, ask nicely
-                    return [4 /*yield*/, _$ui_20.alert("This tool needs permission to play audio. Press OK to grant this permission.")];
+                    return [4 /*yield*/, _$ui_23.alert("This tool needs permission to play audio. Press OK to grant this permission.")];
                 case 5:
                     // OK, ask nicely
                     _a.sent();
@@ -9091,7 +9162,7 @@ function getAudioContext() {
                     return [3 /*break*/, 10];
                 case 8:
                     ex_2 = _a.sent();
-                    return [4 /*yield*/, _$ui_20.alert(ex_2 + "")];
+                    return [4 /*yield*/, _$ui_23.alert(ex_2 + "")];
                 case 9:
                     _a.sent();
                     return [3 /*break*/, 10];
@@ -9107,7 +9178,7 @@ function getAudioContext() {
         });
     });
 }
-_$audio_5.getAudioContext = getAudioContext;
+_$audio_6.getAudioContext = getAudioContext;
 /**
  * Create a source node for this stream of libav-like frames. Takes the reader,
  * so that the caller can cancel it.
@@ -9115,9 +9186,9 @@ _$audio_5.getAudioContext = getAudioContext;
  */
 function createSource(stream, opts) {
     if (opts === void 0) { opts = {}; }
-    return ____awaiter_5(this, void 0, void 0, function () {
+    return ____awaiter_6(this, void 0, void 0, function () {
         var ac, rdr, first, libav, frame, _a, buffersrc_ctx, buffersink_ctx, finished, firstFrames, ret;
-        return ____generator_5(this, function (_b) {
+        return ____generator_6(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4 /*yield*/, getAudioContext()];
                 case 1:
@@ -9150,7 +9221,7 @@ function createSource(stream, opts) {
                             channel_layout: first.value.channel_layout
                         }, {
                             sample_rate: ac.sampleRate,
-                            sample_fmt: _$audioData_4.LibAVSampleFormat.FLTP,
+                            sample_fmt: _$audioData_5.LibAVSampleFormat.FLTP,
                             channel_layout: 3
                         })];
                 case 5:
@@ -9172,9 +9243,9 @@ function createSource(stream, opts) {
                     first = firstFrames = null;
                     // Associate its port with reading
                     ret.port.onmessage = function (ev) {
-                        return ____awaiter_5(this, void 0, void 0, function () {
+                        return ____awaiter_6(this, void 0, void 0, function () {
                             var rawData, frames_1, frames_2;
-                            return ____generator_5(this, function (_a) {
+                            return ____generator_6(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
                                         if (ev.data.c === "time") {
@@ -9243,9 +9314,867 @@ function createSource(stream, opts) {
         });
     });
 }
-_$audio_5.createSource = createSource;
+_$audio_6.createSource = createSource;
 
-var _$status_15 = {};
+var _$parser_4 = {};
+// Any copyright is dedicated to the Public Domain.
+// http://creativecommons.org/publicdomain/zero/1.0/
+
+// Not intended to be fast, but if you can make it faster, please help out!
+
+(function () {
+  var defaultCueSettings = {
+    direction:"horizontal",
+    snapToLines:true,
+    linePosition:"auto",
+    lineAlign:"start",
+    textPosition:"auto",
+    positionAlign:"auto",
+    size:100,
+    alignment:"center",
+  };
+
+  var WebVTTParser = function(entities) {
+    if (!entities) {
+      entities = {
+        "&amp": "&",
+        "&lt": "<",
+        "&gt": ">",
+        "&lrm": "\u200e",
+        "&rlm": "\u200f",
+        "&nbsp": "\u00A0"
+      }
+    }
+    this.entities = entities
+    this.parse = function(input, mode) {
+      // global search and replace for \0
+      input = input.replace(/\0/g, '\uFFFD');
+      var NEWLINE = /\r\n|\r|\n/,
+          startTime = Date.now(),
+          linePos = 0,
+          lines = input.split(NEWLINE),
+          alreadyCollected = false,
+          cues = [],
+          errors = []
+      function err(message, col) {
+        errors.push({message:message, line:linePos+1, col:col})
+      }
+
+      var line = lines[linePos],
+          lineLength = line.length,
+          signature = "WEBVTT",
+          bom = 0,
+          signature_length = signature.length
+
+      /* Byte order mark */
+      if (line[0] === "\ufeff") {
+        bom = 1
+        signature_length += 1
+      }
+      /* SIGNATURE */
+      if (
+        lineLength < signature_length ||
+        line.indexOf(signature) !== 0+bom ||
+        lineLength > signature_length &&
+        line[signature_length] !== " " &&
+        line[signature_length] !== "\t"
+      ) {
+        err("No valid signature. (File needs to start with \"WEBVTT\".)")
+      }
+
+      linePos++
+
+      /* HEADER */
+      while(lines[linePos] != "" && lines[linePos] != undefined) {
+        err("No blank line after the signature.")
+        if(lines[linePos].indexOf("-->") != -1) {
+          alreadyCollected = true
+          break
+        }
+        linePos++
+      }
+
+      /* CUE LOOP */
+      while(lines[linePos] != undefined) {
+        var cue
+        while(!alreadyCollected && lines[linePos] == "") {
+          linePos++
+        }
+        if(!alreadyCollected && lines[linePos] == undefined)
+          break
+
+        /* CUE CREATION */
+        cue = Object.assign({}, defaultCueSettings, {
+          id:"",
+          startTime:0,
+          endTime:0,
+          pauseOnExit:false,
+          direction:"horizontal",
+          snapToLines:true,
+          linePosition:"auto",
+          lineAlign:"start",
+          textPosition:"auto",
+          positionAlign:"auto",
+          size:100,
+          alignment:"center",
+          text:"",
+          tree:null
+        })
+
+        var parseTimings = true
+
+        if(lines[linePos].indexOf("-->") == -1) {
+          cue.id = lines[linePos]
+
+          /* COMMENTS
+             Not part of the specification's parser as these would just be ignored. However,
+             we want them to be conforming and not get "Cue identifier cannot be standalone".
+           */
+          if(/^NOTE($|[ \t])/.test(cue.id)) { // .startsWith fails in Chrome
+            linePos++
+            while(lines[linePos] != "" && lines[linePos] != undefined) {
+              if(lines[linePos].indexOf("-->") != -1)
+                err("Cannot have timestamp in a comment.")
+              linePos++
+            }
+            continue
+          }
+
+          linePos++
+
+          if(lines[linePos] == "" || lines[linePos] == undefined) {
+            err("Cue identifier cannot be standalone.")
+            continue
+          }
+
+          if(lines[linePos].indexOf("-->") == -1) {
+            parseTimings = false
+            err("Cue identifier needs to be followed by timestamp.")
+            continue
+          }
+        }
+
+        /* TIMINGS */
+        alreadyCollected = false
+        var timings = new WebVTTCueTimingsAndSettingsParser(lines[linePos], err)
+        var previousCueStart = 0
+        if(cues.length > 0) {
+          previousCueStart = cues[cues.length-1].startTime
+        }
+        if(parseTimings && !timings.parse(cue, previousCueStart)) {
+          /* BAD CUE */
+
+          cue = null
+          linePos++
+
+          /* BAD CUE LOOP */
+          while(lines[linePos] != "" && lines[linePos] != undefined) {
+            if(lines[linePos].indexOf("-->") != -1) {
+              alreadyCollected = true
+              break
+            }
+            linePos++
+          }
+          continue
+        }
+        linePos++
+
+        /* CUE TEXT LOOP */
+        while(lines[linePos] != "" && lines[linePos] != undefined) {
+          if(lines[linePos].indexOf("-->") != -1) {
+            err("Blank line missing before cue.")
+            alreadyCollected = true
+            break
+          }
+          if(cue.text != "")
+            cue.text += "\n"
+          cue.text += lines[linePos]
+          linePos++
+        }
+
+        /* CUE TEXT PROCESSING */
+        var cuetextparser = new WebVTTCueTextParser(cue.text, err, mode, this.entities)
+        cue.tree = cuetextparser.parse(cue.startTime, cue.endTime)
+        cues.push(cue)
+      }
+      cues.sort(function(a, b) {
+        if (a.startTime < b.startTime)
+          return -1
+        if (a.startTime > b.startTime)
+          return 1
+        if (a.endTime > b.endTime)
+          return -1
+        if (a.endTime < b.endTime)
+          return 1
+        return 0
+      })
+      /* END */
+      return {cues:cues, errors:errors, time:Date.now()-startTime}
+    }
+  }
+
+  var WebVTTCueTimingsAndSettingsParser = function(line, errorHandler) {
+    var SPACE = /[\u0020\t\f]/,
+        NOSPACE = /[^\u0020\t\f]/,
+        line = line,
+        pos = 0,
+        err = function(message) {
+          errorHandler(message, pos+1)
+        },
+        spaceBeforeSetting = true
+    function skip(pattern) {
+      while(
+        line[pos] != undefined &&
+        pattern.test(line[pos])
+      ) {
+        pos++
+      }
+    }
+    function collect(pattern) {
+      var str = ""
+      while(
+        line[pos] != undefined &&
+        pattern.test(line[pos])
+      ) {
+        str += line[pos]
+        pos++
+      }
+      return str
+    }
+    /* http://dev.w3.org/html5/webvtt/#collect-a-webvtt-timestamp */
+    function timestamp() {
+      var units = "minutes",
+          val1,
+          val2,
+          val3,
+          val4
+      // 3
+      if(line[pos] == undefined) {
+        err("No timestamp found.")
+        return
+      }
+      // 4
+      if(!/\d/.test(line[pos])) {
+        err("Timestamp must start with a character in the range 0-9.")
+        return
+      }
+      // 5-7
+      val1 = collect(/\d/)
+      if(val1.length > 2 || parseInt(val1, 10) > 59) {
+        units = "hours"
+      }
+      // 8
+      if(line[pos] != ":") {
+        err("No time unit separator found.")
+        return
+      }
+      pos++
+      // 9-11
+      val2 = collect(/\d/)
+      if(val2.length != 2) {
+        err("Must be exactly two digits.")
+        return
+      }
+      // 12
+      if(units == "hours" || line[pos] == ":") {
+        if(line[pos] != ":") {
+          err("No seconds found or minutes is greater than 59.")
+          return
+        }
+        pos++
+        val3 = collect(/\d/)
+        if(val3.length != 2) {
+          err("Must be exactly two digits.")
+          return
+        }
+      } else {
+        if (val1.length != 2) {
+          err("Must be exactly two digits.")
+          return
+        }
+        val3 = val2
+        val2 = val1
+        val1 = "0"
+      }
+      // 13
+      if(line[pos] != ".") {
+        err("No decimal separator (\".\") found.")
+        return
+      }
+      pos++
+      // 14-16
+      val4 = collect(/\d/)
+      if(val4.length != 3) {
+        err("Milliseconds must be given in three digits.")
+        return
+      }
+      // 17
+      if(parseInt(val2, 10) > 59) {
+        err("You cannot have more than 59 minutes.")
+        return
+      }
+      if(parseInt(val3, 10) > 59) {
+        err("You cannot have more than 59 seconds.")
+        return
+      }
+      return parseInt(val1, 10) * 60 * 60 + parseInt(val2, 10) * 60 + parseInt(val3, 10) + parseInt(val4, 10) / 1000
+    }
+
+    /* http://dev.w3.org/html5/webvtt/#parse-the-webvtt-settings */
+    function parseSettings(input, cue) {
+      var settings = input.split(SPACE),
+          seen = []
+      for(var i=0; i < settings.length; i++) {
+        if(settings[i] == "")
+          continue
+
+        var index = settings[i].indexOf(':'),
+            setting = settings[i].slice(0, index),
+            value = settings[i].slice(index + 1)
+
+        if(seen.indexOf(setting) != -1) {
+          err("Duplicate setting.")
+        }
+        seen.push(setting)
+
+        if(value == "") {
+          err("No value for setting defined.")
+          return
+        }
+
+        if(setting == "vertical") { // writing direction
+          if(value != "rl" && value != "lr") {
+            err("Writing direction can only be set to 'rl' or 'rl'.")
+            continue
+          }
+          cue.direction = value
+        } else if(setting == "line") { // line position and optionally line alignment
+          if (/,/.test(value)) {
+            var comp = value.split(',')
+            value = comp[0]
+            var lineAlign = comp[1]
+          }
+          if(!/^[-\d](\d*)(\.\d+)?%?$/.test(value)) {
+            err("Line position takes a number or percentage.")
+            continue
+          }
+          if(value.indexOf("-", 1) != -1) {
+            err("Line position can only have '-' at the start.")
+            continue
+          }
+          if(value.indexOf("%") != -1 && value.indexOf("%") != value.length-1) {
+            err("Line position can only have '%' at the end.")
+            continue
+          }
+          if(value[0] == "-" && value[value.length-1] == "%") {
+            err("Line position cannot be a negative percentage.")
+            continue
+          }
+          var numVal = value;
+          var isPercent = false;
+          if(value[value.length-1] == "%") {
+            isPercent = true;
+            numVal = value.slice(0, value.length-1)
+            if(parseInt(value, 10) > 100) {
+              err("Line position cannot be >100%.")
+              continue
+            }
+          }
+          if (numVal === '' || isNaN(numVal) || !isFinite(numVal)) {
+            err("Line position needs to be a number")
+            continue
+          }
+          if (lineAlign !== undefined) {
+            if (!["start", "center", "end"].includes(lineAlign)) {
+              err("Line alignment needs to be one of start, center or end")
+              continue
+            }
+            cue.lineAlign = lineAlign
+          }
+          cue.snapToLines = !isPercent;
+          cue.linePosition = parseFloat(numVal)
+          if (parseFloat(numVal).toString() !== numVal) {
+            cue.nonSerializable = true;
+          }
+        } else if(setting == "position") { // text position and optional positionAlign
+          if (/,/.test(value)) {
+            var comp = value.split(',')
+            value = comp[0]
+            var positionAlign = comp[1]
+          }
+          if(value[value.length-1] != "%") {
+            err("Text position must be a percentage.")
+            continue
+          }
+          if(parseInt(value, 10) > 100 || parseInt(value, 10) < 0) {
+            err("Text position needs to be between 0 and 100%.")
+            continue
+          }
+          numVal = value.slice(0, value.length-1)
+          if (numVal === '' || isNaN(numVal) || !isFinite(numVal)) {
+            err("Line position needs to be a number")
+            continue
+          }
+          if (positionAlign !== undefined) {
+            if (!["line-left", "center", "line-right"].includes(positionAlign)) {
+              err("Position alignment needs to be one of line-left, center or line-right")
+              continue
+            }
+            cue.positionAlign = positionAlign
+          }
+          cue.textPosition = parseFloat(numVal)
+        } else if(setting == "size") { // size
+          if(value[value.length-1] != "%") {
+            err("Size must be a percentage.")
+            continue
+          }
+          if(parseInt(value, 10) > 100) {
+            err("Size cannot be >100%.")
+            continue
+          }
+          var size = value.slice(0, value.length -1)
+          if (size === undefined || size === "" || isNaN(size)) {
+            err("Size needs to be a number")
+            size = 100
+            continue
+          } else {
+            size = parseFloat(size)
+            if (size < 0 || size > 100) {
+              err("Size needs to be between 0 and 100%.")
+              continue;
+            }
+          }
+          cue.size = size
+        } else if(setting == "align") { // alignment
+          var alignValues = ["start", "center", "end", "left", "right"]
+          if(alignValues.indexOf(value) == -1) {
+            err("Alignment can only be set to one of " + alignValues.join(", ") + ".")
+            continue
+          }
+          cue.alignment = value
+        } else {
+          err("Invalid setting.")
+        }
+      }
+    }
+
+    this.parse = function(cue, previousCueStart) {
+      skip(SPACE)
+      cue.startTime = timestamp()
+      if(cue.startTime == undefined) {
+        return
+      }
+      if(cue.startTime < previousCueStart) {
+        err("Start timestamp is not greater than or equal to start timestamp of previous cue.")
+      }
+      if(NOSPACE.test(line[pos])) {
+        err("Timestamp not separated from '-->' by whitespace.")
+      }
+      skip(SPACE)
+      // 6-8
+      if(line[pos] != "-") {
+        err("No valid timestamp separator found.")
+        return
+      }
+      pos++
+      if(line[pos] != "-") {
+        err("No valid timestamp separator found.")
+        return
+      }
+      pos++
+      if(line[pos] != ">") {
+        err("No valid timestamp separator found.")
+        return
+      }
+      pos++
+      if(NOSPACE.test(line[pos])) {
+        err("'-->' not separated from timestamp by whitespace.")
+      }
+      skip(SPACE)
+      cue.endTime = timestamp()
+      if(cue.endTime == undefined) {
+        return
+      }
+      if(cue.endTime <= cue.startTime) {
+        err("End timestamp is not greater than start timestamp.")
+      }
+
+      if(NOSPACE.test(line[pos])) {
+        spaceBeforeSetting = false
+      }
+      skip(SPACE)
+      parseSettings(line.substring(pos), cue)
+      return true
+    }
+    this.parseTimestamp = function() {
+      var ts = timestamp()
+      if(line[pos] != undefined) {
+        err("Timestamp must not have trailing characters.")
+        return
+      }
+      return ts
+    }
+  }
+
+  var WebVTTCueTextParser = function(line, errorHandler, mode, entities) {
+    this.entities = entities
+    var self = this
+    var line = line,
+        pos = 0,
+        err = function(message) {
+          if(mode == "metadata")
+            return
+          errorHandler(message, pos+1)
+        }
+
+    this.parse = function(cueStart, cueEnd) {
+      function removeCycles(tree) {
+        const cyclelessTree = {...tree};
+        if (tree.children) {
+          cyclelessTree.children = tree.children.map(removeCycles);
+        }
+        if (cyclelessTree.parent) {
+          delete cyclelessTree.parent;
+        }
+        return cyclelessTree;
+      }
+
+      var result = {children:[]},
+          current = result,
+          timestamps = []
+
+      function attach(token) {
+        current.children.push({type:"object", name:token[1], classes:token[2], children:[], parent:current})
+        current = current.children[current.children.length-1]
+      }
+      function inScope(name) {
+        var node = current
+        while(node) {
+          if(node.name == name)
+            return true
+          node = node.parent
+        }
+        return
+      }
+
+      while(line[pos] != undefined) {
+        var token = nextToken()
+        if(token[0] == "text") {
+          current.children.push({type:"text", value:token[1], parent:current})
+        } else if(token[0] == "start tag") {
+          if(mode == "chapters")
+            err("Start tags not allowed in chapter title text.")
+          var name = token[1]
+          if(name != "v" && name != "lang" && token[3] != "") {
+            err("Only <v> and <lang> can have an annotation.")
+          }
+          if(
+            name == "c" ||
+            name == "i" ||
+            name == "b" ||
+            name == "u" ||
+            name == "ruby"
+          ) {
+            attach(token)
+          } else if(name == "rt" && current.name == "ruby") {
+            attach(token)
+          } else if(name == "v") {
+            if(inScope("v")) {
+              err("<v> cannot be nested inside itself.")
+            }
+            attach(token)
+            current.value = token[3] // annotation
+            if(!token[3]) {
+              err("<v> requires an annotation.")
+            }
+          } else if(name == "lang") {
+            attach(token)
+            current.value = token[3] // language
+          } else {
+            err("Incorrect start tag.")
+          }
+        } else if(token[0] == "end tag") {
+          if(mode == "chapters")
+            err("End tags not allowed in chapter title text.")
+          // XXX check <ruby> content
+          if(token[1] == current.name) {
+            current = current.parent
+          } else if(token[1] == "ruby" && current.name == "rt") {
+            current = current.parent.parent
+          } else {
+            err("Incorrect end tag.")
+          }
+        } else if(token[0] == "timestamp") {
+          if(mode == "chapters")
+            err("Timestamp not allowed in chapter title text.")
+          var timings = new WebVTTCueTimingsAndSettingsParser(token[1], err),
+              timestamp = timings.parseTimestamp()
+          if(timestamp != undefined) {
+            if(timestamp <= cueStart || timestamp >= cueEnd) {
+              err("Timestamp must be between start timestamp and end timestamp.")
+            }
+            if(timestamps.length > 0 && timestamps[timestamps.length-1] >= timestamp) {
+              err("Timestamp must be greater than any previous timestamp.")
+            }
+            current.children.push({type:"timestamp", value:timestamp, parent:current})
+            timestamps.push(timestamp)
+          }
+        }
+      }
+      while(current.parent) {
+        if(current.name != "v") {
+          err("Required end tag missing.")
+        }
+        current = current.parent
+      }
+      return removeCycles(result)
+    }
+
+    function nextToken() {
+      var state = "data",
+          result = "",
+          buffer = "",
+          classes = []
+      while(line[pos-1] != undefined || pos == 0) {
+        var c = line[pos]
+        if(state == "data") {
+          if(c == "&") {
+            buffer = c
+            state = "escape"
+          } else if(c == "<" && result == "") {
+            state = "tag"
+          } else if(c == "<" || c == undefined) {
+            return ["text", result]
+          } else {
+            result += c
+          }
+        } else if(state == "escape") {
+          if(c == "<" || c == undefined) {
+            err("Incorrect escape.")
+            let m;
+            if (m = buffer.match(/^&#([0-9]+)$/)) {
+              result += String.fromCharCode(m[1])
+            } else {
+              if(self.entities[buffer]) {
+                result += self.entities[buffer]
+              } else {
+                result += buffer
+              }
+            }
+            return ["text", result]
+          } else if(c == "&") {
+            err("Incorrect escape.")
+            result += buffer
+            buffer = c
+          } else if(/[a-z#0-9]/i.test(c)) {
+            buffer += c
+          } else if(c == ";") {
+            let m;
+            if (m = buffer.match(/^&#(x?[0-9]+)$/)) {
+              // we prepend "0" so that x20 be interpreted as hexadecim (0x20)
+              result += String.fromCharCode("0" + m[1])
+            } else if(self.entities[buffer + c]) {
+              result += self.entities[buffer + c]
+            } else if (m = Object.keys(entities).find(n => buffer.startsWith(n))) { // partial match
+              result += self.entities[m] + buffer.slice(m.length) + c
+            } else {
+              err("Incorrect escape.")
+              result += buffer + ";"
+            }
+            state = "data"
+          } else {
+            err("Incorrect escape.")
+            result += buffer + c
+            state = "data"
+          }
+        } else if(state == "tag") {
+          if(c == "\t" || c == "\n" || c == "\f" || c == " ") {
+            state = "start tag annotation"
+          } else if(c == ".") {
+            state = "start tag class"
+          } else if(c == "/") {
+            state = "end tag"
+          } else if(/\d/.test(c)) {
+            result = c
+            state = "timestamp tag"
+          } else if(c == ">" || c == undefined) {
+            if(c == ">") {
+              pos++
+            }
+            return ["start tag", "", [], ""]
+          } else {
+            result = c
+            state = "start tag"
+          }
+        } else if(state == "start tag") {
+          if(c == "\t" || c == "\f" || c == " ") {
+            state = "start tag annotation"
+          } else if(c == "\n") {
+            buffer = c
+            state = "start tag annotation"
+          } else if(c == ".") {
+            state = "start tag class"
+          } else if(c == ">" || c == undefined) {
+            if(c == ">") {
+              pos++
+            }
+            return ["start tag", result, [], ""]
+          } else {
+            result += c
+          }
+        } else if(state == "start tag class") {
+          if(c == "\t" || c == "\f" || c == " ") {
+            if (buffer) {
+              classes.push(buffer)
+            }
+            buffer = ""
+            state = "start tag annotation"
+          } else if(c == "\n") {
+            if (buffer) {
+              classes.push(buffer)
+            }
+            buffer = c
+            state = "start tag annotation"
+          } else if(c == ".") {
+            if (buffer) {
+              classes.push(buffer)
+            }
+            buffer = ""
+          } else if(c == ">" || c == undefined) {
+            if(c == ">") {
+              pos++
+            }
+            if (buffer) {
+              classes.push(buffer)
+            }
+            return ["start tag", result, classes, ""]
+          } else {
+            buffer += c
+          }
+        } else if(state == "start tag annotation") {
+          if(c == ">" || c == undefined) {
+            if(c == ">") {
+              pos++
+            }
+            buffer = buffer.split(/[\u0020\t\f\r\n]+/).filter(function(item) { if(item) return true }).join(" ")
+            return ["start tag", result, classes, buffer]
+          } else {
+            buffer +=c
+          }
+        } else if(state == "end tag") {
+          if(c == ">" || c == undefined) {
+            if(c == ">") {
+              pos++
+            }
+            return ["end tag", result]
+          } else {
+            result += c
+          }
+        } else if(state == "timestamp tag") {
+          if(c == ">" || c == undefined) {
+            if(c == ">") {
+              pos++
+            }
+            return ["timestamp", result]
+          } else {
+            result += c
+          }
+        } else {
+          err("Never happens.") // The joke is it might.
+        }
+        // 8
+        pos++
+      }
+    }
+  }
+
+  var WebVTTSerializer = function() {
+    function serializeTimestamp(seconds) {
+      const ms = ("" + (seconds - Math.floor(seconds)).toFixed(3)*1000).padEnd(3, "0");
+      let h = 0, m = 0, s = 0;
+      if (seconds >= 3600) {
+        h = Math.floor(seconds/3600);
+      }
+      m = Math.floor((seconds - 3600*h) / 60);
+      s = Math.floor(seconds - 3600*h - 60*m);
+      return (h ? h + ":" : "") + ("" + m).padStart(2, "0") + ":" + ("" + s).padStart(2, "0") + "." + ms;
+    }
+    function serializeCueSettings(cue) {
+      var result = ""
+      const nonDefaultSettings = Object.keys(defaultCueSettings).filter(s => cue[s] !== defaultCueSettings[s]);
+      if (nonDefaultSettings.includes("direction")) {
+        result+= " vertical:" + cue.direction
+      }
+      if (nonDefaultSettings.includes("alignment")) {
+        result+= " align:" + cue.alignment
+      }
+      if (nonDefaultSettings.includes("size")) {
+        result+= " size:" + cue.size + "%"
+      }
+      if (nonDefaultSettings.includes("lineAlign") || nonDefaultSettings.includes("linePosition")) {
+        result += " line:" + cue.linePosition +  (cue.snapToLines ? "" : "%") + (cue.lineAlign && cue.lineAlign != defaultCueSettings.lineAlign ? "," + cue.lineAlign : "")
+      }
+      if (nonDefaultSettings.includes("textPosition") || nonDefaultSettings.includes("positionAlign")) {
+        result += " position:" + cue.textPosition + "%" + (cue.positionAlign && cue.positionAlign !== defaultCueSettings.positionAlign ? "," + cue.positionAlign : "")
+      }
+      return result
+    }
+    function serializeTree(tree) {
+      var result = ""
+      for (var i = 0; i < tree.length; i++) {
+        var node = tree[i]
+        if(node.type == "text") {
+          result += node.value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        } else if(node.type == "object") {
+          result += "<" + node.name
+          if(node.classes) {
+            for(var y = 0; y < node.classes.length; y++) {
+              result += "." + node.classes[y]
+            }
+          }
+          if(node.value) {
+            result += " " + node.value
+          }
+          result += ">"
+          if(node.children)
+            result += serializeTree(node.children)
+          result += "</" + node.name + ">"
+        } else if(node.type == "timestamp") {
+          result += "<" + serializeTimestamp(node.value) + ">"
+        } else {
+          result += "<" + node.value + ">"
+        }
+      }
+      return result
+    }
+    function serializeCue(cue) {
+      return (cue.id ? cue.id + "\n" : "")
+        + serializeTimestamp(cue.startTime)
+        + " --> "
+        + serializeTimestamp(cue.endTime)
+        + serializeCueSettings(cue)
+        + "\n" + serializeTree(cue.tree.children) + "\n\n"
+    }
+    this.serialize = function(cues) {
+      var result = "WEBVTT\n\n"
+      for(var i=0;i<cues.length;i++) {
+        result += serializeCue(cues[i])
+      }
+      return result
+    }
+  }
+
+  function exportify(object) {
+    object.WebVTTParser = WebVTTParser
+    object.WebVTTCueTimingsAndSettingsParser = WebVTTCueTimingsAndSettingsParser
+    object.WebVTTCueTextParser = WebVTTCueTextParser
+    object.WebVTTSerializer = WebVTTSerializer
+  }
+  if (typeof window !== 'undefined') exportify(window);
+  if (typeof _$parser_4 !== 'undefined') exportify(_$parser_4);
+})()
+
+var _$captionData_8 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -9262,9 +10191,843 @@ var _$status_15 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-Object.defineProperty(_$status_15, "__esModule", { value: true });
-_$status_15.popStatus = _$status_15.pushStatus = void 0;
-/* removed: var _$ui_20 = require("./ui"); */;
+var ____awaiter_8 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var ____generator_8 = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(_$captionData_8, "__esModule", { value: true });
+_$captionData_8.uiLoadFile = _$captionData_8.CaptionTrack = void 0;
+/* removed: var _$id36_13 = require("./id36"); */;
+/* removed: var _$select_17 = require("./select"); */;
+/* removed: var _$stream_20 = require("./stream"); */;
+/* removed: var _$track_21 = require("./track"); */;
+/* removed: var _$ui_23 = require("./ui"); */;
+/* removed: var _$util_24 = require("./util"); */;
+/* removed: var _$parser_4 = require("webvtt-parser"); */;
+/**
+ * A caption track. A CaptionTrack is stored in an array of CaptionDatas, each
+ * of which is a "line" of caption words, associated with their HTML nodes. The
+ * CaptionTrack itself holds a link to the associated AudioTrack by ID, if
+ * there is one. CaptionTracks are stored as caption-track-id.
+ */
+var CaptionTrack = /** @class */ (function () {
+    /**
+     * Make a CaptionTrack.
+     * @param id  ID for this track. Must be unique in the store.
+     * @param project  Project for this track. Note that the track is not
+     *                 automatically added to the project's track list; this
+     *                 parameter is just to know the store.
+     * @param opts  Other options.
+     */
+    function CaptionTrack(id, project, opts) {
+        if (opts === void 0) { opts = {}; }
+        this.id = id;
+        this.project = project;
+        // Main properties
+        this.data = [];
+        this.name = opts.name || "";
+        this.fixedDuration = opts.fixedDuration || 0;
+        this.audioTrack = opts.audioTrack || null;
+        // UI
+        this.spacer = _$ui_23.mk("div", _$ui_23.ui.main, { className: "track-spacer" });
+        this.info = _$ui_23.mk("div", _$ui_23.ui.main, { className: "track-info" });
+        this.display = _$ui_23.mk("div", _$ui_23.ui.main, { className: "track-display" });
+        this.box = _$ui_23.mk("div", this.display, { className: "track-caption-box" });
+        _$select_17.addSelectable({
+            track: this,
+            wrapper: this.display,
+            duration: this.duration.bind(this)
+        });
+    }
+    /**
+     * CaptionTracks are track type Caption.
+     */
+    CaptionTrack.prototype.type = function () { return _$track_21.TrackType.Caption; };
+    /**
+     * Save this track to the store.
+     * @param opts  Other options, in particular whether to perform a deep save
+     *              (save all CaptionDatas too).
+     */
+    CaptionTrack.prototype.save = function (opts) {
+        if (opts === void 0) { opts = {}; }
+        return ____awaiter_8(this, void 0, void 0, function () {
+            var t, _i, _a, el, _b, _c, el;
+            return ____generator_8(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        t = {
+                            name: this.name,
+                            fixedDuration: this.fixedDuration,
+                            audioTrack: this.audioTrack ? this.audioTrack : null,
+                            data: []
+                        };
+                        // Fill in the data
+                        for (_i = 0, _a = this.data; _i < _a.length; _i++) {
+                            el = _a[_i];
+                            t.data.push(el.id);
+                        }
+                        // Save the track itself
+                        return [4 /*yield*/, this.project.store.setItem("caption-track-" + this.id, t)];
+                    case 1:
+                        // Save the track itself
+                        _d.sent();
+                        if (!opts.deep) return [3 /*break*/, 5];
+                        _b = 0, _c = this.data;
+                        _d.label = 2;
+                    case 2:
+                        if (!(_b < _c.length)) return [3 /*break*/, 5];
+                        el = _c[_b];
+                        return [4 /*yield*/, el.save()];
+                    case 3:
+                        _d.sent();
+                        _d.label = 4;
+                    case 4:
+                        _b++;
+                        return [3 /*break*/, 2];
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Load this track from the store.
+     */
+    CaptionTrack.prototype.load = function () {
+        return ____awaiter_8(this, void 0, void 0, function () {
+            var t, _i, _a, dataId, part;
+            return ____generator_8(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.project.store.getItem("caption-track-" + this.id)];
+                    case 1:
+                        t = _b.sent();
+                        if (!t)
+                            return [2 /*return*/];
+                        this.name = t.name || "";
+                        this.fixedDuration = t.fixedDuration || 0;
+                        this.audioTrack = t.audioTrack || null;
+                        _i = 0, _a = t.data;
+                        _b.label = 2;
+                    case 2:
+                        if (!(_i < _a.length)) return [3 /*break*/, 5];
+                        dataId = _a[_i];
+                        part = new CaptionData(dataId, this);
+                        return [4 /*yield*/, part.load()];
+                    case 3:
+                        _b.sent();
+                        this.data.push(part);
+                        _b.label = 4;
+                    case 4:
+                        _i++;
+                        return [3 /*break*/, 2];
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Delete this track.
+     */
+    CaptionTrack.prototype.del = function () {
+        return ____awaiter_8(this, void 0, void 0, function () {
+            var _i, _a, d;
+            return ____generator_8(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _i = 0, _a = this.data;
+                        _b.label = 1;
+                    case 1:
+                        if (!(_i < _a.length)) return [3 /*break*/, 4];
+                        d = _a[_i];
+                        return [4 /*yield*/, d.del()];
+                    case 2:
+                        _b.sent();
+                        _b.label = 3;
+                    case 3:
+                        _i++;
+                        return [3 /*break*/, 1];
+                    case 4: 
+                    // Then delete this
+                    return [4 /*yield*/, this.project.store.removeItem("caption-track-" + this.id)];
+                    case 5:
+                        // Then delete this
+                        _b.sent();
+                        // Remove it from the DOM
+                        try {
+                            this.spacer.parentNode.removeChild(this.spacer);
+                            this.info.parentNode.removeChild(this.info);
+                            this.display.parentNode.removeChild(this.display);
+                        }
+                        catch (ex) { }
+                        // Remove it as a selectable
+                        _$select_17.removeSelectable(this);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Append data from a stream of raw data. The chunks must be arrays of
+     * VoskWords.
+     * @param rstream  The stream to read from.
+     */
+    CaptionTrack.prototype.append = function (rstream) {
+        return ____awaiter_8(this, void 0, void 0, function () {
+            var chunk;
+            return ____generator_8(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!true) return [3 /*break*/, 3];
+                        return [4 /*yield*/, rstream.read()];
+                    case 1:
+                        chunk = _a.sent();
+                        return [4 /*yield*/, this.appendRaw(chunk)];
+                    case 2:
+                        _a.sent();
+                        return [3 /*break*/, 0];
+                    case 3: return [4 /*yield*/, this.save()];
+                    case 4:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Append a single chunk of raw data.
+     * @param words  The single chunk of data.
+     * @param opts  Other options, really only intended to be used by append.
+     */
+    CaptionTrack.prototype.appendRaw = function (words, opts) {
+        if (opts === void 0) { opts = {}; }
+        return ____awaiter_8(this, void 0, void 0, function () {
+            var store, data, _a;
+            return ____generator_8(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        store = this.project.store;
+                        _a = CaptionData.bind;
+                        return [4 /*yield*/, _$id36_13.genFresh(store, "caption-data-")];
+                    case 1:
+                        data = new (_a.apply(CaptionData, [void 0, _b.sent(), this]))();
+                        return [4 /*yield*/, data.setData(words)];
+                    case 2:
+                        _b.sent();
+                        this.data.push(data);
+                        if (!!opts.noSave) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.save()];
+                    case 3:
+                        _b.sent();
+                        _b.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Get the duration, in seconds, of this track.
+     */
+    CaptionTrack.prototype.duration = function () {
+        if (this.fixedDuration)
+            return this.fixedDuration;
+        if (this.data.length === 0)
+            return 0;
+        return this.data[this.data.length - 1].end();
+    };
+    /**
+     * Get this data as a ReadableStream. Packets are set as lines (arrays of
+     * VoskWords).
+     * @param opts  Options. In particular, you can set the start and end time
+     *              here.
+     */
+    CaptionTrack.prototype.stream = function (opts) {
+        if (opts === void 0) { opts = {}; }
+        var self = this;
+        var startTime = (typeof opts.start === "number") ? opts.start : 0;
+        var endTime = (typeof opts.end === "number") ? opts.end : Infinity;
+        var idx = 0;
+        // Create the stream
+        return new _$stream_20.WSPReadableStream({
+            pull: function (controller) {
+                return ____awaiter_8(this, void 0, void 0, function () {
+                    var part;
+                    return ____generator_8(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                if (!(idx < self.data.length)) return [3 /*break*/, 3];
+                                return [4 /*yield*/, self.data[idx].slice(startTime, endTime)];
+                            case 1:
+                                part = _a.sent();
+                                if (part.length) {
+                                    controller.enqueue(part);
+                                    return [2 /*return*/];
+                                }
+                                _a.label = 2;
+                            case 2:
+                                idx++;
+                                return [3 /*break*/, 0];
+                            case 3:
+                                controller.close();
+                                return [2 /*return*/];
+                        }
+                    });
+                });
+            }
+        });
+    };
+    /**
+     * Replace a segment of caption data with the caption data from another
+     * track. The other track will be deleted. Can clip (by not giving a
+     * replacement) or insert (by replacing no time) as well.
+     * @param start  Start time, in seconds.
+     * @param end  End time, in seconds.
+     * @param replacement  Track containing replacement data.
+     */
+    CaptionTrack.prototype.replace = function (start, end, replacement) {
+        return ____awaiter_8(this, void 0, void 0, function () {
+            var ndata, idx, d, ds, de, elim, p, pd, _a, p, pd, _b, adjUp, _i, _c, d, rdata, _d, rdata_1, d;
+            return ____generator_8(this, function (_e) {
+                switch (_e.label) {
+                    case 0:
+                        ndata = [];
+                        idx = this.data.length - 1;
+                        _e.label = 1;
+                    case 1:
+                        if (!(idx >= 0)) return [3 /*break*/, 13];
+                        d = this.data[idx];
+                        ds = d.start();
+                        de = d.end();
+                        elim = false;
+                        if (!(start >= ds && start <= de)) return [3 /*break*/, 6];
+                        return [4 /*yield*/, d.slice(0, start)];
+                    case 2:
+                        p = _e.sent();
+                        if (!p.length) return [3 /*break*/, 5];
+                        _a = CaptionData.bind;
+                        return [4 /*yield*/, _$id36_13.genFresh(this.project.store, "caption-data-")];
+                    case 3:
+                        pd = new (_a.apply(CaptionData, [void 0, _e.sent(), this]))();
+                        return [4 /*yield*/, pd.setData(p)];
+                    case 4:
+                        _e.sent();
+                        ndata.push(pd);
+                        _e.label = 5;
+                    case 5:
+                        elim = true;
+                        _e.label = 6;
+                    case 6:
+                        if (!(end >= ds && end <= de)) return [3 /*break*/, 11];
+                        return [4 /*yield*/, d.slice(end)];
+                    case 7:
+                        p = _e.sent();
+                        if (!p.length) return [3 /*break*/, 10];
+                        _b = CaptionData.bind;
+                        return [4 /*yield*/, _$id36_13.genFresh(this.project.store, "caption-data-")];
+                    case 8:
+                        pd = new (_b.apply(CaptionData, [void 0, _e.sent(), this]))();
+                        return [4 /*yield*/, pd.setData(p)];
+                    case 9:
+                        _e.sent();
+                        ndata.push(pd);
+                        _e.label = 10;
+                    case 10:
+                        elim = true;
+                        _e.label = 11;
+                    case 11:
+                        if (ds >= start && de <= end) {
+                            // Node entirely within eliminated time
+                            elim = true;
+                        }
+                        if (elim)
+                            this.data.splice(idx, 1);
+                        _e.label = 12;
+                    case 12:
+                        idx--;
+                        return [3 /*break*/, 1];
+                    case 13:
+                        this.data = this.data.concat(ndata);
+                        adjUp = replacement ? replacement.duration() : 0;
+                        _i = 0, _c = this.data;
+                        _e.label = 14;
+                    case 14:
+                        if (!(_i < _c.length)) return [3 /*break*/, 17];
+                        d = _c[_i];
+                        return [4 /*yield*/, d.adjustTimes(end, start - end + adjUp)];
+                    case 15:
+                        _e.sent();
+                        _e.label = 16;
+                    case 16:
+                        _i++;
+                        return [3 /*break*/, 14];
+                    case 17:
+                        if (!replacement) return [3 /*break*/, 22];
+                        rdata = replacement.data;
+                        replacement.data = [];
+                        _d = 0, rdata_1 = rdata;
+                        _e.label = 18;
+                    case 18:
+                        if (!(_d < rdata_1.length)) return [3 /*break*/, 21];
+                        d = rdata_1[_d];
+                        return [4 /*yield*/, d.adjustTimes(0, start)];
+                    case 19:
+                        _e.sent();
+                        _e.label = 20;
+                    case 20:
+                        _d++;
+                        return [3 /*break*/, 18];
+                    case 21:
+                        this.data = this.data.concat(rdata);
+                        _e.label = 22;
+                    case 22:
+                        // Sort out the order
+                        this.data.sort(function (a, b) { return a.start() - b.start(); });
+                        // And save
+                        return [4 /*yield*/, this.save()];
+                    case 23:
+                        // And save
+                        _e.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Convert this track to WebVTT.
+     */
+    CaptionTrack.prototype.toVTT = function () {
+        var lines = ["WEBVTT", "", "NOTE This file generated by Ennuizel.", ""];
+        for (var _i = 0, _a = this.data; _i < _a.length; _i++) {
+            var line = _a[_i];
+            lines.push(_$util_24.timestamp(line.start()) + " --> " +
+                _$util_24.timestamp(line.end()));
+            // Convert each word
+            var txt = "";
+            for (var idx = 0; idx < line.data.length; idx++) {
+                var word = line.data[idx];
+                if (idx !== 0)
+                    txt += "<" + _$util_24.timestamp(word.start) + ">";
+                txt += "<c>" + word.word;
+                if (idx !== line.data.length - 1)
+                    txt += " ";
+                txt += "</c>";
+            }
+            lines.push(txt);
+            lines.push("");
+        }
+        return lines.join("\n");
+    };
+    return CaptionTrack;
+}());
+_$captionData_8.CaptionTrack = CaptionTrack;
+/**
+ * Caption data. Each CaptionData is a "line" of caption data, so contains an
+ * array of Vosk words.
+ */
+var CaptionData = /** @class */ (function () {
+    /**
+     * Build a CaptionData.
+     * @param id  The ID, which must be unique in the store.
+     * @param track  The associated track.
+     */
+    function CaptionData(id, track) {
+        this.id = id;
+        this.track = track;
+        this.data = [];
+        this.nodes = [];
+    }
+    /**
+     * Save this caption data.
+     */
+    CaptionData.prototype.save = function () {
+        return ____awaiter_8(this, void 0, void 0, function () {
+            return ____generator_8(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.track.project.store.setItem("caption-data-" + this.id, {
+                            data: this.data
+                        })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Load this caption data.
+     */
+    CaptionData.prototype.load = function () {
+        return ____awaiter_8(this, void 0, void 0, function () {
+            var d;
+            return ____generator_8(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.track.project.store.getItem("caption-data-" + this.id)];
+                    case 1:
+                        d = _a.sent();
+                        if (!d)
+                            return [2 /*return*/];
+                        this.data = d.data;
+                        this.makeNodes();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Delete this caption data.
+     */
+    CaptionData.prototype.del = function () {
+        return ____awaiter_8(this, void 0, void 0, function () {
+            return ____generator_8(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.clearNodes();
+                        return [4 /*yield*/, this.track.project.store.removeItem("caption-data-" + this.id)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Set the underlying data.
+     */
+    CaptionData.prototype.setData = function (data) {
+        return ____awaiter_8(this, void 0, void 0, function () {
+            return ____generator_8(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.clearNodes();
+                        this.data = data;
+                        this.makeNodes();
+                        return [4 /*yield*/, this.save()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * The start time of this line.
+     */
+    CaptionData.prototype.start = function () {
+        if (this.data.length)
+            return this.data[0].start;
+        return 0;
+    };
+    /**
+     * The end time of this line.
+     */
+    CaptionData.prototype.end = function () {
+        if (this.data.length)
+            return this.data[this.data.length - 1].end;
+        return 0;
+    };
+    /**
+     * Create a slice of this data.
+     */
+    CaptionData.prototype.slice = function (start, end) {
+        if (start === void 0) { start = 0; }
+        if (end === void 0) { end = Infinity; }
+        return ____awaiter_8(this, void 0, void 0, function () {
+            return ____generator_8(this, function (_a) {
+                return [2 /*return*/, this.data.filter(function (w) {
+                        return (w.start <= start && w.end >= start) ||
+                            (w.start >= start && w.start <= end);
+                    })];
+            });
+        });
+    };
+    /**
+     * Adjust all times greater than start by the given offset.
+     */
+    CaptionData.prototype.adjustTimes = function (start, offset) {
+        return ____awaiter_8(this, void 0, void 0, function () {
+            function adj(n) {
+                if (n < start)
+                    return n;
+                return Math.max(start, n + offset);
+            }
+            var _i, _a, word;
+            return ____generator_8(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        for (_i = 0, _a = this.data; _i < _a.length; _i++) {
+                            word = _a[_i];
+                            word.start = adj(word.start);
+                            word.end = adj(word.end);
+                        }
+                        this.clearNodes();
+                        this.makeNodes();
+                        return [4 /*yield*/, this.save()];
+                    case 1:
+                        _b.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Make the HTML nodes for this data.
+     */
+    CaptionData.prototype.makeNodes = function () {
+        var y = 0;
+        for (var _i = 0, _a = this.data; _i < _a.length; _i++) {
+            var word = _a[_i];
+            var node = _$ui_23.mk("div", this.track.box, {
+                className: "caption",
+                innerText: word.word
+            });
+            var x = word.start * _$ui_23.pixelsPerSecond;
+            var w = (word.end - word.start) * _$ui_23.pixelsPerSecond;
+            Object.assign(node.style, {
+                left: "calc(" + x + "px * var(--zoom-wave))",
+                top: y * 20 + "px",
+                minWidth: "calc(" + w + "px * var(--zoom-wave))"
+            });
+            this.nodes.push(node);
+            y = (y + 1) % 5;
+        }
+    };
+    /**
+     * Clear the HTML nodes for this data.
+     */
+    CaptionData.prototype.clearNodes = function () {
+        for (var _i = 0, _a = this.nodes; _i < _a.length; _i++) {
+            var node = _a[_i];
+            try {
+                node.parentNode.removeChild(node);
+            }
+            catch (ex) { }
+        }
+        this.nodes = [];
+    };
+    return CaptionData;
+}());
+/**
+ * Convert WebVTT to Vosk-style lines.
+ * @param webvtt  The WebVTT input.
+ */
+function webvttToVosk(webvtt) {
+    var parser = new _$parser_4.WebVTTParser();
+    var parsed = parser.parse(webvtt).cues;
+    // Find the end time, by looking for a timestamp
+    function findEnd(cues, idx, def) {
+        for (; idx < cues.length; idx++) {
+            var cue = cues[idx];
+            if (cue.type === "timestamp")
+                return cue.value;
+        }
+        return def;
+    }
+    // Convert this tree into a VoskWord array
+    function convertTree(into, cues, groupStart, groupEnd) {
+        var start = groupStart;
+        var end = findEnd(cues, 0, groupEnd);
+        for (var idx = 0; idx < cues.length; idx++) {
+            var cue = cues[idx];
+            switch (cue.type) {
+                case "text":
+                    into.push({ start: start, end: end, word: cue.value.trim() });
+                    break;
+                case "timestamp":
+                    start = cue.value;
+                    end = findEnd(cues, idx + 1, groupEnd);
+                    break;
+                case "object":
+                    convertTree(into, cue.children, start, end);
+                    break;
+            }
+        }
+    }
+    // Go line by line
+    var ret = [];
+    for (var _i = 0, parsed_1 = parsed; _i < parsed_1.length; _i++) {
+        var line = parsed_1[_i];
+        var voskLine = [];
+        convertTree(voskLine, line.tree.children, line.startTime, line.endTime);
+        ret.push(voskLine);
+    }
+    return ret;
+}
+/**
+ * Load a caption file into tracks (UI).
+ */
+function uiLoadFile(project, d) {
+    return ____awaiter_8(this, void 0, void 0, function () {
+        var res, promise;
+        return ____generator_8(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    promise = new Promise(function (r) { return res = r; });
+                    _$ui_23.dialog(function (d, show) {
+                        return ____awaiter_8(this, void 0, void 0, function () {
+                            var file;
+                            return ____generator_8(this, function (_a) {
+                                _$ui_23.lbl(d.box, "load-file", "Caption file:&nbsp;");
+                                file = _$ui_23.mk("input", d.box, { id: "load-file", type: "file" });
+                                file.onchange = function () {
+                                    return ____awaiter_8(this, void 0, void 0, function () {
+                                        return ____generator_8(this, function (_a) {
+                                            switch (_a.label) {
+                                                case 0:
+                                                    if (!file.files.length)
+                                                        return [2 /*return*/];
+                                                    return [4 /*yield*/, _$ui_23.loading(function (ld) {
+                                                            return ____awaiter_8(this, void 0, void 0, function () {
+                                                                var _a, ex_1;
+                                                                return ____generator_8(this, function (_b) {
+                                                                    switch (_b.label) {
+                                                                        case 0:
+                                                                            // Make sure we can undo
+                                                                            project.store.undoPoint();
+                                                                            _b.label = 1;
+                                                                        case 1:
+                                                                            _b.trys.push([1, 3, , 8]);
+                                                                            _a = res;
+                                                                            return [4 /*yield*/, loadFile(project, file.files[0].name, file.files[0])];
+                                                                        case 2:
+                                                                            _a.apply(void 0, [_b.sent()]);
+                                                                            return [3 /*break*/, 8];
+                                                                        case 3:
+                                                                            ex_1 = _b.sent();
+                                                                            if (!ex_1.stack) return [3 /*break*/, 5];
+                                                                            return [4 /*yield*/, _$ui_23.alert(ex_1 + "<br/>" + ex_1.stack)];
+                                                                        case 4:
+                                                                            _b.sent();
+                                                                            return [3 /*break*/, 7];
+                                                                        case 5: return [4 /*yield*/, _$ui_23.alert(ex_1 + "")];
+                                                                        case 6:
+                                                                            _b.sent();
+                                                                            _b.label = 7;
+                                                                        case 7:
+                                                                            res([]);
+                                                                            return [3 /*break*/, 8];
+                                                                        case 8: return [2 /*return*/];
+                                                                    }
+                                                                });
+                                                            });
+                                                        }, {
+                                                            reuse: d
+                                                        })];
+                                                case 1:
+                                                    _a.sent();
+                                                    return [2 /*return*/];
+                                            }
+                                        });
+                                    });
+                                };
+                                show(file);
+                                return [2 /*return*/];
+                            });
+                        });
+                    }, {
+                        reuse: d,
+                        closeable: true
+                    });
+                    return [4 /*yield*/, promise];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+_$captionData_8.uiLoadFile = uiLoadFile;
+/**
+ * Load a caption file into tracks.
+ * @param project  Project, just for the store.
+ * @param fileName  The name of the file.
+ * @param raw  The file, as a Blob.
+ */
+function loadFile(project, fileName, raw) {
+    return ____awaiter_8(this, void 0, void 0, function () {
+        var text, vosk, track, _a, _i, vosk_1, line;
+        return ____generator_8(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, raw.text()];
+                case 1:
+                    text = _b.sent();
+                    // Check if it's our only supported format
+                    if (text.slice(0, 6) !== "WEBVTT")
+                        throw new Error("File is not WebVTT");
+                    vosk = webvttToVosk(text);
+                    _a = CaptionTrack.bind;
+                    return [4 /*yield*/, _$id36_13.genFresh(project.store, "caption-track-")];
+                case 2:
+                    track = new (_a.apply(CaptionTrack, [void 0, _b.sent(), project,
+                        { name: fileName.replace(/\..*/, "") }]))();
+                    _i = 0, vosk_1 = vosk;
+                    _b.label = 3;
+                case 3:
+                    if (!(_i < vosk_1.length)) return [3 /*break*/, 6];
+                    line = vosk_1[_i];
+                    return [4 /*yield*/, track.appendRaw(line, { noSave: true })];
+                case 4:
+                    _b.sent();
+                    _b.label = 5;
+                case 5:
+                    _i++;
+                    return [3 /*break*/, 3];
+                case 6: return [4 /*yield*/, track.save()];
+                case 7:
+                    _b.sent();
+                    return [2 /*return*/, [track]];
+            }
+        });
+    });
+}
+
+var _$status_18 = {};
+"use strict";
+/*
+ * Copyright (c) 2021 Yahweasel
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+ * SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
+ * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+ * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+Object.defineProperty(_$status_18, "__esModule", { value: true });
+_$status_18.popStatus = _$status_18.pushStatus = void 0;
+/* removed: var _$ui_23 = require("./ui"); */;
 // Current status items
 var statusKeys = [];
 var statusItems = Object.create(null);
@@ -9280,7 +11043,7 @@ function pushStatus(key, value) {
     statusItems[key] = value;
     updateStatus();
 }
-_$status_15.pushStatus = pushStatus;
+_$status_18.pushStatus = pushStatus;
 /**
  * Remove a status item.
  * @param key  Name of the status item to remove.
@@ -9292,7 +11055,7 @@ function popStatus(key) {
         statusKeys.splice(idx, 1);
     updateStatus();
 }
-_$status_15.popStatus = popStatus;
+_$status_18.popStatus = popStatus;
 // Update the status bar
 function updateStatus() {
     // Make the full text
@@ -9304,7 +11067,7 @@ function updateStatus() {
     if (cont.length === 0)
         cont.push("&nbsp;");
     // And display it
-    _$ui_20.ui.status.innerHTML = cont.join("<br/>");
+    _$ui_23.ui.status.innerHTML = cont.join("<br/>");
 }
 
 var _$bytes_1 = {};
@@ -9471,7 +11234,7 @@ function parse(val) {
   return Math.floor(map[unit] * floatValue);
 }
 
-var _$store_16 = {};
+var _$store_19 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -9503,7 +11266,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var ____awaiter_16 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var ____awaiter_19 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -9512,7 +11275,7 @@ var ____awaiter_16 = (this && this.__awaiter) || function (thisArg, _arguments, 
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var ____generator_16 = (this && this.__generator) || function (thisArg, body) {
+var ____generator_19 = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
@@ -9539,9 +11302,9 @@ var ____generator_16 = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(_$store_16, "__esModule", { value: true });
-_$store_16.load = _$store_16.store = _$store_16.UndoableStore = _$store_16.Store = void 0;
-/* removed: var _$status_15 = require("./status"); */;
+Object.defineProperty(_$store_19, "__esModule", { value: true });
+_$store_19.load = _$store_19.store = _$store_19.UndoableStore = _$store_19.Store = void 0;
+/* removed: var _$status_18 = require("./status"); */;
 /* removed: var _$bytes_1 = require("bytes"); */;
 // We don't support undo if our local storage utilization is too high
 var noUndo = false;
@@ -9557,8 +11320,8 @@ var Store = /** @class */ (function () {
         return new Store(localforage.createInstance(opts));
     };
     Store.prototype.dropInstance = function (opts) {
-        return ____awaiter_16(this, void 0, void 0, function () {
-            return ____generator_16(this, function (_a) {
+        return ____awaiter_19(this, void 0, void 0, function () {
+            return ____generator_19(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.localForage.dropInstance(opts)];
                     case 1:
@@ -9572,8 +11335,8 @@ var Store = /** @class */ (function () {
         });
     };
     Store.prototype.getItem = function (name) {
-        return ____awaiter_16(this, void 0, void 0, function () {
-            return ____generator_16(this, function (_a) {
+        return ____awaiter_19(this, void 0, void 0, function () {
+            return ____generator_19(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.localForage.getItem(name)];
                     case 1: return [2 /*return*/, _a.sent()];
@@ -9582,9 +11345,9 @@ var Store = /** @class */ (function () {
         });
     };
     Store.prototype.setItem = function (name, value) {
-        return ____awaiter_16(this, void 0, void 0, function () {
+        return ____awaiter_19(this, void 0, void 0, function () {
             var ret;
-            return ____generator_16(this, function (_a) {
+            return ____generator_19(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.localForage.setItem(name, value)];
                     case 1:
@@ -9598,9 +11361,9 @@ var Store = /** @class */ (function () {
         });
     };
     Store.prototype.removeItem = function (name) {
-        return ____awaiter_16(this, void 0, void 0, function () {
+        return ____awaiter_19(this, void 0, void 0, function () {
             var ret;
-            return ____generator_16(this, function (_a) {
+            return ____generator_19(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.localForage.removeItem(name)];
                     case 1:
@@ -9614,8 +11377,8 @@ var Store = /** @class */ (function () {
         });
     };
     Store.prototype.keys = function () {
-        return ____awaiter_16(this, void 0, void 0, function () {
-            return ____generator_16(this, function (_a) {
+        return ____awaiter_19(this, void 0, void 0, function () {
+            return ____generator_19(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.localForage.keys()];
                     case 1: return [2 /*return*/, _a.sent()];
@@ -9625,7 +11388,7 @@ var Store = /** @class */ (function () {
     };
     return Store;
 }());
-_$store_16.Store = Store;
+_$store_19.Store = Store;
 /**
  * An undoable store is a store with the ability to undo. Only one undoable
  * store can exist at any time.
@@ -9637,8 +11400,8 @@ var UndoableStore = /** @class */ (function (_super) {
         var self = _this;
         _this.undoStore = null;
         _this.undoStorePromise = (function () {
-            return ____awaiter_16(this, void 0, void 0, function () {
-                return ____generator_16(this, function (_a) {
+            return ____awaiter_19(this, void 0, void 0, function () {
+                return ____generator_19(this, function (_a) {
                     switch (_a.label) {
                         case 0: return [4 /*yield*/, localforage.dropInstance({ name: "ez-undo" })];
                         case 1:
@@ -9674,8 +11437,8 @@ var UndoableStore = /** @class */ (function (_super) {
      * Drop the undo store.
      */
     UndoableStore.prototype.dropUndo = function () {
-        return ____awaiter_16(this, void 0, void 0, function () {
-            return ____generator_16(this, function (_a) {
+        return ____awaiter_19(this, void 0, void 0, function () {
+            return ____generator_19(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.undoStorePromise];
                     case 1:
@@ -9696,8 +11459,8 @@ var UndoableStore = /** @class */ (function (_super) {
      * Disable undoing.
      */
     UndoableStore.prototype.disableUndo = function () {
-        return ____awaiter_16(this, void 0, void 0, function () {
-            return ____generator_16(this, function (_a) {
+        return ____awaiter_19(this, void 0, void 0, function () {
+            return ____generator_19(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.dropUndo()];
                     case 1:
@@ -9712,9 +11475,9 @@ var UndoableStore = /** @class */ (function (_super) {
      * Set an item and remember the undo steps.
      */
     UndoableStore.prototype.setItem = function (name, value) {
-        return ____awaiter_16(this, void 0, void 0, function () {
+        return ____awaiter_19(this, void 0, void 0, function () {
             var orig, ct;
-            return ____generator_16(this, function (_a) {
+            return ____generator_19(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.getItem(name)];
                     case 1:
@@ -9745,9 +11508,9 @@ var UndoableStore = /** @class */ (function (_super) {
      * Remove an item and remember the undo steps.
      */
     UndoableStore.prototype.removeItem = function (name) {
-        return ____awaiter_16(this, void 0, void 0, function () {
+        return ____awaiter_19(this, void 0, void 0, function () {
             var orig, ct;
-            return ____generator_16(this, function (_a) {
+            return ____generator_19(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.getItem(name)];
                     case 1:
@@ -9774,9 +11537,9 @@ var UndoableStore = /** @class */ (function (_super) {
      * Perform an undo.
      */
     UndoableStore.prototype.undo = function () {
-        return ____awaiter_16(this, void 0, void 0, function () {
+        return ____awaiter_19(this, void 0, void 0, function () {
             var undo, val;
-            return ____generator_16(this, function (_a) {
+            return ____generator_19(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (noUndo || this.noUndo)
@@ -9814,20 +11577,20 @@ var UndoableStore = /** @class */ (function (_super) {
     };
     return UndoableStore;
 }(Store));
-_$store_16.UndoableStore = UndoableStore;
+_$store_19.UndoableStore = UndoableStore;
 /**
  * A main, global store.
  */
-_$store_16.store = null;
+_$store_19.store = null;
 /**
  * Load storage.
  */
-function __load_16() {
-    return ____awaiter_16(this, void 0, void 0, function () {
-        return ____generator_16(this, function (_a) {
+function __load_19() {
+    return ____awaiter_19(this, void 0, void 0, function () {
+        return ____generator_19(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _$store_16.store = new Store(localforage);
+                    _$store_19.store = new Store(localforage);
                     return [4 /*yield*/, updateIndicator()];
                 case 1:
                     _a.sent();
@@ -9836,12 +11599,12 @@ function __load_16() {
         });
     });
 }
-_$store_16.load = __load_16;
+_$store_19.load = __load_19;
 // Update the storage space indicator.
 function updateIndicator() {
-    return ____awaiter_16(this, void 0, void 0, function () {
+    return ____awaiter_19(this, void 0, void 0, function () {
         var estimate;
-        return ____generator_16(this, function (_a) {
+        return ____generator_19(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!navigator.storage || !navigator.storage.estimate)
@@ -9856,7 +11619,7 @@ function updateIndicator() {
                     _a.sent();
                     _a.label = 3;
                 case 3:
-                    _$status_15.pushStatus("storage", "Storage: " + Math.round(estimate.usage / estimate.quota * 100) + "% (" +
+                    _$status_18.pushStatus("storage", "Storage: " + Math.round(estimate.usage / estimate.quota * 100) + "% (" +
                         _$bytes_1(estimate.usage) + "/" +
                         _$bytes_1(estimate.quota) + ")");
                     return [2 /*return*/];
@@ -9865,7 +11628,7 @@ function updateIndicator() {
     });
 }
 
-var _$project_13 = {};
+var _$project_16 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -9882,7 +11645,7 @@ var _$project_13 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-var ____awaiter_13 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var ____awaiter_16 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -9891,7 +11654,7 @@ var ____awaiter_13 = (this && this.__awaiter) || function (thisArg, _arguments, 
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var ____generator_13 = (this && this.__generator) || function (thisArg, body) {
+var ____generator_16 = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
@@ -9918,20 +11681,21 @@ var ____generator_13 = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(_$project_13, "__esModule", { value: true });
-_$project_13.play = _$project_13.disableUndo = _$project_13.undoPoint = _$project_13.deleteProjectById = _$project_13.unloadProject = _$project_13.loadProject = _$project_13.newProject = _$project_13.getProjects = _$project_13.load = _$project_13.project = _$project_13.Project = void 0;
-/* removed: var _$audio_5 = require("./audio"); */;
-/* removed: var _$audioData_4 = require("./audio-data"); */;
-/* removed: var _$export_7 = require("./export"); */;
-/* removed: var _$filters_8 = require("./filters"); */;
-/* removed: var _$hotkeys_9 = require("./hotkeys"); */;
-/* removed: var _$id36_10 = require("./id36"); */;
-/* removed: var _$select_14 = require("./select"); */;
-/* removed: var _$store_16 = require("./store"); */;
-/* removed: var _$stream_17 = require("./stream"); */;
-/* removed: var _$track_18 = require("./track"); */;
-/* removed: var _$ui_20 = require("./ui"); */;
-/* removed: var _$util_21 = require("./util"); */;
+Object.defineProperty(_$project_16, "__esModule", { value: true });
+_$project_16.play = _$project_16.disableUndo = _$project_16.undoPoint = _$project_16.deleteProjectById = _$project_16.unloadProject = _$project_16.loadProject = _$project_16.newProject = _$project_16.getProjects = _$project_16.load = _$project_16.project = _$project_16.Project = void 0;
+/* removed: var _$audio_6 = require("./audio"); */;
+/* removed: var _$audioData_5 = require("./audio-data"); */;
+/* removed: var _$captionData_8 = require("./caption-data"); */;
+/* removed: var _$export_10 = require("./export"); */;
+/* removed: var _$filters_11 = require("./filters"); */;
+/* removed: var _$hotkeys_12 = require("./hotkeys"); */;
+/* removed: var _$id36_13 = require("./id36"); */;
+/* removed: var _$select_17 = require("./select"); */;
+/* removed: var _$store_19 = require("./store"); */;
+/* removed: var _$stream_20 = require("./stream"); */;
+/* removed: var _$track_21 = require("./track"); */;
+/* removed: var _$ui_23 = require("./ui"); */;
+/* removed: var _$util_24 = require("./util"); */;
 // These buttons are disabled when no project is loaded
 var projectButtons = ["edit", "tracks", "filters"];
 /**
@@ -9950,7 +11714,7 @@ var Project = /** @class */ (function () {
             this.store = opts.store;
         }
         else {
-            this.store = _$store_16.UndoableStore.createInstance({ name: "ez-project-" + id });
+            this.store = _$store_19.UndoableStore.createInstance({ name: "ez-project-" + id });
         }
         this.name = opts.name || "";
         this.tracks = [];
@@ -9961,9 +11725,9 @@ var Project = /** @class */ (function () {
      */
     Project.prototype.save = function (opts) {
         if (opts === void 0) { opts = {}; }
-        return ____awaiter_13(this, void 0, void 0, function () {
+        return ____awaiter_16(this, void 0, void 0, function () {
             var _i, _a, track_1;
-            return ____generator_13(this, function (_b) {
+            return ____generator_16(this, function (_b) {
                 switch (_b.label) {
                     case 0: 
                     // Save the project itself
@@ -9996,34 +11760,51 @@ var Project = /** @class */ (function () {
      * Load this project from the store.
      */
     Project.prototype.load = function () {
-        return ____awaiter_13(this, void 0, void 0, function () {
-            var p, _i, _a, _b, trackType, trackId, atrack;
-            return ____generator_13(this, function (_c) {
-                switch (_c.label) {
+        return ____awaiter_16(this, void 0, void 0, function () {
+            var p, _i, _a, _b, trackType, trackId, _c, atrack, ctrack;
+            return ____generator_16(this, function (_d) {
+                switch (_d.label) {
                     case 0: return [4 /*yield*/, this.store.getItem("project-" + this.id)];
                     case 1:
-                        p = _c.sent();
+                        p = _d.sent();
                         if (!p)
                             return [2 /*return*/];
                         this.name = p.name;
                         this.tracks = [];
                         _i = 0, _a = p.tracks;
-                        _c.label = 2;
+                        _d.label = 2;
                     case 2:
-                        if (!(_i < _a.length)) return [3 /*break*/, 5];
+                        if (!(_i < _a.length)) return [3 /*break*/, 11];
                         _b = _a[_i], trackType = _b[0], trackId = _b[1];
-                        if (trackType !== _$track_18.TrackType.Audio)
-                            throw new Error("Unrecognized track type " + trackType);
-                        atrack = new _$audioData_4.AudioTrack(trackId, this);
-                        return [4 /*yield*/, atrack.load()];
+                        _c = trackType;
+                        switch (_c) {
+                            case _$track_21.TrackType.Audio: return [3 /*break*/, 3];
+                            case _$track_21.TrackType.Caption: return [3 /*break*/, 6];
+                        }
+                        return [3 /*break*/, 9];
                     case 3:
-                        _c.sent();
-                        this.addTrack(atrack);
-                        _c.label = 4;
+                        atrack = new _$audioData_5.AudioTrack(trackId, this);
+                        return [4 /*yield*/, atrack.load()];
                     case 4:
+                        _d.sent();
+                        return [4 /*yield*/, this.addTrack(atrack, { noSave: true })];
+                    case 5:
+                        _d.sent();
+                        return [3 /*break*/, 10];
+                    case 6:
+                        ctrack = new _$captionData_8.CaptionTrack(trackId, this);
+                        return [4 /*yield*/, ctrack.load()];
+                    case 7:
+                        _d.sent();
+                        return [4 /*yield*/, this.addTrack(ctrack, { noSave: true })];
+                    case 8:
+                        _d.sent();
+                        return [3 /*break*/, 10];
+                    case 9: throw new Error("Unrecognized track type " + trackType);
+                    case 10:
                         _i++;
                         return [3 /*break*/, 2];
-                    case 5: return [2 /*return*/];
+                    case 11: return [2 /*return*/];
                 }
             });
         });
@@ -10032,8 +11813,8 @@ var Project = /** @class */ (function () {
      * Delete this project.
      */
     Project.prototype.del = function () {
-        return ____awaiter_13(this, void 0, void 0, function () {
-            return ____generator_13(this, function (_a) {
+        return ____awaiter_16(this, void 0, void 0, function () {
+            return ____generator_16(this, function (_a) {
                 switch (_a.label) {
                     case 0: 
                     // First drop the undo store
@@ -10046,8 +11827,8 @@ var Project = /** @class */ (function () {
                     case 2:
                         // Then delete it
                         _a.sent();
-                        if (!(_$project_13.project === this)) return [3 /*break*/, 4];
-                        _$project_13.project = null;
+                        if (!(_$project_16.project === this)) return [3 /*break*/, 4];
+                        _$project_16.project = null;
                         return [4 /*yield*/, unloadProject()];
                     case 3:
                         _a.sent();
@@ -10058,26 +11839,58 @@ var Project = /** @class */ (function () {
         });
     };
     /**
-     * Create a new audio track. The track is added to the project if it's not temporary.
+     * Create a new audio track. The track is added to the project if it's not
+     * temporary.
      * @param opts  Options for creating the track.
      */
     Project.prototype.newAudioTrack = function (opts) {
         if (opts === void 0) { opts = {}; }
-        return ____awaiter_13(this, void 0, void 0, function () {
+        return ____awaiter_16(this, void 0, void 0, function () {
             var track, _a, _b;
-            return ____generator_13(this, function (_c) {
+            return ____generator_16(this, function (_c) {
                 switch (_c.label) {
                     case 0:
-                        _b = (_a = _$audioData_4.AudioTrack).bind;
-                        return [4 /*yield*/, _$id36_10.genFresh(this.store, "audio-track-")];
+                        _b = (_a = _$audioData_5.AudioTrack).bind;
+                        return [4 /*yield*/, _$id36_13.genFresh(this.store, "audio-track-")];
                     case 1:
                         track = new (_b.apply(_a, [void 0, _c.sent(), this, opts]))();
-                        if (!!opts.temp) return [3 /*break*/, 3];
-                        return [4 /*yield*/, this.addTrack(track)];
+                        if (!!opts.temp) return [3 /*break*/, 4];
+                        return [4 /*yield*/, track.save()];
                     case 2:
                         _c.sent();
-                        _c.label = 3;
-                    case 3: return [2 /*return*/, track];
+                        return [4 /*yield*/, this.addTrack(track)];
+                    case 3:
+                        _c.sent();
+                        _c.label = 4;
+                    case 4: return [2 /*return*/, track];
+                }
+            });
+        });
+    };
+    /**
+     * Create a new caption track.
+     * @param opts  Options for creating the track.
+     */
+    Project.prototype.newCaptionTrack = function (opts) {
+        if (opts === void 0) { opts = {}; }
+        return ____awaiter_16(this, void 0, void 0, function () {
+            var track, _a, _b;
+            return ____generator_16(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _b = (_a = _$captionData_8.CaptionTrack).bind;
+                        return [4 /*yield*/, _$id36_13.genFresh(this.store, "caption-track-")];
+                    case 1:
+                        track = new (_b.apply(_a, [void 0, _c.sent(), this, opts]))();
+                        if (!!opts.temp) return [3 /*break*/, 4];
+                        return [4 /*yield*/, track.save()];
+                    case 2:
+                        _c.sent();
+                        return [4 /*yield*/, this.addTrack(track)];
+                    case 3:
+                        _c.sent();
+                        _c.label = 4;
+                    case 4: return [2 /*return*/, track];
                 }
             });
         });
@@ -10085,81 +11898,91 @@ var Project = /** @class */ (function () {
     /**
      * Add a track that's already been created.
      * @param track  The track to add.
+     * @param opts  Mostly interal options.
      */
-    Project.prototype.addTrack = function (track) {
-        return ____awaiter_13(this, void 0, void 0, function () {
+    Project.prototype.addTrack = function (track, opts) {
+        if (opts === void 0) { opts = {}; }
+        return ____awaiter_16(this, void 0, void 0, function () {
             var self, name, timeout, del;
-            return ____generator_13(this, function (_a) {
-                self = this;
-                name = _$ui_20.txt(track.info, {
-                    className: "row",
-                    value: track.name
-                });
-                timeout = null;
-                name.oninput = function (ev) {
-                    if (timeout !== null)
-                        clearTimeout(timeout);
-                    timeout = setTimeout(function () {
-                        return ____awaiter_13(this, void 0, void 0, function () {
-                            return ____generator_13(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        timeout = null;
-                                        return [4 /*yield*/, _$project_13.project.store.undoPoint()];
-                                    case 1:
-                                        _a.sent();
-                                        track.name = ev.target.value;
-                                        return [4 /*yield*/, track.save()];
-                                    case 2:
-                                        _a.sent();
-                                        return [2 /*return*/];
-                                }
-                            });
+            return ____generator_16(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        self = this;
+                        name = _$ui_23.txt(track.info, {
+                            className: "row",
+                            value: track.name
                         });
-                    }, 1000);
-                };
-                del = _$ui_20.btn(track.info, "Delete", { className: "row small" });
-                del.onclick = function () {
-                    _$ui_20.dialog(function (d, show) {
-                        return ____awaiter_13(this, void 0, void 0, function () {
-                            var yes, no;
-                            return ____generator_13(this, function (_a) {
-                                _$ui_20.mk("div", d.box, { innerHTML: "Are you sure?<br/><br/>" });
-                                yes = _$hotkeys_9.btn(d, "_Yes, delete this track", { className: "row" });
-                                no = _$hotkeys_9.btn(d, "_No, cancel", { className: "row" });
-                                no.onclick = function () {
-                                    _$ui_20.dialogClose(d);
-                                };
-                                yes.onclick = function () {
-                                    _$ui_20.loading(function () {
-                                        return ____awaiter_13(this, void 0, void 0, function () {
-                                            return ____generator_13(this, function (_a) {
-                                                switch (_a.label) {
-                                                    case 0: return [4 /*yield*/, _$project_13.project.store.undoPoint()];
-                                                    case 1:
-                                                        _a.sent();
-                                                        return [4 /*yield*/, self.removeTrack(track)];
-                                                    case 2:
-                                                        _a.sent();
-                                                        return [2 /*return*/];
-                                                }
-                                            });
-                                        });
-                                    }, {
-                                        reuse: d
+                        timeout = null;
+                        name.oninput = function (ev) {
+                            if (timeout !== null)
+                                clearTimeout(timeout);
+                            timeout = setTimeout(function () {
+                                return ____awaiter_16(this, void 0, void 0, function () {
+                                    return ____generator_16(this, function (_a) {
+                                        switch (_a.label) {
+                                            case 0:
+                                                timeout = null;
+                                                return [4 /*yield*/, _$project_16.project.store.undoPoint()];
+                                            case 1:
+                                                _a.sent();
+                                                track.name = ev.target.value;
+                                                return [4 /*yield*/, track.save()];
+                                            case 2:
+                                                _a.sent();
+                                                return [2 /*return*/];
+                                        }
                                     });
-                                };
-                                show(no);
-                                return [2 /*return*/];
+                                });
+                            }, 1000);
+                        };
+                        del = _$ui_23.btn(track.info, "Delete", { className: "row small" });
+                        del.onclick = function () {
+                            _$ui_23.dialog(function (d, show) {
+                                return ____awaiter_16(this, void 0, void 0, function () {
+                                    var yes, no;
+                                    return ____generator_16(this, function (_a) {
+                                        _$ui_23.mk("div", d.box, { innerHTML: "Are you sure?<br/><br/>" });
+                                        yes = _$hotkeys_12.btn(d, "_Yes, delete this track", { className: "row" });
+                                        no = _$hotkeys_12.btn(d, "_No, cancel", { className: "row" });
+                                        no.onclick = function () {
+                                            _$ui_23.dialogClose(d);
+                                        };
+                                        yes.onclick = function () {
+                                            _$ui_23.loading(function () {
+                                                return ____awaiter_16(this, void 0, void 0, function () {
+                                                    return ____generator_16(this, function (_a) {
+                                                        switch (_a.label) {
+                                                            case 0: return [4 /*yield*/, _$project_16.project.store.undoPoint()];
+                                                            case 1:
+                                                                _a.sent();
+                                                                return [4 /*yield*/, self.removeTrack(track)];
+                                                            case 2:
+                                                                _a.sent();
+                                                                return [2 /*return*/];
+                                                        }
+                                                    });
+                                                });
+                                            }, {
+                                                reuse: d
+                                            });
+                                        };
+                                        show(no);
+                                        return [2 /*return*/];
+                                    });
+                                });
+                            }, {
+                                closeable: true
                             });
-                        });
-                    }, {
-                        closeable: true
-                    });
-                };
-                // And add it to the list
-                this.tracks.push(track);
-                return [2 /*return*/];
+                        };
+                        // And add it to the list
+                        this.tracks.push(track);
+                        if (!!opts.noSave) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.save()];
+                    case 1:
+                        _a.sent();
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
+                }
             });
         });
     };
@@ -10169,9 +11992,9 @@ var Project = /** @class */ (function () {
      * @param track  The track to remove.
      */
     Project.prototype.removeTrack = function (track) {
-        return ____awaiter_13(this, void 0, void 0, function () {
+        return ____awaiter_16(this, void 0, void 0, function () {
             var idx;
-            return ____generator_13(this, function (_a) {
+            return ____generator_16(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, track.del()];
                     case 1:
@@ -10189,38 +12012,38 @@ var Project = /** @class */ (function () {
     };
     return Project;
 }());
-_$project_13.Project = Project;
+_$project_16.Project = Project;
 /**
  * The current project, if there is one.
  */
-_$project_13.project = null;
+_$project_16.project = null;
 /**
  * Load project-related behavior and UI.
  */
-function __load_13() {
-    return ____awaiter_13(this, void 0, void 0, function () {
+function __load_16() {
+    return ____awaiter_16(this, void 0, void 0, function () {
         var menu;
-        return ____generator_13(this, function (_a) {
+        return ____generator_16(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    menu = _$ui_20.ui.menu;
+                    menu = _$ui_23.ui.menu;
                     menu.project.onclick = projectMenu;
-                    _$hotkeys_9.registerHotkey(menu.project, null, "p");
+                    _$hotkeys_12.registerHotkey(menu.project, null, "p");
                     menu.edit.onclick = editMenu;
-                    _$hotkeys_9.registerHotkey(menu.edit, null, "e");
+                    _$hotkeys_12.registerHotkey(menu.edit, null, "e");
                     menu.tracks.onclick = tracksMenu;
-                    _$hotkeys_9.registerHotkey(menu.tracks, null, "t");
+                    _$hotkeys_12.registerHotkey(menu.tracks, null, "t");
                     menu.zoom.onclick = function () {
-                        var s = _$ui_20.ui.zoomSelector.style;
+                        var s = _$ui_23.ui.zoomSelector.style;
                         if (s.display === "block") {
                             s.display = "none";
                         }
                         else {
                             s.display = "block";
-                            _$ui_20.ui.zoomSelector.focus();
+                            _$ui_23.ui.zoomSelector.focus();
                         }
                     };
-                    _$hotkeys_9.registerHotkey(menu.zoom, null, "z");
+                    _$hotkeys_12.registerHotkey(menu.zoom, null, "z");
                     return [4 /*yield*/, unloadProject()];
                 case 1:
                     _a.sent();
@@ -10229,16 +12052,16 @@ function __load_13() {
         });
     });
 }
-_$project_13.load = __load_13;
+_$project_16.load = __load_16;
 /**
  * Get the list of projects.
  */
 function getProjects() {
-    return ____awaiter_13(this, void 0, void 0, function () {
+    return ____awaiter_16(this, void 0, void 0, function () {
         var ids, ret, _i, ids_1, id, project_1;
-        return ____generator_13(this, function (_a) {
+        return ____generator_16(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, _$store_16.store.getItem("ez-projects")];
+                case 0: return [4 /*yield*/, _$store_19.store.getItem("ez-projects")];
                 case 1:
                     ids = (_a.sent()) || [];
                     ret = [];
@@ -10247,7 +12070,7 @@ function getProjects() {
                 case 2:
                     if (!(_i < ids_1.length)) return [3 /*break*/, 5];
                     id = ids_1[_i];
-                    return [4 /*yield*/, _$store_16.store.getItem("ez-project-" + id)];
+                    return [4 /*yield*/, _$store_19.store.getItem("ez-project-" + id)];
                 case 3:
                     project_1 = _a.sent();
                     if (project_1)
@@ -10261,32 +12084,40 @@ function getProjects() {
         });
     });
 }
-_$project_13.getProjects = getProjects;
+_$project_16.getProjects = getProjects;
 /**
  * Show the main project menu.
  */
 function projectMenu() {
-    _$ui_20.dialog(function (d, show) {
-        return ____awaiter_13(this, void 0, void 0, function () {
-            var newb, loadb, deleteb, exp;
-            return ____generator_13(this, function (_a) {
+    _$ui_23.dialog(function (d, show) {
+        return ____awaiter_16(this, void 0, void 0, function () {
+            var newb, loadb, deleteb, exp, exp;
+            return ____generator_16(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        newb = _$hotkeys_9.btn(d, "_New project", { className: "row" });
+                        newb = _$hotkeys_12.btn(d, "_New project", { className: "row" });
                         newb.onclick = function () { return uiNewProject(d); };
                         return [4 /*yield*/, getProjects()];
                     case 1:
                         // Show the load projects button if there are any to load
                         if ((_a.sent()).length) {
-                            loadb = _$hotkeys_9.btn(d, "_Load project", { className: "row" });
+                            loadb = _$hotkeys_12.btn(d, "_Load project", { className: "row" });
                             loadb.onclick = function () { return uiLoadProject(d); };
                         }
                         // Only shown if there's a current project
-                        if (_$project_13.project) {
-                            deleteb = _$hotkeys_9.btn(d, "_Delete project", { className: "row" });
+                        if (_$project_16.project) {
+                            deleteb = _$hotkeys_12.btn(d, "_Delete project", { className: "row" });
                             deleteb.onclick = function () { return uiDeleteProject(d); };
-                            exp = _$hotkeys_9.btn(d, "_Export audio file", { className: "row" });
-                            exp.onclick = function () { return _$export_7.uiExport(d, _$project_13.project.name); };
+                            if (_$project_16.project.tracks
+                                .filter(function (x) { return x.type() === _$track_21.TrackType.Audio; }).length) {
+                                exp = _$hotkeys_12.btn(d, "_Export audio file(s)", { className: "row" });
+                                exp.onclick = function () { return _$export_10.uiExport(d, _$project_16.project.name); };
+                            }
+                            if (_$project_16.project.tracks
+                                .filter(function (x) { return x.type() === _$track_21.TrackType.Caption; }).length) {
+                                exp = _$hotkeys_12.btn(d, "Export _caption file(s)", { className: "row" });
+                                exp.onclick = function () { return _$export_10.uiExportCaption(d, _$project_16.project.name); };
+                            }
                         }
                         show(newb);
                         return [2 /*return*/];
@@ -10301,21 +12132,21 @@ function projectMenu() {
  * Create a new project (UI).
  */
 function uiNewProject(d) {
-    _$ui_20.dialog(function (d, show) {
-        return ____awaiter_13(this, void 0, void 0, function () {
+    _$ui_23.dialog(function (d, show) {
+        return ____awaiter_16(this, void 0, void 0, function () {
             function doIt() {
-                return ____awaiter_13(this, void 0, void 0, function () {
-                    return ____generator_13(this, function (_a) {
+                return ____awaiter_16(this, void 0, void 0, function () {
+                    return ____generator_16(this, function (_a) {
                         switch (_a.label) {
                             case 0:
                                 if (nm.value.trim() === "") {
                                     nm.focus();
                                     return [2 /*return*/];
                                 }
-                                return [4 /*yield*/, _$ui_20.loading(function () {
-                                        return ____awaiter_13(this, void 0, void 0, function () {
+                                return [4 /*yield*/, _$ui_23.loading(function () {
+                                        return ____awaiter_16(this, void 0, void 0, function () {
                                             var name, existing, _i, _a, project_2;
-                                            return ____generator_13(this, function (_b) {
+                                            return ____generator_16(this, function (_b) {
                                                 switch (_b.label) {
                                                     case 0: return [4 /*yield*/, unloadProject()];
                                                     case 1:
@@ -10340,7 +12171,7 @@ function uiNewProject(d) {
                                                         return [3 /*break*/, 3];
                                                     case 5:
                                                         if (!existing) return [3 /*break*/, 7];
-                                                        return [4 /*yield*/, _$ui_20.alert("There's already a project with that name!")];
+                                                        return [4 /*yield*/, _$ui_23.alert("There's already a project with that name!")];
                                                     case 6:
                                                         _b.sent();
                                                         return [3 /*break*/, 9];
@@ -10363,10 +12194,10 @@ function uiNewProject(d) {
                 });
             }
             var nm, neww;
-            return ____generator_13(this, function (_a) {
-                _$ui_20.lbl(d.box, "project-name", "Project name:&nbsp;");
-                nm = _$ui_20.txt(d.box, { id: "project-name" });
-                neww = _$hotkeys_9.btn(d, "_New project");
+            return ____generator_16(this, function (_a) {
+                _$ui_23.lbl(d.box, "project-name", "Project name:&nbsp;");
+                nm = _$ui_23.txt(d.box, { id: "project-name" });
+                neww = _$hotkeys_12.btn(d, "_New project");
                 nm.onkeydown = function (ev) {
                     if (ev.key === "Enter") {
                         ev.preventDefault();
@@ -10391,50 +12222,50 @@ function uiNewProject(d) {
  * @param name  Name for the project.
  */
 function newProject(name) {
-    return ____awaiter_13(this, void 0, void 0, function () {
+    return ____awaiter_16(this, void 0, void 0, function () {
         var _a, id, projects;
-        return ____generator_13(this, function (_b) {
+        return ____generator_16(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4 /*yield*/, unloadProject()];
                 case 1:
                     _b.sent();
                     _a = Project.bind;
-                    return [4 /*yield*/, _$id36_10.genFresh(_$store_16.store, "ez-project-")];
+                    return [4 /*yield*/, _$id36_13.genFresh(_$store_19.store, "ez-project-")];
                 case 2:
                     // Create this project
-                    _$project_13.project = new (_a.apply(Project, [void 0, _b.sent()]))();
-                    id = _$project_13.project.id;
-                    return [4 /*yield*/, _$store_16.store.setItem("ez-project-" + id, { name: name })];
+                    _$project_16.project = new (_a.apply(Project, [void 0, _b.sent()]))();
+                    id = _$project_16.project.id;
+                    return [4 /*yield*/, _$store_19.store.setItem("ez-project-" + id, { name: name })];
                 case 3:
                     _b.sent();
-                    _$project_13.project.name = name;
-                    return [4 /*yield*/, _$project_13.project.save()];
+                    _$project_16.project.name = name;
+                    return [4 /*yield*/, _$project_16.project.save()];
                 case 4:
                     _b.sent();
-                    return [4 /*yield*/, _$store_16.store.getItem("ez-projects")];
+                    return [4 /*yield*/, _$store_19.store.getItem("ez-projects")];
                 case 5:
                     projects = (_b.sent()) || [];
-                    projects.push(_$project_13.project.id);
-                    return [4 /*yield*/, _$store_16.store.setItem("ez-projects", projects)];
+                    projects.push(_$project_16.project.id);
+                    return [4 /*yield*/, _$store_19.store.setItem("ez-projects", projects)];
                 case 6:
                     _b.sent();
                     // Then load it (since loading knows how to open it)
-                    _$project_13.project = null;
+                    _$project_16.project = null;
                     return [4 /*yield*/, loadProject(id)];
                 case 7: return [2 /*return*/, _b.sent()];
             }
         });
     });
 }
-_$project_13.newProject = newProject;
+_$project_16.newProject = newProject;
 /**
  * Load a project (UI).
  */
 function uiLoadProject(d) {
-    _$ui_20.dialog(function (d, show) {
-        return ____awaiter_13(this, void 0, void 0, function () {
+    _$ui_23.dialog(function (d, show) {
+        return ____awaiter_16(this, void 0, void 0, function () {
             var projects, first, _i, projects_1, project_3;
-            return ____generator_13(this, function (_a) {
+            return ____generator_16(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, getProjects()];
                     case 1:
@@ -10443,16 +12274,16 @@ function uiLoadProject(d) {
                         for (_i = 0, projects_1 = projects; _i < projects_1.length; _i++) {
                             project_3 = projects_1[_i];
                             (function (project) {
-                                var btn = _$ui_20.btn(d.box, project.name, { className: "row nouppercase" });
+                                var btn = _$ui_23.btn(d.box, project.name, { className: "row nouppercase" });
                                 if (!first)
                                     first = btn;
                                 btn.onclick = function () {
-                                    return ____awaiter_13(this, void 0, void 0, function () {
-                                        return ____generator_13(this, function (_a) {
+                                    return ____awaiter_16(this, void 0, void 0, function () {
+                                        return ____generator_16(this, function (_a) {
                                             switch (_a.label) {
-                                                case 0: return [4 /*yield*/, _$ui_20.loading(function () {
-                                                        return ____awaiter_13(this, void 0, void 0, function () {
-                                                            return ____generator_13(this, function (_a) {
+                                                case 0: return [4 /*yield*/, _$ui_23.loading(function () {
+                                                        return ____awaiter_16(this, void 0, void 0, function () {
+                                                            return ____generator_16(this, function (_a) {
                                                                 switch (_a.label) {
                                                                     case 0: return [4 /*yield*/, loadProject(project.id)];
                                                                     case 1:
@@ -10488,56 +12319,56 @@ function uiLoadProject(d) {
  * @param id  ID of the project.
  */
 function loadProject(id, store) {
-    return ____awaiter_13(this, void 0, void 0, function () {
+    return ____awaiter_16(this, void 0, void 0, function () {
         var _i, projectButtons_1, nm, b;
-        return ____generator_13(this, function (_a) {
+        return ____generator_16(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, unloadProject()];
                 case 1:
                     _a.sent();
                     // Create and load this project
-                    _$project_13.project = new Project(id, { store: store });
-                    return [4 /*yield*/, _$project_13.project.load()];
+                    _$project_16.project = new Project(id, { store: store });
+                    return [4 /*yield*/, _$project_16.project.load()];
                 case 2:
                     _a.sent();
                     // Free up the buttons
                     for (_i = 0, projectButtons_1 = projectButtons; _i < projectButtons_1.length; _i++) {
                         nm = projectButtons_1[_i];
-                        b = _$ui_20.ui.menu[nm];
+                        b = _$ui_23.ui.menu[nm];
                         b.classList.remove("off");
                         b.disabled = false;
                     }
-                    return [2 /*return*/, _$project_13.project];
+                    return [2 /*return*/, _$project_16.project];
             }
         });
     });
 }
-_$project_13.loadProject = loadProject;
+_$project_16.loadProject = loadProject;
 /**
  * Unload the current project, if one is loaded.
  */
 function unloadProject() {
-    return ____awaiter_13(this, void 0, void 0, function () {
+    return ____awaiter_16(this, void 0, void 0, function () {
         var _i, projectButtons_2, nm, b;
-        return ____generator_13(this, function (_a) {
+        return ____generator_16(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!_$project_13.project) return [3 /*break*/, 2];
+                    if (!_$project_16.project) return [3 /*break*/, 2];
                     // Remove the undo info
-                    return [4 /*yield*/, _$project_13.project.store.dropUndo()];
+                    return [4 /*yield*/, _$project_16.project.store.dropUndo()];
                 case 1:
                     // Remove the undo info
                     _a.sent();
-                    _$project_13.project = null;
+                    _$project_16.project = null;
                     _a.label = 2;
                 case 2:
                     // Clear out the former selections
-                    _$select_14.clearSelectables();
+                    _$select_17.clearSelectables();
                     // Clear out the UI
-                    _$ui_20.ui.main.innerHTML = "";
+                    _$ui_23.ui.main.innerHTML = "";
                     for (_i = 0, projectButtons_2 = projectButtons; _i < projectButtons_2.length; _i++) {
                         nm = projectButtons_2[_i];
-                        b = _$ui_20.ui.menu[nm];
+                        b = _$ui_23.ui.menu[nm];
                         b.classList.add("off");
                         b.disabled = true;
                     }
@@ -10546,19 +12377,19 @@ function unloadProject() {
         });
     });
 }
-_$project_13.unloadProject = unloadProject;
+_$project_16.unloadProject = unloadProject;
 /**
  * Reload the current project. Useful for undos.
  */
 function reloadProject() {
-    return ____awaiter_13(this, void 0, void 0, function () {
+    return ____awaiter_16(this, void 0, void 0, function () {
         var id, store;
-        return ____generator_13(this, function (_a) {
+        return ____generator_16(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    id = _$project_13.project.id;
-                    store = _$project_13.project.store;
-                    _$project_13.project = null;
+                    id = _$project_16.project.id;
+                    store = _$project_16.project.store;
+                    _$project_16.project = null;
                     return [4 /*yield*/, unloadProject()];
                 case 1:
                     _a.sent();
@@ -10576,28 +12407,28 @@ function reloadProject() {
  * @param id  ID of the project to delete.
  */
 function deleteProjectById(id) {
-    return ____awaiter_13(this, void 0, void 0, function () {
+    return ____awaiter_16(this, void 0, void 0, function () {
         var projects, idx;
-        return ____generator_13(this, function (_a) {
+        return ____generator_16(this, function (_a) {
             switch (_a.label) {
                 case 0: 
                 // First drop the store
-                return [4 /*yield*/, _$store_16.store.dropInstance({ name: "ez-project-" + id })];
+                return [4 /*yield*/, _$store_19.store.dropInstance({ name: "ez-project-" + id })];
                 case 1:
                     // First drop the store
                     _a.sent();
                     // Then drop the ref in the main store
-                    return [4 /*yield*/, _$store_16.store.removeItem("ez-project-" + id)];
+                    return [4 /*yield*/, _$store_19.store.removeItem("ez-project-" + id)];
                 case 2:
                     // Then drop the ref in the main store
                     _a.sent();
-                    return [4 /*yield*/, _$store_16.store.getItem("ez-projects")];
+                    return [4 /*yield*/, _$store_19.store.getItem("ez-projects")];
                 case 3:
                     projects = (_a.sent()) || [];
                     idx = projects.indexOf(id);
                     if (!(idx >= 0)) return [3 /*break*/, 5];
                     projects.splice(idx, 1);
-                    return [4 /*yield*/, _$store_16.store.setItem("ez-projects", projects)];
+                    return [4 /*yield*/, _$store_19.store.setItem("ez-projects", projects)];
                 case 4:
                     _a.sent();
                     _a.label = 5;
@@ -10606,52 +12437,52 @@ function deleteProjectById(id) {
         });
     });
 }
-_$project_13.deleteProjectById = deleteProjectById;
+_$project_16.deleteProjectById = deleteProjectById;
 /**
  * Show the edit menu.
  */
 function editMenu() {
-    _$ui_20.dialog(function (d, show) {
-        return ____awaiter_13(this, void 0, void 0, function () {
+    _$ui_23.dialog(function (d, show) {
+        return ____awaiter_16(this, void 0, void 0, function () {
             var undo, selAll, selAllTracks;
-            return ____generator_13(this, function (_a) {
-                undo = _$hotkeys_9.btn(d, "_Undo (Ctrl+Z)", { className: "row" });
-                selAll = _$hotkeys_9.btn(d, "Select _all (Ctrl+A)", { className: "row" });
-                selAllTracks = _$hotkeys_9.btn(d, "Select all _tracks (Ctrl+Alt+A)", { className: "row" });
+            return ____generator_16(this, function (_a) {
+                undo = _$hotkeys_12.btn(d, "_Undo (Ctrl+Z)", { className: "row" });
+                selAll = _$hotkeys_12.btn(d, "Select _all (Ctrl+A)", { className: "row" });
+                selAllTracks = _$hotkeys_12.btn(d, "Select all _tracks (Ctrl+Alt+A)", { className: "row" });
                 undo.onclick = function () {
-                    return ____awaiter_13(this, void 0, void 0, function () {
-                        return ____generator_13(this, function (_a) {
+                    return ____awaiter_16(this, void 0, void 0, function () {
+                        return ____generator_16(this, function (_a) {
                             switch (_a.label) {
                                 case 0: return [4 /*yield*/, performUndo()];
                                 case 1:
                                     _a.sent();
-                                    _$ui_20.dialogClose(d);
+                                    _$ui_23.dialogClose(d);
                                     return [2 /*return*/];
                             }
                         });
                     });
                 };
                 selAll.onclick = function () {
-                    return ____awaiter_13(this, void 0, void 0, function () {
-                        return ____generator_13(this, function (_a) {
+                    return ____awaiter_16(this, void 0, void 0, function () {
+                        return ____generator_16(this, function (_a) {
                             switch (_a.label) {
-                                case 0: return [4 /*yield*/, _$select_14.selectAll()];
+                                case 0: return [4 /*yield*/, _$select_17.selectAll()];
                                 case 1:
                                     _a.sent();
-                                    _$ui_20.dialogClose(d);
+                                    _$ui_23.dialogClose(d);
                                     return [2 /*return*/];
                             }
                         });
                     });
                 };
                 selAllTracks.onclick = function () {
-                    return ____awaiter_13(this, void 0, void 0, function () {
-                        return ____generator_13(this, function (_a) {
+                    return ____awaiter_16(this, void 0, void 0, function () {
+                        return ____generator_16(this, function (_a) {
                             switch (_a.label) {
-                                case 0: return [4 /*yield*/, _$select_14.selectAll({ tracksOnly: true })];
+                                case 0: return [4 /*yield*/, _$select_17.selectAll({ tracksOnly: true })];
                                 case 1:
                                     _a.sent();
-                                    _$ui_20.dialogClose(d);
+                                    _$ui_23.dialogClose(d);
                                     return [2 /*return*/];
                             }
                         });
@@ -10669,20 +12500,20 @@ function editMenu() {
  * Mark this as an undo point.
  */
 function undoPoint() {
-    if (_$project_13.project)
-        _$project_13.project.store.undoPoint();
+    if (_$project_16.project)
+        _$project_16.project.store.undoPoint();
 }
-_$project_13.undoPoint = undoPoint;
+_$project_16.undoPoint = undoPoint;
 /**
  * Disable undo for the currently loaded project.
  */
 function disableUndo() {
-    return ____awaiter_13(this, void 0, void 0, function () {
-        return ____generator_13(this, function (_a) {
+    return ____awaiter_16(this, void 0, void 0, function () {
+        return ____generator_16(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!_$project_13.project) return [3 /*break*/, 2];
-                    return [4 /*yield*/, _$project_13.project.store.disableUndo()];
+                    if (!_$project_16.project) return [3 /*break*/, 2];
+                    return [4 /*yield*/, _$project_16.project.store.disableUndo()];
                 case 1:
                     _a.sent();
                     _a.label = 2;
@@ -10691,19 +12522,19 @@ function disableUndo() {
         });
     });
 }
-_$project_13.disableUndo = disableUndo;
+_$project_16.disableUndo = disableUndo;
 /**
  * Perform an undo.
  */
 function performUndo() {
-    return ____awaiter_13(this, void 0, void 0, function () {
-        return ____generator_13(this, function (_a) {
+    return ____awaiter_16(this, void 0, void 0, function () {
+        return ____generator_16(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, _$ui_20.loading(function () {
-                        return ____awaiter_13(this, void 0, void 0, function () {
-                            return ____generator_13(this, function (_a) {
+                case 0: return [4 /*yield*/, _$ui_23.loading(function () {
+                        return ____awaiter_16(this, void 0, void 0, function () {
+                            return ____generator_16(this, function (_a) {
                                 switch (_a.label) {
-                                    case 0: return [4 /*yield*/, _$project_13.project.store.undo()];
+                                    case 0: return [4 /*yield*/, _$project_16.project.store.undo()];
                                     case 1:
                                         _a.sent();
                                         return [4 /*yield*/, reloadProject()];
@@ -10726,28 +12557,55 @@ function performUndo() {
  */
 function tracksMenu() {
     function dynaudnorm(x) {
-        return ____awaiter_13(this, void 0, void 0, function () {
-            return ____generator_13(this, function (_a) {
+        return ____awaiter_16(this, void 0, void 0, function () {
+            return ____generator_16(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, _$filters_8.ffmpegStream(x, "dynaudnorm")];
+                    case 0: return [4 /*yield*/, _$filters_11.ffmpegStream(x, "dynaudnorm")];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     }
-    _$ui_20.dialog(function (d, show) {
-        return ____awaiter_13(this, void 0, void 0, function () {
-            var load, mix, mixKeep, mixLevel, mixLevelKeep;
-            return ____generator_13(this, function (_a) {
-                load = _$hotkeys_9.btn(d, "_Load track(s) from file", { className: "row" });
-                load.onclick = function () { return uiLoadFile(d); };
-                mix = _$hotkeys_9.btn(d, "Mi_x selected tracks", { className: "row" });
+    _$ui_23.dialog(function (d, show) {
+        return ____awaiter_16(this, void 0, void 0, function () {
+            var load, cload, mix, mixKeep, mixLevel, mixLevelKeep;
+            return ____generator_16(this, function (_a) {
+                load = _$hotkeys_12.btn(d, "_Load track(s) from file", { className: "row" });
+                load.onclick = function () { return __uiLoadFile_16(d); };
+                cload = _$hotkeys_12.btn(d, "Load _captions from file", { className: "row" });
+                cload.onclick = function () {
+                    return ____awaiter_16(this, void 0, void 0, function () {
+                        var _i, _a, track_2;
+                        return ____generator_16(this, function (_b) {
+                            switch (_b.label) {
+                                case 0:
+                                    _i = 0;
+                                    return [4 /*yield*/, _$captionData_8.uiLoadFile(_$project_16.project, d)];
+                                case 1:
+                                    _a = _b.sent();
+                                    _b.label = 2;
+                                case 2:
+                                    if (!(_i < _a.length)) return [3 /*break*/, 5];
+                                    track_2 = _a[_i];
+                                    return [4 /*yield*/, _$project_16.project.addTrack(track_2)];
+                                case 3:
+                                    _b.sent();
+                                    _b.label = 4;
+                                case 4:
+                                    _i++;
+                                    return [3 /*break*/, 2];
+                                case 5: return [2 /*return*/];
+                            }
+                        });
+                    });
+                };
+                mix = _$hotkeys_12.btn(d, "Mi_x selected tracks", { className: "row" });
                 mix.onclick = function () { return uiMix(d, false); };
-                mixKeep = _$hotkeys_9.btn(d, "_Mix selected tracks into new track", { className: "row" });
+                mixKeep = _$hotkeys_12.btn(d, "_Mix selected tracks into new track", { className: "row" });
                 mixKeep.onclick = function () { return uiMix(d, true); };
-                mixLevel = _$hotkeys_9.btn(d, "Mix and le_vel selected tracks", { className: "row" });
+                mixLevel = _$hotkeys_12.btn(d, "Mix and le_vel selected tracks", { className: "row" });
                 mixLevel.onclick = function () { return uiMix(d, false, { preFilter: dynaudnorm, postFilter: dynaudnorm }); };
-                mixLevelKeep = _$hotkeys_9.btn(d, "M_ix and level selected tracks into new track", { className: "row" });
+                mixLevelKeep = _$hotkeys_12.btn(d, "M_ix and level selected tracks into new track", { className: "row" });
                 mixLevelKeep.onclick = function () { return uiMix(d, true, { preFilter: dynaudnorm, postFilter: dynaudnorm }); };
                 show(load);
                 return [2 /*return*/];
@@ -10760,36 +12618,36 @@ function tracksMenu() {
 /**
  * Load a file into tracks (UI).
  */
-function uiLoadFile(d) {
-    _$ui_20.dialog(function (d, show) {
-        return ____awaiter_13(this, void 0, void 0, function () {
+function __uiLoadFile_16(d) {
+    _$ui_23.dialog(function (d, show) {
+        return ____awaiter_16(this, void 0, void 0, function () {
             var file;
-            return ____generator_13(this, function (_a) {
-                _$ui_20.lbl(d.box, "load-file", "Audio file:&nbsp;");
-                file = _$ui_20.mk("input", d.box, { id: "load-file", type: "file" });
+            return ____generator_16(this, function (_a) {
+                _$ui_23.lbl(d.box, "load-file", "Audio file:&nbsp;");
+                file = _$ui_23.mk("input", d.box, { id: "load-file", type: "file" });
                 file.onchange = function () {
-                    return ____awaiter_13(this, void 0, void 0, function () {
-                        return ____generator_13(this, function (_a) {
+                    return ____awaiter_16(this, void 0, void 0, function () {
+                        return ____generator_16(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
                                     if (!file.files.length)
                                         return [2 /*return*/];
-                                    return [4 /*yield*/, _$ui_20.loading(function (ld) {
-                                            return ____awaiter_13(this, void 0, void 0, function () {
+                                    return [4 /*yield*/, _$ui_23.loading(function (ld) {
+                                            return ____awaiter_16(this, void 0, void 0, function () {
                                                 var ex_1;
-                                                return ____generator_13(this, function (_a) {
+                                                return ____generator_16(this, function (_a) {
                                                     switch (_a.label) {
                                                         case 0:
                                                             // Make sure we can undo
-                                                            _$project_13.project.store.undoPoint();
+                                                            _$project_16.project.store.undoPoint();
                                                             _a.label = 1;
                                                         case 1:
                                                             _a.trys.push([1, 3, , 9]);
-                                                            return [4 /*yield*/, loadFile(file.files[0].name, file.files[0], {
+                                                            return [4 /*yield*/, __loadFile_16(file.files[0].name, file.files[0], {
                                                                     status: function (cur, duration) {
-                                                                        var txt = "Loading... " + _$util_21.timestamp(cur);
+                                                                        var txt = "Loading... " + _$util_24.timestamp(cur);
                                                                         if (duration) {
-                                                                            txt += "/" + _$util_21.timestamp(duration) +
+                                                                            txt += "/" + _$util_24.timestamp(duration) +
                                                                                 " (" + ~~(cur / duration * 100) + "%)";
                                                                         }
                                                                         ld.box.innerHTML = txt;
@@ -10801,11 +12659,11 @@ function uiLoadFile(d) {
                                                         case 3:
                                                             ex_1 = _a.sent();
                                                             if (!ex_1.stack) return [3 /*break*/, 5];
-                                                            return [4 /*yield*/, _$ui_20.alert(ex_1.stack)];
+                                                            return [4 /*yield*/, _$ui_23.alert(ex_1 + "<br/>" + ex_1.stack)];
                                                         case 4:
                                                             _a.sent();
                                                             return [3 /*break*/, 7];
-                                                        case 5: return [4 /*yield*/, _$ui_20.alert(ex_1 + "")];
+                                                        case 5: return [4 /*yield*/, _$ui_23.alert(ex_1 + "")];
                                                         case 6:
                                                             _a.sent();
                                                             _a.label = 7;
@@ -10842,11 +12700,11 @@ function uiLoadFile(d) {
  * @param raw  The file, as a Blob.
  * @param opts  Other options.
  */
-function loadFile(fileName, raw, opts) {
+function __loadFile_16(fileName, raw, opts) {
     if (opts === void 0) { opts = {}; }
-    return ____awaiter_13(this, void 0, void 0, function () {
+    return ____awaiter_16(this, void 0, void 0, function () {
         var fileReader, header, chunk, h2, libav, _a, fmt_ctx, streams, pkt, libavReader, duration, audioStreams, demuxerControllers, demuxers, _loop_1, _i, streams_1, stream, baseName, audioTracks, trackPromises, _loop_2, _b, audioStreams_1, stream;
-        return ____generator_13(this, function (_c) {
+        return ____generator_16(this, function (_c) {
             switch (_c.label) {
                 case 0:
                     fileReader = raw.stream().getReader();
@@ -10879,11 +12737,11 @@ function loadFile(fileName, raw, opts) {
                     return [4 /*yield*/, libav.av_packet_alloc()];
                 case 8:
                     pkt = _c.sent();
-                    libavReader = new _$stream_17.WSPReadableStream({
+                    libavReader = new _$stream_20.WSPReadableStream({
                         pull: function (controller) {
-                            return ____awaiter_13(this, void 0, void 0, function () {
+                            return ____awaiter_16(this, void 0, void 0, function () {
                                 var _a, res, packets, done, chunk;
-                                return ____generator_13(this, function (_b) {
+                                return ____generator_16(this, function (_b) {
                                     switch (_b.label) {
                                         case 0:
                                             if (!true) return [3 /*break*/, 7];
@@ -10936,14 +12794,14 @@ function loadFile(fileName, raw, opts) {
                             return "continue";
                         duration = Math.max(stream.duration, duration);
                         audioStreams.push(stream);
-                        demuxers[stream.index] = new _$stream_17.WSPReadableStream({
+                        demuxers[stream.index] = new _$stream_20.WSPReadableStream({
                             start: function (controller) {
                                 demuxerControllers[stream.index] = controller;
                             },
                             pull: function () {
-                                return ____awaiter_13(this, void 0, void 0, function () {
+                                return ____awaiter_16(this, void 0, void 0, function () {
                                     var packets, gotThis, idx;
-                                    return ____generator_13(this, function (_a) {
+                                    return ____generator_16(this, function (_a) {
                                         switch (_a.label) {
                                             case 0:
                                                 if (!true) return [3 /*break*/, 2];
@@ -10983,24 +12841,24 @@ function loadFile(fileName, raw, opts) {
                     audioTracks = Object.create(null);
                     trackPromises = [];
                     _loop_2 = function (stream) {
-                        var trackName, track_2, _d, c, pkt_1, frame, filter_graph, buffersrc_ctx, buffersink_ctx, reader;
-                        return ____generator_13(this, function (_e) {
+                        var trackName, track_3, _d, c, pkt_1, frame, filter_graph, buffersrc_ctx, buffersink_ctx, reader;
+                        return ____generator_16(this, function (_e) {
                             switch (_e.label) {
                                 case 0:
                                     trackName = baseName + ((audioStreams.length <= 1) ? "" : ("-" + (stream.index + 1)));
-                                    return [4 /*yield*/, _$project_13.project.newAudioTrack({ name: trackName })];
+                                    return [4 /*yield*/, _$project_16.project.newAudioTrack({ name: trackName })];
                                 case 1:
-                                    track_2 = _e.sent();
-                                    audioTracks[stream.index] = track_2;
+                                    track_3 = _e.sent();
+                                    audioTracks[stream.index] = track_3;
                                     return [4 /*yield*/, libav.ff_init_decoder(stream.codec_id, stream.codecpar)];
                                 case 2:
                                     _d = _e.sent(), c = _d[1], pkt_1 = _d[2], frame = _d[3];
-                                    reader = new _$stream_17.WSPReadableStream({
+                                    reader = new _$stream_20.WSPReadableStream({
                                         pull: function (controller) {
-                                            return ____awaiter_13(this, void 0, void 0, function () {
+                                            return ____awaiter_16(this, void 0, void 0, function () {
                                                 var packets, frames_1, channel_layout, rframes, _i, rframes_1, frame_1;
                                                 var _a;
-                                                return ____generator_13(this, function (_b) {
+                                                return ____generator_16(this, function (_b) {
                                                     switch (_b.label) {
                                                         case 0:
                                                             if (!true) return [3 /*break*/, 7];
@@ -11012,17 +12870,17 @@ function loadFile(fileName, raw, opts) {
                                                             frames_1 = _b.sent();
                                                             if (!frames_1.length) return [3 /*break*/, 6];
                                                             if (!!filter_graph) return [3 /*break*/, 4];
-                                                            track_2.format = _$audioData_4.fromPlanar(frames_1[0].format);
-                                                            track_2.sampleRate = frames_1[0].sample_rate;
-                                                            track_2.channels = frames_1[0].channels;
-                                                            channel_layout = _$audioData_4.toChannelLayout(track_2.channels);
+                                                            track_3.format = _$audioData_5.fromPlanar(frames_1[0].format);
+                                                            track_3.sampleRate = frames_1[0].sample_rate;
+                                                            track_3.channels = frames_1[0].channels;
+                                                            channel_layout = _$audioData_5.toChannelLayout(track_3.channels);
                                                             return [4 /*yield*/, libav.ff_init_filter_graph("anull", {
-                                                                    sample_rate: track_2.sampleRate,
+                                                                    sample_rate: track_3.sampleRate,
                                                                     sample_fmt: frames_1[0].format,
                                                                     channel_layout: channel_layout
                                                                 }, {
-                                                                    sample_rate: track_2.sampleRate,
-                                                                    sample_fmt: track_2.format,
+                                                                    sample_rate: track_3.sampleRate,
+                                                                    sample_fmt: track_3.format,
                                                                     channel_layout: channel_layout
                                                                 })];
                                                         case 3:
@@ -11059,7 +12917,7 @@ function loadFile(fileName, raw, opts) {
                                         }
                                     });
                                     // And start it reading
-                                    trackPromises.push(track_2.append(new _$stream_17.EZStream(reader)));
+                                    trackPromises.push(track_3.append(new _$stream_20.EZStream(reader)));
                                     return [2 /*return*/];
                             }
                         });
@@ -11084,7 +12942,7 @@ function loadFile(fileName, raw, opts) {
                     _c.sent();
                     libav.terminate();
                     // And save it
-                    return [4 /*yield*/, _$project_13.project.save()];
+                    return [4 /*yield*/, _$project_16.project.save()];
                 case 14:
                     // And save it
                     _c.sent();
@@ -11101,37 +12959,40 @@ function loadFile(fileName, raw, opts) {
  */
 function uiMix(d, keep, opts) {
     if (opts === void 0) { opts = {}; }
-    _$ui_20.loading(function (d) {
-        return ____awaiter_13(this, void 0, void 0, function () {
+    _$ui_23.loading(function (d) {
+        return ____awaiter_16(this, void 0, void 0, function () {
             var sel, outTrack, _i, _a, inTrack;
-            return ____generator_13(this, function (_b) {
+            return ____generator_16(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        sel = _$select_14.getSelection();
+                        sel = _$select_17.getSelection();
                         // This is an undo point
-                        _$project_13.project.store.undoPoint();
-                        return [4 /*yield*/, _$filters_8.mixTracks(sel, d, opts)];
+                        _$project_16.project.store.undoPoint();
+                        return [4 /*yield*/, _$filters_11.mixTracks(sel, d, opts)];
                     case 1:
                         outTrack = _b.sent();
                         if (!outTrack)
                             return [2 /*return*/];
                         // Add the new track
-                        _$project_13.project.addTrack(outTrack);
-                        if (!!keep) return [3 /*break*/, 5];
-                        _i = 0, _a = sel.tracks;
-                        _b.label = 2;
+                        return [4 /*yield*/, _$project_16.project.addTrack(outTrack)];
                     case 2:
-                        if (!(_i < _a.length)) return [3 /*break*/, 5];
-                        inTrack = _a[_i];
-                        if (!(inTrack.type() === _$track_18.TrackType.Audio)) return [3 /*break*/, 4];
-                        return [4 /*yield*/, _$project_13.project.removeTrack(inTrack)];
-                    case 3:
+                        // Add the new track
                         _b.sent();
-                        _b.label = 4;
+                        if (!!keep) return [3 /*break*/, 6];
+                        _i = 0, _a = sel.tracks;
+                        _b.label = 3;
+                    case 3:
+                        if (!(_i < _a.length)) return [3 /*break*/, 6];
+                        inTrack = _a[_i];
+                        if (!(inTrack.type() === _$track_21.TrackType.Audio)) return [3 /*break*/, 5];
+                        return [4 /*yield*/, _$project_16.project.removeTrack(inTrack)];
                     case 4:
+                        _b.sent();
+                        _b.label = 5;
+                    case 5:
                         _i++;
-                        return [3 /*break*/, 2];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 3];
+                    case 6: return [2 /*return*/];
                 }
             });
         });
@@ -11143,15 +13004,15 @@ function uiMix(d, keep, opts) {
  * Delete a project (UI).
  */
 function uiDeleteProject(d) {
-    _$ui_20.dialog(function (d, show) {
-        return ____awaiter_13(this, void 0, void 0, function () {
+    _$ui_23.dialog(function (d, show) {
+        return ____awaiter_16(this, void 0, void 0, function () {
             var yesb, nob, yes;
-            return ____generator_13(this, function (_a) {
+            return ____generator_16(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _$ui_20.mk("div", d.box, { innerHTML: "Are you sure? This will delete project data in the browser (but will not delete any saved files or data on any servers).<br/><br/>" });
-                        yesb = _$hotkeys_9.btn(d, "_Yes, delete the project", { className: "row" });
-                        nob = _$hotkeys_9.btn(d, "_No, cancel", { className: "row" });
+                        _$ui_23.mk("div", d.box, { innerHTML: "Are you sure? This will delete project data in the browser (but will not delete any saved files or data on any servers).<br/><br/>" });
+                        yesb = _$hotkeys_12.btn(d, "_Yes, delete the project", { className: "row" });
+                        nob = _$hotkeys_12.btn(d, "_No, cancel", { className: "row" });
                         show(nob);
                         return [4 /*yield*/, new Promise(function (res) {
                                 yesb.onclick = function () { return res(true); };
@@ -11160,11 +13021,11 @@ function uiDeleteProject(d) {
                     case 1:
                         yes = _a.sent();
                         if (!yes) return [3 /*break*/, 3];
-                        return [4 /*yield*/, _$ui_20.loading(function () {
-                                return ____awaiter_13(this, void 0, void 0, function () {
-                                    return ____generator_13(this, function (_a) {
+                        return [4 /*yield*/, _$ui_23.loading(function () {
+                                return ____awaiter_16(this, void 0, void 0, function () {
+                                    return ____generator_16(this, function (_a) {
                                         switch (_a.label) {
-                                            case 0: return [4 /*yield*/, _$project_13.project.del()];
+                                            case 0: return [4 /*yield*/, _$project_16.project.del()];
                                             case 1:
                                                 _a.sent();
                                                 return [2 /*return*/];
@@ -11193,34 +13054,34 @@ var stopPlayback = null;
  * Play the selected audio.
  */
 function play() {
-    return ____awaiter_13(this, void 0, void 0, function () {
-        return ____generator_13(this, function (_a) {
+    return ____awaiter_16(this, void 0, void 0, function () {
+        return ____generator_16(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     // Override stopPlayback during loading
                     stopPlayback = function () { return void 0; };
-                    return [4 /*yield*/, _$ui_20.loading(function () {
-                            return ____awaiter_13(this, void 0, void 0, function () {
-                                var ac, sel, streamOpts, audioTracks, longest, longestLen, _i, audioTracks_1, track_3, dur, streams, readyCt, readyRes, readyPromise, playing, sourcePromises, i, track_4, stream, ready, end, sources, _a, sources_1, source, _b, sources_2, source;
-                                return ____generator_13(this, function (_c) {
+                    return [4 /*yield*/, _$ui_23.loading(function () {
+                            return ____awaiter_16(this, void 0, void 0, function () {
+                                var ac, sel, streamOpts, audioTracks, longest, longestLen, _i, audioTracks_1, track_4, dur, streams, readyCt, readyRes, readyPromise, playing, sourcePromises, i, track_5, stream, ready, end, sources, _a, sources_1, source, _b, sources_2, source;
+                                return ____generator_16(this, function (_c) {
                                     switch (_c.label) {
-                                        case 0: return [4 /*yield*/, _$audio_5.getAudioContext()];
+                                        case 0: return [4 /*yield*/, _$audio_6.getAudioContext()];
                                         case 1:
                                             ac = _c.sent();
-                                            sel = _$select_14.getSelection();
+                                            sel = _$select_17.getSelection();
                                             streamOpts = {
                                                 start: sel.start
                                             };
                                             if (sel.range)
                                                 streamOpts.end = sel.end;
-                                            audioTracks = _$project_13.project.tracks.filter(function (x) { return x.type() === _$track_18.TrackType.Audio; });
+                                            audioTracks = _$project_16.project.tracks.filter(function (x) { return x.type() === _$track_21.TrackType.Audio; });
                                             longest = null;
                                             longestLen = 0;
                                             for (_i = 0, audioTracks_1 = audioTracks; _i < audioTracks_1.length; _i++) {
-                                                track_3 = audioTracks_1[_i];
-                                                dur = track_3.duration();
+                                                track_4 = audioTracks_1[_i];
+                                                dur = track_4.duration();
                                                 if (dur > longestLen) {
-                                                    longest = track_3;
+                                                    longest = track_4;
                                                     longestLen = dur;
                                                 }
                                             }
@@ -11233,7 +13094,7 @@ function play() {
                                             playing = streams.length;
                                             sourcePromises = [];
                                             for (i = 0; i < streams.length; i++) {
-                                                track_4 = audioTracks[i];
+                                                track_5 = audioTracks[i];
                                                 stream = streams[i];
                                                 ready = function () {
                                                     if (++readyCt === streams.length)
@@ -11246,19 +13107,19 @@ function play() {
                                                             stopPlayback();
                                                     }
                                                 };
-                                                if (track_4 === longest) {
+                                                if (track_5 === longest) {
                                                     // This is the longest track, so use its timestamps
-                                                    sourcePromises.push(_$audio_5.createSource(stream, {
+                                                    sourcePromises.push(_$audio_6.createSource(stream, {
                                                         status: function (ts) {
                                                             if (playing)
-                                                                _$select_14.setPlayHead(sel.start + ts / ac.sampleRate);
+                                                                _$select_17.setPlayHead(sel.start + ts / ac.sampleRate);
                                                         },
                                                         ready: ready,
                                                         end: end
                                                     }));
                                                 }
                                                 else {
-                                                    sourcePromises.push(_$audio_5.createSource(stream, { ready: ready, end: end }));
+                                                    sourcePromises.push(_$audio_6.createSource(stream, { ready: ready, end: end }));
                                                 }
                                             }
                                             return [4 /*yield*/, Promise.all(sourcePromises)];
@@ -11277,7 +13138,7 @@ function play() {
                                                     source.node.disconnect(ac.destination);
                                                     source.stop();
                                                 }
-                                                _$select_14.setPlayHead(null);
+                                                _$select_17.setPlayHead(null);
                                                 stopPlayback = null;
                                             };
                                             // Connect them all
@@ -11302,18 +13163,18 @@ function play() {
         });
     });
 }
-_$project_13.play = play;
+_$project_16.play = play;
 // Project-level hotkeys
 window.addEventListener("keydown", function (ev) {
-    return ____awaiter_13(this, void 0, void 0, function () {
+    return ____awaiter_16(this, void 0, void 0, function () {
         var el;
-        return ____generator_13(this, function (_a) {
+        return ____generator_16(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!_$project_13.project)
+                    if (!_$project_16.project)
                         return [2 /*return*/];
                     // No hotkeys if dialogs are up
-                    if (_$ui_20.ui.dialogs.length)
+                    if (_$ui_23.ui.dialogs.length)
                         return [2 /*return*/];
                     if (!(ev.key === " ")) return [3 /*break*/, 4];
                     el = ev.target;
@@ -11343,7 +13204,7 @@ window.addEventListener("keydown", function (ev) {
     });
 });
 
-var _$plugins_12 = {};
+var _$plugins_15 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -11360,7 +13221,7 @@ var _$plugins_12 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-var ____awaiter_12 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var ____awaiter_15 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -11369,7 +13230,7 @@ var ____awaiter_12 = (this && this.__awaiter) || function (thisArg, _arguments, 
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var ____generator_12 = (this && this.__generator) || function (thisArg, body) {
+var ____generator_15 = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
@@ -11396,22 +13257,22 @@ var ____generator_12 = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(_$plugins_12, "__esModule", { value: true });
-_$plugins_12.getPlugins = _$plugins_12.loadPlugin = _$plugins_12.load = _$plugins_12.haveUserDefinedPlugins = void 0;
+Object.defineProperty(_$plugins_15, "__esModule", { value: true });
+_$plugins_15.getPlugins = _$plugins_15.loadPlugin = _$plugins_15.load = _$plugins_15.haveUserDefinedPlugins = void 0;
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../ennuizel.d.ts" />
-/* removed: var _$audioData_4 = require("./audio-data"); */;
-/* removed: var _$export_7 = require("./export"); */;
-/* removed: var _$filters_8 = require("./filters"); */;
-/* removed: var _$hotkeys_9 = require("./hotkeys"); */;
-/* removed: var _$project_13 = require("./project"); */;
-/* removed: var _$select_14 = require("./select"); */;
-/* removed: var _$stream_17 = require("./stream"); */;
-/* removed: var _$track_18 = require("./track"); */;
-/* removed: var _$ui_20 = require("./ui"); */;
-/* removed: var _$util_21 = require("./util"); */;
+/* removed: var _$audioData_5 = require("./audio-data"); */;
+/* removed: var _$export_10 = require("./export"); */;
+/* removed: var _$filters_11 = require("./filters"); */;
+/* removed: var _$hotkeys_12 = require("./hotkeys"); */;
+/* removed: var _$project_16 = require("./project"); */;
+/* removed: var _$select_17 = require("./select"); */;
+/* removed: var _$stream_20 = require("./stream"); */;
+/* removed: var _$track_21 = require("./track"); */;
+/* removed: var _$ui_23 = require("./ui"); */;
+/* removed: var _$util_24 = require("./util"); */;
 // If we have user-defined plugins, say so
-_$plugins_12.haveUserDefinedPlugins = false;
+_$plugins_15.haveUserDefinedPlugins = false;
 // All loaded plugins
 var plugins = Object.create(null);
 // The URL of the plugin currently being loaded
@@ -11421,39 +13282,40 @@ var registeredPlugin = null;
 /**
  * Load the plugin API.
  */
-function __load_12() {
-    return ____awaiter_12(this, void 0, void 0, function () {
-        return ____generator_12(this, function (_a) {
+function __load_15() {
+    return ____awaiter_15(this, void 0, void 0, function () {
+        return ____generator_15(this, function (_a) {
             Ennuizel = {
                 registerPlugin: registerPlugin,
                 loadPlugin: loadPlugin,
                 getPlugin: getPlugin,
-                ReadableStream: _$stream_17.WSPReadableStream,
-                EZStream: _$stream_17.EZStream,
-                filters: _$filters_8,
-                util: _$util_21,
-                hotkeys: _$hotkeys_9,
-                ui: _$ui_20,
-                select: _$select_14,
-                TrackType: _$track_18.TrackType,
-                LibAVSampleFormat: _$audioData_4.LibAVSampleFormat,
-                toPlanar: _$audioData_4.toPlanar,
-                fromPlanar: _$audioData_4.fromPlanar,
-                newProject: _$project_13.newProject,
-                getProjects: _$project_13.getProjects,
-                loadProject: _$project_13.loadProject,
-                unloadProject: _$project_13.unloadProject,
-                deleteProjectById: _$project_13.deleteProjectById,
-                undoPoint: _$project_13.undoPoint,
-                disableUndo: _$project_13.disableUndo,
-                standardExports: _$export_7.standardExports,
-                exportAudio: _$export_7.exportAudio
+                ReadableStream: _$stream_20.WSPReadableStream,
+                EZStream: _$stream_20.EZStream,
+                filters: _$filters_11,
+                util: _$util_24,
+                hotkeys: _$hotkeys_12,
+                ui: _$ui_23,
+                select: _$select_17,
+                TrackType: _$track_21.TrackType,
+                LibAVSampleFormat: _$audioData_5.LibAVSampleFormat,
+                toPlanar: _$audioData_5.toPlanar,
+                fromPlanar: _$audioData_5.fromPlanar,
+                newProject: _$project_16.newProject,
+                getProjects: _$project_16.getProjects,
+                loadProject: _$project_16.loadProject,
+                unloadProject: _$project_16.unloadProject,
+                deleteProjectById: _$project_16.deleteProjectById,
+                undoPoint: _$project_16.undoPoint,
+                disableUndo: _$project_16.disableUndo,
+                standardExports: _$export_10.standardExports,
+                exportAudio: _$export_10.exportAudio,
+                exportCaption: _$export_10.exportCaption
             };
             return [2 /*return*/];
         });
     });
 }
-_$plugins_12.load = __load_12;
+_$plugins_15.load = __load_15;
 /**
  * Call this to register your plugin. Every plugin *must* call this.
  * @param plugin  The plugin to register.
@@ -11470,13 +13332,13 @@ function registerPlugin(plugin) {
  */
 function loadPlugin(url, opts) {
     if (opts === void 0) { opts = {}; }
-    return ____awaiter_12(this, void 0, void 0, function () {
+    return ____awaiter_15(this, void 0, void 0, function () {
         var prevPlugin, prevURL, response, ex_1, ex_2, ret, ex_3;
-        return ____generator_12(this, function (_a) {
+        return ____generator_15(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (opts.userDefined)
-                        _$plugins_12.haveUserDefinedPlugins = true;
+                        _$plugins_15.haveUserDefinedPlugins = true;
                     // Sanitize the URL
                     if (url.indexOf("://") < 0)
                         url = "https://" + url;
@@ -11500,14 +13362,14 @@ function loadPlugin(url, opts) {
                     return [3 /*break*/, 5];
                 case 5:
                     _a.trys.push([5, 7, , 9]);
-                    return [4 /*yield*/, _$ui_20.loadLibrary(url)];
+                    return [4 /*yield*/, _$ui_23.loadLibrary(url)];
                 case 6:
                     _a.sent();
                     return [3 /*break*/, 9];
                 case 7:
                     ex_2 = _a.sent();
                     // Report what went wrong
-                    return [4 /*yield*/, _$ui_20.alert("Error loading plugin " + url + ": " + ex_2)];
+                    return [4 /*yield*/, _$ui_23.alert("Error loading plugin " + url + ": " + ex_2)];
                 case 8:
                     // Report what went wrong
                     _a.sent();
@@ -11527,12 +13389,12 @@ function loadPlugin(url, opts) {
                     return [3 /*break*/, 14];
                 case 12:
                     ex_3 = _a.sent();
-                    return [4 /*yield*/, _$ui_20.alert("Error loading plugin " + ret.name + ": " + ex_3)];
+                    return [4 /*yield*/, _$ui_23.alert("Error loading plugin " + ret.name + ": " + ex_3)];
                 case 13:
                     _a.sent();
                     return [3 /*break*/, 14];
                 case 14: return [3 /*break*/, 17];
-                case 15: return [4 /*yield*/, _$ui_20.alert("Plugin " + url + " failed to register itself!")];
+                case 15: return [4 /*yield*/, _$ui_23.alert("Plugin " + url + " failed to register itself!")];
                 case 16:
                     _a.sent();
                     _a.label = 17;
@@ -11543,7 +13405,7 @@ function loadPlugin(url, opts) {
         });
     });
 }
-_$plugins_12.loadPlugin = loadPlugin;
+_$plugins_15.loadPlugin = loadPlugin;
 /**
  * Get all loaded plugins.
  */
@@ -11553,7 +13415,7 @@ function getPlugins() {
         ret.push(plugins[id]);
     return ret;
 }
-_$plugins_12.getPlugins = getPlugins;
+_$plugins_15.getPlugins = getPlugins;
 /**
  * Get the loaded plugin with this ID, if such a plugin has been
  * loaded.
@@ -11563,7 +13425,7 @@ function getPlugin(id) {
     return plugins[id] || null;
 }
 
-var _$main_11 = {};
+var _$main_14 = {};
 "use strict";
 /*
  * Copyright (c) 2021 Yahweasel
@@ -11580,7 +13442,7 @@ var _$main_11 = {};
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-var ____awaiter_11 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var ____awaiter_14 = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -11589,7 +13451,7 @@ var ____awaiter_11 = (this && this.__awaiter) || function (thisArg, _arguments, 
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var ____generator_11 = (this && this.__generator) || function (thisArg, body) {
+var ____generator_14 = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
@@ -11616,23 +13478,22 @@ var ____generator_11 = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(_$main_11, "__esModule", { value: true });
-_$main_11.project = _$main_11.ui = void 0;
+Object.defineProperty(_$main_14, "__esModule", { value: true });
+_$main_14.project = _$main_14.ui = void 0;
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../ennuizel.d.ts" />
 // License info (for the about box)
-var licenseInfo = "\nThe licenses below cover software which is compiled into ennuizel.js. For other\nincluded software, consult the licenses in their files.\n\n\n===\nEnnuizel\n===\n\nCopyright (c) 2021 Yahweasel\n\nPermission to use, copy, modify, and/or distribute this software for any\npurpose with or without fee is hereby granted, provided that the above\ncopyright notice and this permission notice appear in all copies.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\" AND THE AUTHOR DISCLAIMS ALL WARRANTIES\nWITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF\nMERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY\nSPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES\nWHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION\nOF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN\nCONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.\n\n\n===\nbytes (https://github.com/visionmedia/bytes.js)\n===\n\n(The MIT License)\n\nCopyright (c) 2012-2014 TJ Holowaychuk <tj@vision-media.ca>\nCopyright (c) 2015 Jed Watson <jed.watson@me.com>\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n'Software'), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\nCLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\nTORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\nSOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n\n===\nStreamSaver (https://github.com/jimmywarting/StreamSaver.js)\n===\n\nThe MIT License (MIT)\n\nCopyright (c) 2016-2021 Jimmy Karl Roland W\u00E4rting\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n";
-/* removed: var _$avthreads_6 = require("./avthreads"); */;
-/* removed: var _$filters_8 = require("./filters"); */;
-/* removed: var _$plugins_12 = require("./plugins"); */;
-/* removed: var _$project_13 = require("./project"); */;
-_$main_11.project = _$project_13;
-/* removed: var _$select_14 = require("./select"); */;
-/* removed: var _$store_16 = require("./store"); */;
-/* removed: var _$ui_20 = require("./ui"); */;
-_$main_11.ui = _$ui_20;
-/* removed: var _$StreamSaver_2 = require("streamsaver"); */;
-/* removed: var _$ponyfill_3 = require("web-streams-polyfill/ponyfill"); */;
+var licenseInfo = "\nThe licenses below cover software which is compiled into ennuizel.js. For other\nincluded software, consult the licenses in their files.\n\n\n===\nEnnuizel\n===\n\nCopyright (c) 2021 Yahweasel\n\nPermission to use, copy, modify, and/or distribute this software for any\npurpose with or without fee is hereby granted, provided that the above\ncopyright notice and this permission notice appear in all copies.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\" AND THE AUTHOR DISCLAIMS ALL WARRANTIES\nWITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF\nMERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY\nSPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES\nWHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION\nOF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN\nCONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.\n\n\n===\nbytes (https://github.com/visionmedia/bytes.js)\n===\n\n(The MIT License)\n\nCopyright (c) 2012-2014 TJ Holowaychuk <tj@vision-media.ca>\nCopyright (c) 2015 Jed Watson <jed.watson@me.com>\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n'Software'), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\nCLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\nTORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\nSOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n\n===\nFileSaver (https://github.com/eligrey/FileSaver.js/)\n===\n\nThe MIT License\n\nCopyright \u00A9 2016 [Eli Grey][1].\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n  [1]: http://eligrey.com\n";
+/* removed: var _$avthreads_7 = require("./avthreads"); */;
+/* removed: var _$downloadStream_9 = require("./download-stream"); */;
+/* removed: var _$filters_11 = require("./filters"); */;
+/* removed: var _$plugins_15 = require("./plugins"); */;
+/* removed: var _$project_16 = require("./project"); */;
+_$main_14.project = _$project_16;
+/* removed: var _$select_17 = require("./select"); */;
+/* removed: var _$store_19 = require("./store"); */;
+/* removed: var _$ui_23 = require("./ui"); */;
+_$main_14.ui = _$ui_23;
 /* Ennuizel itself, as interpreted as a plugin, to make the about box easier to
  * fill */
 var ennuizelPlugin = {
@@ -11643,19 +13504,19 @@ var ennuizelPlugin = {
     licenseInfo: licenseInfo
 };
 (function () {
-    return ____awaiter_11(this, void 0, void 0, function () {
+    return ____awaiter_14(this, void 0, void 0, function () {
         function onError(msg) {
-            return ____awaiter_11(this, void 0, void 0, function () {
+            return ____awaiter_14(this, void 0, void 0, function () {
                 var html;
-                return ____generator_11(this, function (_a) {
+                return ____generator_14(this, function (_a) {
                     html = msg
                         // eslint-disable-next-line no-useless-escape
                         .replace(/\&/g, "&nbsp;")
                         .replace(/</g, "&lt;").replace(/>/g, "&gt;")
                         .replace(/\n/g, "<br/>");
-                    _$ui_20.dialog(function (d, show) {
-                        return ____awaiter_11(this, void 0, void 0, function () {
-                            return ____generator_11(this, function (_a) {
+                    _$ui_23.dialog(function (d, show) {
+                        return ____awaiter_14(this, void 0, void 0, function () {
+                            return ____generator_14(this, function (_a) {
                                 errorDialog = d;
                                 d.box.innerHTML = html;
                                 show(null);
@@ -11672,10 +13533,10 @@ var ennuizelPlugin = {
             });
         }
         var errorDialog;
-        return ____generator_11(this, function (_a) {
+        return ____generator_14(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _$ui_20.load();
+                    _$ui_23.load();
                     errorDialog = null;
                     window.addEventListener("error", function (ev) {
                         onError(ev.message + " @ " + ev.filename + ":" + ev.lineno);
@@ -11685,35 +13546,32 @@ var ennuizelPlugin = {
                             ("" + ev.reason + "\n" + ev.reason.stack) :
                             ("" + ev.reason));
                     });
-                    return [4 /*yield*/, _$ui_20.loading(function (d) {
-                            return ____awaiter_11(this, void 0, void 0, function () {
+                    return [4 /*yield*/, _$ui_23.loading(function (d) {
+                            return ____awaiter_14(this, void 0, void 0, function () {
                                 var persistent, wizard, response, config, _i, _a, url, plugin, ex_1;
-                                return ____generator_11(this, function (_b) {
+                                return ____generator_14(this, function (_b) {
                                     switch (_b.label) {
                                         case 0:
                                             if (!(typeof LibAV === "undefined")) return [3 /*break*/, 2];
                                             LibAV = { base: "libav/" };
-                                            return [4 /*yield*/, _$ui_20.loadLibrary("libav/libav-2.4.4.4-fat.js")];
+                                            return [4 /*yield*/, _$ui_23.loadLibrary("libav/libav-2.4.4.4-fat.js")];
                                         case 1:
                                             _b.sent();
                                             _b.label = 2;
                                         case 2:
                                             if (!(typeof localforage === "undefined")) return [3 /*break*/, 4];
-                                            return [4 /*yield*/, _$ui_20.loadLibrary("localforage.min.js")];
+                                            return [4 /*yield*/, _$ui_23.loadLibrary("localforage.min.js")];
                                         case 3:
                                             _b.sent();
                                             _b.label = 4;
                                         case 4:
-                                            // StreamSaver.js
-                                            _$StreamSaver_2.mitm = "StreamSaver/mitm.html";
-                                            _$StreamSaver_2.WritableStream = _$ponyfill_3.WritableStream;
                                             persistent = false;
                                             if (!(navigator.storage && navigator.storage.persist && navigator.storage.persisted)) return [3 /*break*/, 13];
                                             return [4 /*yield*/, navigator.storage.persisted()];
                                         case 5:
                                             persistent = _b.sent();
                                             if (!!persistent) return [3 /*break*/, 8];
-                                            return [4 /*yield*/, _$ui_20.alert("To handle large projects, this tool must have permission for persistent local storage. On some browsers, this permission is given through the notifications permission, so please accept that request if it is asked.")];
+                                            return [4 /*yield*/, _$ui_23.alert("To handle large projects, this tool must have permission for persistent local storage. On some browsers, this permission is given through the notifications permission, so please accept that request if it is asked.")];
                                         case 6:
                                             _b.sent();
                                             return [4 /*yield*/, navigator.storage.persist()];
@@ -11731,69 +13589,72 @@ var ennuizelPlugin = {
                                             _b.label = 11;
                                         case 11:
                                             if (!!persistent) return [3 /*break*/, 13];
-                                            return [4 /*yield*/, _$ui_20.alert("Failed to acquire permission for persistent storage. Large projects will fail.")];
+                                            return [4 /*yield*/, _$ui_23.alert("Failed to acquire permission for persistent storage. Large projects will fail.")];
                                         case 12:
                                             _b.sent();
                                             _b.label = 13;
                                         case 13: 
                                         // Load all the components that need loading
-                                        return [4 /*yield*/, _$avthreads_6.load()];
+                                        return [4 /*yield*/, _$avthreads_7.load()];
                                         case 14:
                                             // Load all the components that need loading
                                             _b.sent();
-                                            return [4 /*yield*/, _$filters_8.load()];
+                                            return [4 /*yield*/, _$downloadStream_9.load()];
                                         case 15:
                                             _b.sent();
-                                            return [4 /*yield*/, _$project_13.load()];
+                                            return [4 /*yield*/, _$filters_11.load()];
                                         case 16:
                                             _b.sent();
-                                            return [4 /*yield*/, _$select_14.load()];
+                                            return [4 /*yield*/, _$project_16.load()];
                                         case 17:
                                             _b.sent();
-                                            return [4 /*yield*/, _$store_16.load()];
+                                            return [4 /*yield*/, _$select_17.load()];
                                         case 18:
                                             _b.sent();
-                                            return [4 /*yield*/, _$plugins_12.load()];
+                                            return [4 /*yield*/, _$store_19.load()];
                                         case 19:
                                             _b.sent();
-                                            wizard = null;
-                                            _b.label = 20;
+                                            return [4 /*yield*/, _$plugins_15.load()];
                                         case 20:
-                                            _b.trys.push([20, 27, , 28]);
+                                            _b.sent();
+                                            wizard = null;
+                                            _b.label = 21;
+                                        case 21:
+                                            _b.trys.push([21, 28, , 29]);
                                             return [4 /*yield*/, fetch("ennuizel.json", {
                                                     cache: "no-cache"
                                                 })];
-                                        case 21:
+                                        case 22:
                                             response = _b.sent();
                                             return [4 /*yield*/, response.json()];
-                                        case 22:
+                                        case 23:
                                             config = _b.sent();
                                             _i = 0, _a = config.plugins;
-                                            _b.label = 23;
-                                        case 23:
-                                            if (!(_i < _a.length)) return [3 /*break*/, 26];
-                                            url = _a[_i];
-                                            return [4 /*yield*/, _$plugins_12.loadPlugin(url)];
+                                            _b.label = 24;
                                         case 24:
+                                            if (!(_i < _a.length)) return [3 /*break*/, 27];
+                                            url = _a[_i];
+                                            return [4 /*yield*/, _$plugins_15.loadPlugin(url)];
+                                        case 25:
                                             plugin = _b.sent();
                                             if (plugin && plugin.wizard)
                                                 wizard = plugin.wizard;
-                                            _b.label = 25;
-                                        case 25:
+                                            _b.label = 26;
+                                        case 26:
                                             _i++;
-                                            return [3 /*break*/, 23];
-                                        case 26: return [3 /*break*/, 28];
-                                        case 27:
+                                            return [3 /*break*/, 24];
+                                        case 27: return [3 /*break*/, 29];
+                                        case 28:
                                             ex_1 = _b.sent();
                                             console.error(ex_1);
-                                            return [3 /*break*/, 28];
-                                        case 28:
-                                            if (!wizard) return [3 /*break*/, 30];
-                                            return [4 /*yield*/, wizard(d)];
+                                            return [3 /*break*/, 29];
                                         case 29:
+                                            if (!wizard) return [3 /*break*/, 31];
+                                            return [4 /*yield*/, wizard(d)];
+                                        case 30:
                                             _b.sent();
-                                            _b.label = 30;
-                                        case 30: return [2 /*return*/];
+                                            _b.label = 31;
+                                        case 31: return [2 /*return*/];
                                     }
                                 });
                             });
@@ -11801,22 +13662,22 @@ var ennuizelPlugin = {
                 case 1:
                     _a.sent();
                     // And make an about screen
-                    _$ui_20.ui.menu.about.onclick = function () {
-                        var plugs = _$plugins_12.getPlugins();
+                    _$ui_23.ui.menu.about.onclick = function () {
+                        var plugs = _$plugins_15.getPlugins();
                         if (plugs.length === 0) {
                             // No plugins, just show the help for Ennuizel itself
                             about(null, ennuizelPlugin);
                             return;
                         }
                         // Make a dialog to ask which plugin they're querying
-                        _$ui_20.dialog(function (d, show) {
-                            return ____awaiter_11(this, void 0, void 0, function () {
+                        _$ui_23.dialog(function (d, show) {
+                            return ____awaiter_14(this, void 0, void 0, function () {
                                 var ez, _loop_1, _i, plugs_1, plug;
-                                return ____generator_11(this, function (_a) {
-                                    ez = _$ui_20.btn(d.box, "About Ennuizel", { className: "row small" });
+                                return ____generator_14(this, function (_a) {
+                                    ez = _$ui_23.btn(d.box, "About Ennuizel", { className: "row small" });
                                     ez.onclick = function () { return about(d, ennuizelPlugin); };
                                     _loop_1 = function (plug) {
-                                        var btn = _$ui_20.btn(d.box, "About " + plug.name, { className: "row small" });
+                                        var btn = _$ui_23.btn(d.box, "About " + plug.name, { className: "row small" });
                                         btn.onclick = function () { return about(d, plug); };
                                     };
                                     for (_i = 0, plugs_1 = plugs; _i < plugs_1.length; _i++) {
@@ -11838,20 +13699,20 @@ var ennuizelPlugin = {
 })();
 // Handler for "about" screens
 function about(d, plugin) {
-    _$ui_20.dialog(function (d, show) {
-        return ____awaiter_11(this, void 0, void 0, function () {
+    _$ui_23.dialog(function (d, show) {
+        return ____awaiter_14(this, void 0, void 0, function () {
             var header, about, li, ok;
-            return ____generator_11(this, function (_a) {
-                header = _$ui_20.mk("h2", d.box);
-                _$ui_20.mk("a", header, {
+            return ____generator_14(this, function (_a) {
+                header = _$ui_23.mk("h2", d.box);
+                _$ui_23.mk("a", header, {
                     href: plugin.infoURL,
                     innerText: plugin.name
                 });
-                about = _$ui_20.mk("div", d.box, {
+                about = _$ui_23.mk("div", d.box, {
                     innerHTML: plugin.description + "<br/><br/>License info:"
                 });
                 about.style.maxWidth = "45rem";
-                li = _$ui_20.mk("textarea", d.box, {
+                li = _$ui_23.mk("textarea", d.box, {
                     readOnly: true,
                     innerHTML: plugin.licenseInfo,
                     className: "row"
@@ -11861,9 +13722,9 @@ function about(d, plugin) {
                     width: "45rem",
                     height: "20em"
                 });
-                ok = _$ui_20.btn(d.box, "OK", { className: "row" });
+                ok = _$ui_23.btn(d.box, "OK", { className: "row" });
                 ok.style.width = "45rem";
-                ok.onclick = function () { return _$ui_20.dialogClose(d); };
+                ok.onclick = function () { return _$ui_23.dialogClose(d); };
                 show(ok);
                 return [2 /*return*/];
             });
@@ -11874,7 +13735,7 @@ function about(d, plugin) {
     });
 }
 
-return _$main_11;
+return _$main_14;
 
 });
 

@@ -285,13 +285,16 @@ var ____generator_9 = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(_$downloadStream_9, "__esModule", { value: true });
-_$downloadStream_9.stream = _$downloadStream_9.load = void 0;
+_$downloadStream_9.stream = _$downloadStream_9.load = _$downloadStream_9.serviceWorkerPinger = void 0;
 /* removed: var _$FileSaverMin_2 = require("file-saver"); */;
+// The scope for the service worker
 var scope = "/download-stream-service-worker/";
 // The registered service worker, if there is one
 var serviceWorker = null;
 // The port for communicating with the service worker
 var serviceWorkerPort = null;
+// The pinger iframe used to keep the service worker alive
+_$downloadStream_9.serviceWorkerPinger = null;
 // Callbacks from the service worker
 var callbacks = Object.create(null);
 // Current callback number
@@ -319,17 +322,19 @@ function swPostMessage(msg) {
  */
 function __load_9() {
     return ____awaiter_9(this, void 0, void 0, function () {
-        var swr_1, mc, ex_1;
+        var swr_1, mc, ack, pinger, ex_1;
         return ____generator_9(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 12, , 13]);
-                    if (!navigator.serviceWorker) return [3 /*break*/, 11];
+                    _a.trys.push([0, 15, , 16]);
+                    if (!(navigator.serviceWorker &&
+                        (navigator.userAgent.indexOf("Safari") < 0 ||
+                            navigator.userAgent.indexOf("Chrome") >= 0))) return [3 /*break*/, 14];
                     return [4 /*yield*/, navigator.serviceWorker.getRegistration(scope)];
                 case 1:
                     swr_1 = _a.sent();
                     if (!(!swr_1 || !swr_1.active)) return [3 /*break*/, 9];
-                    return [4 /*yield*/, navigator.serviceWorker.register("sw.js", { scope: scope })];
+                    return [4 /*yield*/, navigator.serviceWorker.register("sw.js?v=3", { scope: scope })];
                 case 2:
                     // We need to register and activate it
                     swr_1 = _a.sent();
@@ -374,20 +379,33 @@ function __load_9() {
                             callback(msg);
                         }
                     };
-                    // And ack
                     return [4 /*yield*/, swPostMessage({ c: "setup" })];
                 case 10:
-                    // And ack
+                    ack = _a.sent();
+                    if (!(ack.v !== 3)) return [3 /*break*/, 13];
+                    return [4 /*yield*/, swr_1.unregister()];
+                case 11:
                     _a.sent();
-                    _a.label = 11;
-                case 11: return [3 /*break*/, 13];
+                    location.reload();
+                    return [4 /*yield*/, new Promise(function () { })];
                 case 12:
+                    _a.sent();
+                    _a.label = 13;
+                case 13:
+                    pinger = _$downloadStream_9.serviceWorkerPinger =
+                        document.createElement("iframe");
+                    pinger.style.display = "none";
+                    pinger.src = scope + "download-stream-service-worker-pinger.html";
+                    document.body.appendChild(pinger);
+                    _a.label = 14;
+                case 14: return [3 /*break*/, 16];
+                case 15:
                     ex_1 = _a.sent();
                     // No service worker
                     console.log("WARNING: Not using service workers! " + ex_1);
                     serviceWorker = serviceWorkerPort = null;
-                    return [3 /*break*/, 13];
-                case 13: return [2 /*return*/];
+                    return [3 /*break*/, 16];
+                case 16: return [2 /*return*/];
             }
         });
     });
@@ -398,21 +416,26 @@ _$downloadStream_9.load = __load_9;
  */
 function stream(name, body, headers) {
     return ____awaiter_9(this, void 0, void 0, function () {
-        var url, worked, iframe;
+        var utf8Name, safeName, url, worked, iframe;
         return ____generator_9(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    // Set up the most important header
-                    name = encodeURI(name).replace(/%/g, "_");
-                    headers["content-disposition"] = "attachment; filename=\"" + name + "\"";
+                    utf8Name = encodeURIComponent(name);
+                    safeName = utf8Name.replace(/%/g, "_");
+                    headers = Object.assign({
+                        "content-disposition": "attachment; filename=\"" + safeName + "\"; filename*=UTF-8''" + utf8Name,
+                        "cross-origin-embedder-policy": "require-corp"
+                    }, headers);
                     if (!serviceWorker) return [3 /*break*/, 5];
-                    url = scope + Math.random() + Math.random() + Math.random() + "/" + name;
+                    url = scope + Math.random() + Math.random() + Math.random() + "/" + safeName;
                     return [4 /*yield*/, Promise.race([
                             swPostMessage({ c: "stream", u: url, h: headers }).then(function () { return true; }),
                             (new Promise(function (res) { return setTimeout(res, 5000); })).then(function () { return false; })
                         ])];
                 case 1:
                     worked = _a.sent();
+                    if (!worked)
+                        console.log("WARNING: Failed to communicate with service worker!");
                     if (!worked) return [3 /*break*/, 3];
                     iframe = document.createElement("iframe");
                     iframe.src = url;
@@ -425,6 +448,8 @@ function stream(name, body, headers) {
                 case 2:
                     // Make sure it actually starts downloading
                     worked = _a.sent();
+                    if (!worked)
+                        console.log("WARNING: Failed to start service worker download!");
                     _a.label = 3;
                 case 3:
                     if (!worked) return [3 /*break*/, 5];
@@ -6199,10 +6224,10 @@ _$audioData_5.sanitizeLibAVFrame = sanitizeLibAVFrame;
  * @param sampleRate  Desired sample rate.
  * @param format  Desired sample format.
  * @param channels  Desired channel count.
- * @param fs  Optional filter string to perform while resampling.
+ * @param opts  Other options.
  */
-function resample(stream, sampleRate, format, channels, fs) {
-    if (fs === void 0) { fs = "anull"; }
+function resample(stream, sampleRate, format, channels, opts) {
+    if (opts === void 0) { opts = {}; }
     return ____awaiter_5(this, void 0, void 0, function () {
         var first, libav, frame, _a, buffersrc_ctx, buffersink_ctx;
         return ____generator_5(this, function (_b) {
@@ -6223,7 +6248,9 @@ function resample(stream, sampleRate, format, channels, fs) {
                     sanitizeLibAVFrame(first);
                     if (first.sample_rate === sampleRate &&
                         first.format === format &&
-                        first.channels === channels) {
+                        first.channels === channels &&
+                        !opts.fs &&
+                        !opts.reframe) {
                         // Nope, already good!
                         return [2 /*return*/, new _$stream_20.WSPReadableStream({
                                 pull: function (controller) {
@@ -6251,14 +6278,15 @@ function resample(stream, sampleRate, format, channels, fs) {
                     return [4 /*yield*/, libav.av_frame_alloc()];
                 case 3:
                     frame = _b.sent();
-                    return [4 /*yield*/, libav.ff_init_filter_graph(fs, {
+                    return [4 /*yield*/, libav.ff_init_filter_graph(opts.fs || "anull", {
                             sample_rate: first.sample_rate,
                             sample_fmt: first.format,
                             channel_layout: first.channel_layout
                         }, {
                             sample_rate: sampleRate,
                             sample_fmt: format,
-                            channel_layout: toChannelLayout(channels)
+                            channel_layout: toChannelLayout(channels),
+                            frame_size: ~~(first.sample_rate * 0.2)
                         })];
                 case 4:
                     _a = _b.sent(), buffersrc_ctx = _a[1], buffersink_ctx = _a[2];
@@ -8257,13 +8285,15 @@ function mixTracks(sel, d, opts) {
                         })];
                 case 4:
                     _c = _d.sent(), buffersrc_ctx = _c[1], buffersink_ctx = _c[2];
-                    inRStreams = tracks.map(function (x) { return x.stream(streamOpts); });
-                    if (!opts.preFilter) return [3 /*break*/, 6];
-                    return [4 /*yield*/, Promise.all(inRStreams.map(function (x) { return opts.preFilter(new _$stream_20.EZStream(x)); }))];
+                    return [4 /*yield*/, Promise.all(tracks.map(function (x) { return _$audioData_5.resample(new _$stream_20.EZStream(x.stream(streamOpts)), x.sampleRate, x.format, x.channels, { reframe: true }); }))];
                 case 5:
                     inRStreams = _d.sent();
-                    _d.label = 6;
+                    if (!opts.preFilter) return [3 /*break*/, 7];
+                    return [4 /*yield*/, Promise.all(inRStreams.map(function (x) { return opts.preFilter(new _$stream_20.EZStream(x)); }))];
                 case 6:
+                    inRStreams = _d.sent();
+                    _d.label = 7;
+                case 7:
                     inStreams = inRStreams.map(function (x) { return x.getReader(); });
                     trackDone = tracks.map(function () { return false; });
                     trackDoneCt = 0;
@@ -8324,15 +8354,15 @@ function mixTracks(sel, d, opts) {
                         }
                     });
                     outStream = null;
-                    if (!opts.postFilter) return [3 /*break*/, 8];
+                    if (!opts.postFilter) return [3 /*break*/, 9];
                     return [4 /*yield*/, opts.postFilter(new _$stream_20.EZStream(mixStream))];
-                case 7:
+                case 8:
                     outStream = _d.sent();
-                    _d.label = 8;
-                case 8: 
+                    _d.label = 9;
+                case 9: 
                 // Append that to the new track
                 return [4 /*yield*/, outTrack.append(new _$stream_20.EZStream(outStream || mixStream))];
-                case 9:
+                case 10:
                     // Append that to the new track
                     _d.sent();
                     // And get rid of the libav instance
@@ -9168,7 +9198,7 @@ function getAudioContext() {
                     return [3 /*break*/, 10];
                 case 10: 
                 // Load in the AWP
-                return [4 /*yield*/, ac.audioWorklet.addModule("awp/ennuizel-player.js")];
+                return [4 /*yield*/, ac.audioWorklet.addModule("ennuizel-player.js")];
                 case 11:
                     // Load in the AWP
                     _a.sent();
@@ -10404,20 +10434,26 @@ var CaptionTrack = /** @class */ (function () {
      */
     CaptionTrack.prototype.append = function (rstream) {
         return ____awaiter_8(this, void 0, void 0, function () {
-            var chunk;
+            var data, chunk;
             return ____generator_8(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        data = [];
+                        _a.label = 1;
+                    case 1:
                         if (!true) return [3 /*break*/, 3];
                         return [4 /*yield*/, rstream.read()];
-                    case 1:
-                        chunk = _a.sent();
-                        return [4 /*yield*/, this.appendRaw(chunk)];
                     case 2:
-                        _a.sent();
-                        return [3 /*break*/, 0];
-                    case 3: return [4 /*yield*/, this.save()];
+                        chunk = _a.sent();
+                        if (!chunk)
+                            return [3 /*break*/, 3];
+                        data.push(chunk);
+                        return [3 /*break*/, 1];
+                    case 3: return [4 /*yield*/, this.appendRaw(data)];
                     case 4:
+                        _a.sent();
+                        return [4 /*yield*/, this.save()];
+                    case 5:
                         _a.sent();
                         return [2 /*return*/];
                 }
@@ -10425,32 +10461,46 @@ var CaptionTrack = /** @class */ (function () {
         });
     };
     /**
-     * Append a single chunk of raw data.
-     * @param words  The single chunk of data.
+     * Append chunks of raw data.
+     * @param lines  Chunks of data (lines of vosk words).
      * @param opts  Other options, really only intended to be used by append.
      */
-    CaptionTrack.prototype.appendRaw = function (words, opts) {
+    CaptionTrack.prototype.appendRaw = function (lines, opts) {
         if (opts === void 0) { opts = {}; }
         return ____awaiter_8(this, void 0, void 0, function () {
-            var store, data, _a;
-            return ____generator_8(this, function (_b) {
-                switch (_b.label) {
+            var store, idBase, data, promises, idx, data;
+            return ____generator_8(this, function (_a) {
+                switch (_a.label) {
                     case 0:
                         store = this.project.store;
-                        _a = CaptionData.bind;
                         return [4 /*yield*/, _$id36_13.genFresh(store, "caption-data-")];
                     case 1:
-                        data = new (_a.apply(CaptionData, [void 0, _b.sent(), this]))();
-                        return [4 /*yield*/, data.setData(words)];
+                        idBase = _a.sent();
+                        if (!lines.length) return [3 /*break*/, 3];
+                        data = new CaptionData(idBase, this);
+                        return [4 /*yield*/, data.setData(lines[0])];
                     case 2:
-                        _b.sent();
+                        _a.sent();
                         this.data.push(data);
-                        if (!!opts.noSave) return [3 /*break*/, 4];
-                        return [4 /*yield*/, this.save()];
+                        _a.label = 3;
                     case 3:
-                        _b.sent();
-                        _b.label = 4;
-                    case 4: return [2 /*return*/];
+                        promises = [];
+                        for (idx = 1; idx < lines.length; idx++) {
+                            data = new CaptionData(idBase + "-" + idx, this);
+                            promises.push(data.setData(lines[idx]));
+                            this.data.push(data);
+                        }
+                        // Wait for them to complete
+                        return [4 /*yield*/, Promise.all(promises)];
+                    case 4:
+                        // Wait for them to complete
+                        _a.sent();
+                        if (!!opts.noSave) return [3 /*break*/, 6];
+                        return [4 /*yield*/, this.save()];
+                    case 5:
+                        _a.sent();
+                        _a.label = 6;
+                    case 6: return [2 /*return*/];
                 }
             });
         });
@@ -10972,7 +11022,7 @@ _$captionData_8.uiLoadFile = uiLoadFile;
  */
 function loadFile(project, fileName, raw) {
     return ____awaiter_8(this, void 0, void 0, function () {
-        var text, vosk, track, _a, _i, vosk_1, line;
+        var text, vosk, track, _a;
         return ____generator_8(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4 /*yield*/, raw.text()];
@@ -10987,20 +11037,10 @@ function loadFile(project, fileName, raw) {
                 case 2:
                     track = new (_a.apply(CaptionTrack, [void 0, _b.sent(), project,
                         { name: fileName.replace(/\..*/, "") }]))();
-                    _i = 0, vosk_1 = vosk;
-                    _b.label = 3;
+                    // Import it
+                    return [4 /*yield*/, track.appendRaw(vosk)];
                 case 3:
-                    if (!(_i < vosk_1.length)) return [3 /*break*/, 6];
-                    line = vosk_1[_i];
-                    return [4 /*yield*/, track.appendRaw(line, { noSave: true })];
-                case 4:
-                    _b.sent();
-                    _b.label = 5;
-                case 5:
-                    _i++;
-                    return [3 /*break*/, 3];
-                case 6: return [4 /*yield*/, track.save()];
-                case 7:
+                    // Import it
                     _b.sent();
                     return [2 /*return*/, [track]];
             }

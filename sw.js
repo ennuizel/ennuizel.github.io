@@ -49,6 +49,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
+// A page to ping this service worker
+var pinger = "\n<!doctype html>\n<html>\n    <head>\n        <meta charset=\"utf-8\" />\n    </head>\n    <body>\n        <script type=\"text/javascript\">(function() {\n            var interval = setInterval(function() {\n                fetch(\"/download-stream-service-worker/\" + Math.random() +\n                    Math.random() + Math.random() +\n                    \"/download-stream-service-worker-ping\").then(function(f) {\n\n                    return f.text();\n\n                }).then(function(t) {\n                    if (t !== \"pong\") {\n                        console.log(t);\n                        clearInterval(interval);\n                    }\n\n                }).catch(console.error);\n            }, 5000);\n        })();\n        </script>\n    </body>\n</html>\n";
 // Current streams
 var streams = Object.create(null);
 // Wait for clients
@@ -77,31 +79,37 @@ function message(port, ev) {
                     _a = msg.c;
                     switch (_a) {
                         case "setup": return [3 /*break*/, 1];
-                        case "stream": return [3 /*break*/, 2];
-                        case "wait-start": return [3 /*break*/, 3];
-                        case "data": return [3 /*break*/, 5];
-                        case "end": return [3 /*break*/, 5];
+                        case "ping": return [3 /*break*/, 2];
+                        case "stream": return [3 /*break*/, 3];
+                        case "wait-start": return [3 /*break*/, 4];
+                        case "data": return [3 /*break*/, 6];
+                        case "end": return [3 /*break*/, 6];
                     }
-                    return [3 /*break*/, 7];
-                case 1: 
-                // Just ack
-                return [3 /*break*/, 8];
+                    return [3 /*break*/, 8];
+                case 1:
+                    // Ack with our version
+                    port.postMessage({ c: "ack", i: msg.i, v: 3 });
+                    return [2 /*return*/];
                 case 2:
+                    // Pong
+                    port.postMessage({ c: "pong", i: msg.i });
+                    return [2 /*return*/];
+                case 3:
                     stream(msg);
-                    return [3 /*break*/, 8];
-                case 3: return [4 /*yield*/, waitStart(msg)];
-                case 4:
+                    return [3 /*break*/, 9];
+                case 4: return [4 /*yield*/, waitStart(msg)];
+                case 5:
                     _b.sent();
-                    return [3 /*break*/, 8];
-                case 5: return [4 /*yield*/, data(msg)];
-                case 6:
-                    _b.sent();
-                    return [3 /*break*/, 8];
+                    return [3 /*break*/, 9];
+                case 6: return [4 /*yield*/, data(msg)];
                 case 7:
+                    _b.sent();
+                    return [3 /*break*/, 9];
+                case 8:
                     // Unrecognized message!
                     port.postMessage({ c: "nack", i: msg.i });
                     return [2 /*return*/];
-                case 8:
+                case 9:
                     port.postMessage({ c: "ack", i: msg.i });
                     return [2 /*return*/];
             }
@@ -182,6 +190,27 @@ function data(msg) {
 self.addEventListener("fetch", function (ev) {
     var urlF = new URL(ev.request.url);
     var url = urlF.pathname;
+    // Keep the service worker alive with pings
+    if (url.endsWith("/download-stream-service-worker-ping")) {
+        ev.respondWith(new Response("pong", {
+            status: 200,
+            headers: {
+                "content-type": "text/plain",
+                "cross-origin-embedder-policy": "require-corp"
+            }
+        }));
+        return;
+    }
+    if (url.endsWith("/download-stream-service-worker-pinger.html")) {
+        ev.respondWith(new Response(pinger, {
+            status: 200,
+            headers: {
+                "content-type": "text/html",
+                "cross-origin-embedder-policy": "require-corp"
+            }
+        }));
+        return;
+    }
     if (!(url in streams)) {
         // No stream!
         ev.respondWith(new Response("404", { status: 404 }));
